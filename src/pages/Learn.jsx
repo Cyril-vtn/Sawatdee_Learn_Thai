@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/LearnPage/Navbar";
+import Navbar from "../components/Navbar";
 import { UserAuth } from "../context/AuthContext";
 
 const Learn = () => {
