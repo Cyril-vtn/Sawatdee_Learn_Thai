@@ -1,7 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import HomePage from "../components/HomePage";
+import { UserAuth } from "../context/AuthContext";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { user } = UserAuth();
+  if (user) {
+    navigate("/learn");
+  }
   return <HomePage />;
 };
 
