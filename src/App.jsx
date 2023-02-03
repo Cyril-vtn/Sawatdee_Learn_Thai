@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Learn from "./pages/Learn";
 import Login from "./pages/Login";
@@ -26,7 +27,11 @@ const router = createBrowserRouter([
       },
       {
         path: "learn",
-        element: <Learn />,
+        element: (
+          <ProtectedRoute>
+            <Learn />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

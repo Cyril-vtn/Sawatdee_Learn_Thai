@@ -4,11 +4,11 @@ import classes from "./HomePage.module.css";
 import logo from "../assets/logo.png";
 import ThaiWorld from "../assets/thaiWorldLogo.png";
 import Bouton from "../components/UI/Bouton";
+import { UserAuth } from "../context/AuthContext";
 
 const Home = () => {
-  const [name, setName] = useState("");
-  const [data, setData] = useState({});
-
+  const { createUser, user } = UserAuth();
+  console.log(user);
   return (
     <>
       <div className={classes.home}>
