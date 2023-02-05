@@ -6,9 +6,7 @@ import { UserAuth } from "../context/AuthContext";
 const Home = () => {
   const navigate = useNavigate();
   const { user } = UserAuth();
-  if (user) {
-    navigate("/learn");
-  }
+
   return <HomePage />;
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import Sidebar from "../components/UI/Sidebar";
 import { UserAuth } from "../context/AuthContext";
 
 const Learn = () => {
@@ -9,8 +10,7 @@ const Learn = () => {
   return (
     <div>
       <div>
-        <Navbar />
-        <div>{user.email}</div>
+        <Sidebar>qhzd</Sidebar>
       </div>
     </div>
   );

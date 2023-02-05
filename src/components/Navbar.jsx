@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import logo from "../../assets/logoGreen.svg";
-import flagRounded from "../../assets/flagRounded.svg";
-import streakFlame from "../../assets/fireStreak.svg";
-import ProfileImg from "../../assets/profileImg.png";
+import logo from "../assets/logoGreen.svg";
+import flagRounded from "../assets/flagRounded.svg";
+import streakFlame from "../assets/fireStreak.svg";
+import ProfileImg from "../assets/profileImg.png";
 
 const Navbar = () => {
   return (

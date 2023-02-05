@@ -42,6 +42,7 @@
 .homeContent {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 12px auto;
   text-align: center;
 }
@@ -88,4 +89,12 @@
   border-bottom: solid #133055;
   border-bottom-width: 4px;
   color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+  .homeContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
