@@ -12,6 +12,7 @@ const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [isLogin, setIsLogin] = useState({});
 
   const createUser = async (email, password, displayName) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
@@ -32,7 +33,14 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signIn = async (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password).then(
+      (UserCredential) => {
+        return sessionStorage.setItem(
+          "session",
+          JSON.stringify(UserCredential.user)
+        );
+      }
+    );
   };
 
   const logout = () => {

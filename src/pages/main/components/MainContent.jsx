@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import classes from "./HomePage.module.css";
-import logo from "../assets/logo.png";
-import ThaiWorld from "../assets/thaiWorldLogo.png";
-import Bouton from "../components/UI/Bouton";
-import { UserAuth } from "../context/AuthContext";
+import classes from "./MainContent.module.css";
+import logo from "../../../assets/brand/logo.png";
+import ThaiWorld from "../../../assets/images/thaiWorldLogo.png";
+import Bouton from "../../../pages/global/components/button/Bouton";
 
 const Home = () => {
-  const { createUser, user } = UserAuth();
-  console.log(user);
   return (
     <>
       <div className={classes.home}>

@@ -1,0 +1,146 @@
+.sidebar {
+  position: fixed;
+  left: 16px;
+  z-index: 1;
+  width: 224px;
+  border-right: 1px solid #e7e7e7;
+  height: 100vh;
+  padding-right: 16px;
+  font-family: "DINROUNDPRO";
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.logo {
+  height: 24px;
+  padding: 40px 0 30px 16px;
+}
+.logoLink {
+  display: block;
+  height: 100%;
+  width: fit-content;
+}
+.logoLink img {
+  display: initial;
+  height: 100%;
+}
+
+.sidebarBtnContainer {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  width: auto;
+}
+.linkContent {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  color: #777;
+  transition: none;
+  border-radius: 12px;
+  padding: 4px 8px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+.navImg {
+  margin-right: 20px;
+  display: flex;
+  position: relative;
+}
+.linkImg {
+  margin-right: 20px;
+}
+.linkImg img {
+  margin-left: 12px;
+  height: 32px;
+  width: 32px;
+}
+.active {
+  border-radius: 12px;
+  background-color: #ddf4ff;
+  border: 2px solid #84d8ff;
+  transition: all 0.3s ease;
+}
+.active:hover {
+  background-color: #84d8ff;
+  border: 2px solid #84d8ff;
+  transition: all 0.3s ease;
+}
+.inactive {
+  transition: all 0.3s ease;
+}
+.inactive:hover {
+  border-radius: 12px;
+  background-color: rgba(108, 108, 108, 0.077);
+}
+
+.disconnectBtn {
+  position: fixed;
+  align-items: center;
+  width: 208px;
+  display: flex;
+  background-color: #ffdddd;
+  border: 2px solid #ff8484;
+  color: #777;
+  flex-direction: row;
+  justify-content: center;
+  transition: none;
+  border-radius: 12px;
+  padding: 4px 8px;
+  height: 40px;
+  bottom: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.disconnectBtn:hover {
+  background-color: #f3a5a5;
+}
+.disconnectIcon {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .linkText {
+    display: none;
+  }
+  .linkImg img {
+    margin: 0;
+  }
+  .linkImg {
+    margin: 0;
+  }
+  .linkContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo {
+    height: 24px;
+    padding: 40px 0 40px 0;
+  }
+  .logoLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  .logoLink img {
+    display: flex;
+    height: 35px;
+  }
+  .disconnectBtn {
+    width: 48px;
+  }
+  .disconnectIcon {
+    display: block;
+    width: 40px;
+  }
+}

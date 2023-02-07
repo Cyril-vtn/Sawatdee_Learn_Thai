@@ -1,4 +1,4 @@
-@import url("./font/DINRound/stylesheet.css");
+@import url("./font/stylesheet.css");
 root {
   font-family: "DINRoundPro";
   font-size: 16px;
@@ -151,4 +151,23 @@ a {
 
 * {
   font-family: "DINRoundPro";
+}
+
+*,
+:after,
+:before,
+button,
+button:focus,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: inherit;
+  font-family: din-round, sans-serif;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+button {
+  cursor: pointer;
 }

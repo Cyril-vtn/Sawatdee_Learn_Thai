@@ -53,7 +53,7 @@ input {
 }
 
 .loginBtn {
-  background-color: #235390;
+  background-color: #2d69b7;
   padding: 0 16px;
   width: auto;
   height: 44px;
@@ -110,22 +110,14 @@ input {
 }
 
 .nextStepBtn {
-  margin: auto;
   margin-top: 20px;
   width: 100%;
   background-color: #1cb0f6;
-  padding: 0 16px;
   border: 0;
   height: 44px;
   border-bottom: solid #1899d6;
   border-bottom-width: 4px;
   color: #fff;
-  cursor: pointer;
-}
-
-.nextStepBtn:disabled {
-  background-color: #106e99;
-  border-bottom: solid #0d5373;
 }
 
 .stroke {

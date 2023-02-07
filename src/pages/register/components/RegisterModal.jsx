@@ -6,14 +6,14 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 //css import
 import classes from "./RegisterModal.module.css";
-import "../../UI/Bouton.css";
+import "../../../pages/global/components/button/Bouton.css";
 
 // img import
-import closeBtn from "../../../assets/closeBtn.svg";
+import closeBtn from "../../../assets/svg/closeBtn.svg";
 
 // components import
-import Bouton from "../../UI/Bouton";
-import Load from "../../UI/Load";
+import Bouton from "../../../pages/global/components/button/Bouton";
+import Load from "../../global/components/loader/Load";
 
 // import du context
 import { UserAuth } from "../../../context/AuthContext";
@@ -149,16 +149,17 @@ const RegisterModal = () => {
                 </label>
               </div>
             </div>
-
-            <button
-              type="submit"
-              // Passage en mode disable pour eviter les multiple creation d'utilisateurs
-              disabled={loading ? true : false}
-              className={`${classes.nextStepBtn} bouton`}
-            >
-              {/* Géré l'apparition du composant Load si le state Loading est true */}
-              {!loading ? "C'est parti !" : <Load />}
-            </button>
+            <div style={{ display: "flex" }}>
+              <button
+                type="submit"
+                // Passage en mode disable pour eviter les multiple creation d'utilisateurs
+                disabled={loading ? true : false}
+                className={`${classes.nextStepBtn} bouton`}
+              >
+                {/* Géré l'apparition du composant Load si le state Loading est true */}
+                {!loading ? "C'est parti !" : <Load />}
+              </button>
+            </div>
             <div className={classes.stroke}>
               <div></div>
             </div>

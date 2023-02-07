@@ -8,11 +8,11 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import classes from "./LoginModal.module.css";
 
 // img import
-import closeBtn from "../../../assets/closeBtn.svg";
+import closeBtn from "../../../assets/svg/closeBtn.svg";
 
 // component import
-import Bouton from "../../UI/Bouton";
-import Load from "../../UI/Load";
+import Bouton from "../../../pages/global/components/button/Bouton";
+import Load from "../../global/components/loader/Load";
 
 // import du context
 import { UserAuth } from "../../../context/AuthContext";
@@ -29,7 +29,6 @@ const LoginModal = () => {
 
   // Récupération des function du context (voir import si besoin)
   const { signIn, user } = UserAuth();
-
   // submit fonction
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,15 +114,18 @@ const LoginModal = () => {
                 </label>
               </div>
             </div>
-            <button
-              type="submit"
-              // Passage en mode disable pour eviter les multiple creation d'utilisateurs
-              disabled={loading ? true : false}
-              className={`${classes.nextStepBtn} bouton`}
-            >
-              {/* Géré l'apparition du composant Load si le state Loading est true */}
-              {!loading ? "C'est parti !" : <Load />}
-            </button>
+            <div style={{ display: "flex" }}>
+              <button
+                type="submit"
+                // Passage en mode disable pour eviter les multiple creation d'utilisateurs
+                disabled={loading ? true : false}
+                className={`${classes.nextStepBtn} bouton`}
+              >
+                {/* Géré l'apparition du composant Load si le state Loading est true */}
+                {!loading ? "C'est parti !" : <Load />}
+              </button>
+            </div>
+
             <div className={classes.stroke}>
               <div></div>
             </div>

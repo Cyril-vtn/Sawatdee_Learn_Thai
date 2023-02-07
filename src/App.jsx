@@ -1,11 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./pages/Home";
-import Learn from "./pages/Learn";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
+import Home from "./pages/main/index";
+import Learn from "./pages/learn/index";
+import Login from "./pages/login/index";
+import Register from "./pages/register/index";
 import RootLayout from "./pages/Root";
-
 
 // Crée les différentes routes pour le site
 const router = createBrowserRouter([
@@ -14,13 +13,14 @@ const router = createBrowserRouter([
     // errorElement: <ErrorPage />,
     children: [
       {
-        path: "/register",
-        element: <Register />,
-      },
-      {
         path: "/",
         element: <Home />,
       },
+      {
+        path: "register",
+        element: <Register />,
+      },
+
       {
         path: "login",
         element: <Login />,
@@ -34,10 +34,10 @@ const router = createBrowserRouter([
         ),
         children: [
           {
-           index: true,
-           element:  <Learn/>,
-          }
-        ]
+            index: true,
+            element: <Learn />,
+          },
+        ],
       },
     ],
   },

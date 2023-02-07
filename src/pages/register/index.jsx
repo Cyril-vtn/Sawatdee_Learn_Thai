@@ -1,5 +1,5 @@
 import React from "react";
-import RegisterModal from "../components/Modal/Auth/RegisterModal";
+import RegisterModal from "./components/RegisterModal";
 
 const Register = () => {
   return <RegisterModal />;

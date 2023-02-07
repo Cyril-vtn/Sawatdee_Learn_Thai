@@ -1,0 +1,8 @@
+.sidebarBtnContainer {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  width: auto;
+}
