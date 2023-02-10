@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.8",
     "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
     "firebase": "^9.16.0",

@@ -1,7 +1,7 @@
 .sidebar {
   position: fixed;
   left: 16px;
-  z-index: 1;
+  z-index: 199;
   width: 224px;
   border-right: 1px solid #e7e7e7;
   height: 100vh;
@@ -21,7 +21,6 @@
   width: fit-content;
 }
 .logoLink img {
-  display: initial;
   height: 100%;
 }
 
@@ -39,11 +38,10 @@
   flex-direction: row;
   justify-content: left;
   color: #777;
-  transition: none;
   border-radius: 12px;
   padding: 4px 8px;
   height: 40px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 .navImg {
@@ -63,15 +61,14 @@
   border-radius: 12px;
   background-color: #ddf4ff;
   border: 2px solid #84d8ff;
-  transition: all 0.3s ease;
 }
+
 .active:hover {
   background-color: #84d8ff;
   border: 2px solid #84d8ff;
-  transition: all 0.3s ease;
 }
 .inactive {
-  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 .inactive:hover {
   border-radius: 12px;

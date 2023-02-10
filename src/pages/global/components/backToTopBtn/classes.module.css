@@ -1,0 +1,38 @@
+.btn {
+  margin-right: 0;
+  margin-left: auto;
+  bottom: 20px;
+  right: 20px;
+  position: sticky;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  --__internal__border-color: #e5e5e5;
+  background: none;
+  border: solid transparent;
+  border-radius: 12px;
+  border-width: 2px 2px 4px;
+  color: #afafaf;
+  height: 50px;
+  padding: 0 16px;
+  transition: filter 0.2s;
+}
+.btn::before {
+  background-color: var(--web-ui_button-background-color, #fff);
+  border: 2px solid var(--__internal__border-color);
+  border-radius: var(--web-ui_button-border-radius, 12px);
+  bottom: -2px;
+  box-shadow: 0 2px 0 var(--__internal__border-color);
+  content: "";
+  left: -2px;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  z-index: -1;
+}
+.btn:hover {
+  filter: brightness(0.94);
+}

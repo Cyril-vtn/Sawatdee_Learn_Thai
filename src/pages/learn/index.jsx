@@ -1,11 +1,10 @@
 import React from "react";
-import Sidebar from "./components/Sidebar";
 
 const Learn = () => {
   return (
     <div>
       <div>
-        <Sidebar />
+        <h1>MDR</h1>
       </div>
     </div>
   );

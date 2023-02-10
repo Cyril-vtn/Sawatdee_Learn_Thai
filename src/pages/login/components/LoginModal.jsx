@@ -28,7 +28,8 @@ const LoginModal = () => {
   const [loading, setLoading] = useState(false);
 
   // Récupération des function du context (voir import si besoin)
-  const { signIn, user } = UserAuth();
+  const { signIn } = UserAuth();
+
   // submit fonction
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +42,7 @@ const LoginModal = () => {
     try {
       await signIn(email, password);
       setLoading(false);
-      navigate("/learn");
+      navigate("/app/learn");
     } catch (err) {
       console.log(err.code);
       if (err.code === "auth/wrong-password") {

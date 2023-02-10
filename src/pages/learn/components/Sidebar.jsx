@@ -6,7 +6,7 @@ import logoSmall from "../../../assets/svg/logoSmall.svg";
 import disconnectIcon from "../../../assets/images/disconnectIcon.png";
 import ProfilePicRounded from "../../global/components/profilePic/ProfilePicRounded";
 import { UserAuth } from "../../../context/AuthContext";
-
+import alphabetIcon from "../../../assets/images/alphabetIcon.png";
 const Sidebar = () => {
   const { logout } = UserAuth();
   const navigate = useNavigate();
@@ -22,20 +22,20 @@ const Sidebar = () => {
   return (
     <div className={classes.sidebar}>
       <div className={classes.logo}>
-        <NavLink to="/learn" className={classes.logoLink}>
+        <NavLink to="/app/learn" className={classes.logoLink}>
           <picture>
             <source
-              srcset={logo}
+              srcSet={logo}
               media="(min-width: 769px)"
               type="image/svg+xml"
             />
-            <img srcset={logoSmall} className={classes.logoSmall} />
+            <img srcSet={logoSmall} className={classes.logoSmall} />
           </picture>
         </NavLink>
       </div>
       <div className={classes.sidebarBtnContainer}>
         <NavLink
-          to="/learn"
+          to="/app/learn"
           className={({ isActive }) => {
             return isActive ? classes.active : classes.inactive;
           }}
@@ -48,7 +48,20 @@ const Sidebar = () => {
           </span>
         </NavLink>
         <NavLink
-          to="/alphabet"
+          to="/app/alphabet"
+          className={({ isActive }) => {
+            return isActive ? classes.active : classes.inactive;
+          }}
+        >
+          <span className={classes.linkContent}>
+            <div className={classes.linkImg}>
+              <img src={alphabetIcon} />
+            </div>
+            <span className={classes.linkText}>CONSONNES</span>
+          </span>
+        </NavLink>
+        <NavLink
+          to="/app/vowel"
           className={({ isActive }) => {
             return isActive ? classes.active : classes.inactive;
           }}
@@ -57,7 +70,7 @@ const Sidebar = () => {
             <div className={classes.linkImg}>
               <img src="https://d35aaqx5ub95lt.cloudfront.net/vendor/5187f6694476a769d4a4e28149867e3e.svg" />
             </div>
-            <span className={classes.linkText}>L'ALPHABET</span>
+            <span className={classes.linkText}>VOYELLES</span>
           </span>
         </NavLink>
         <NavLink

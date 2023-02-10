@@ -1,0 +1,63 @@
+.alphabetContainer {
+  padding-left: 256px;
+  font-family: "DINROUNDPRO";
+}
+.wrapper {
+  margin: 0 auto;
+  max-width: 1056px;
+  padding-top: 32px;
+  width: 100%;
+}
+.h1 {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 34px;
+  margin-bottom: 24px;
+  margin-right: auto;
+  padding-right: 24px;
+}
+.headerText {
+  color: rgb(119, 119, 119);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 23px;
+}
+.span {
+  color: #dd0d0d;
+  font-weight: 700;
+}
+.span:first-of-type {
+  color: #0d7cdd;
+}
+.span:last-of-type {
+  color: #58cc02;
+}
+
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 25px;
+}
+.tableWrapper:last-child {
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 1440px) {
+  .wrapper {
+    max-width: 700px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .wrapper {
+    max-width: 470px;
+  }
+}
+@media screen and (max-width: 769px) {
+  .alphabetContainer {
+    padding-left: 102px;
+  }
+  .wrapper {
+    max-width: 470px;
+  }
+}

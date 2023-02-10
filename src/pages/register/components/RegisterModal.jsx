@@ -54,7 +54,7 @@ const RegisterModal = () => {
     try {
       await createUser(email, password, name);
       setLoading(false);
-      navigate("/learn");
+      navigate("/app//learn");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         setError("Adresse email déjà utilisé");
