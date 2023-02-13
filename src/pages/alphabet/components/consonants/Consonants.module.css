@@ -1,0 +1,28 @@
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: 30px 0;
+}
+.text {
+  color: rgb(119, 119, 119);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 23px;
+  margin-bottom: 10px;
+}
+.wrapperConsonantsType {
+  margin: 20px 0;
+}
+
+.span {
+  color: #dd0d0d;
+  font-weight: 700;
+  margin-top: 10px;
+}
+.span:first-of-type {
+  color: #0d7cdd;
+}
+.span:last-of-type {
+  color: #58cc02;
+}

@@ -3,7 +3,6 @@ import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
 import Home from "./pages/main/index";
 import Learn from "./pages/learn/index";
 import Alphabet from "./pages/alphabet/index";
-import Voyelles from "./pages/voyelle/index";
 import Login from "./pages/login/index";
 import Register from "./pages/register/index";
 import RootLayout from "./pages/Root";
@@ -38,7 +37,6 @@ function App() {
           >
             <Route path="learn" element={<Learn />} />
             <Route path="alphabet" element={<Alphabet />} />
-            <Route path="vowel" element={<Voyelles />} />
           </Route>
         </Routes>
       </AuthContextProvider>

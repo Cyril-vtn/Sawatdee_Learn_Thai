@@ -171,3 +171,12 @@ textarea {
 button {
   cursor: pointer;
 }
+h2 {
+  font-size: 25px;
+  font-weight: 700;
+  color: rgb(119, 119, 119);
+  line-height: 34px;
+  margin: 5px 0;
+  text-decoration: underline;
+  padding-right: 24px;
+}

@@ -1,3 +1,4 @@
+// DONNEE CONSONNES
 function createData(lettres, sonInitial, sonFinal, nom) {
   return { lettres, sonInitial, sonFinal, nom };
 }
