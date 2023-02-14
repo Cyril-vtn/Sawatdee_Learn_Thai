@@ -1,11 +1,10 @@
 import React from "react";
+import LessonPath from "./components/LessonPath";
 
 const Learn = () => {
   return (
-    <div>
-      <div>
-        <h1>MDR</h1>
-      </div>
+    <div style={{ paddingLeft: "256px" }}>
+      <LessonPath />
     </div>
   );
 };
