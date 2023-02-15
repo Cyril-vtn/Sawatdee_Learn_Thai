@@ -1,5 +1,52 @@
 import React from "react";
+import LessonBtn from "./LessonBtn";
 import classes from "./LessonPath.module.css";
+import color from "./LessonBtnColor.module.css";
+
+const data = [
+  {
+    id: "S1",
+    colorSection: {
+      // backgroundColor: "#555555",
+    },
+    title: "section 1",
+    description: "Utilise des mots de base !",
+    sectionStyle: {
+      left: "0px",
+      position: "absolute",
+      top: "0px",
+      width: "100%",
+    },
+    btnStyle: [
+      {
+        left: "0px",
+        marginBottom: "0px",
+        marginTop: "24px",
+      },
+      {
+        left: "-44px",
+        marginBottom: "0px",
+        marginTop: "11px",
+      },
+      {
+        left: "-70px",
+        marginBottom: "0px",
+        marginTop: "20px",
+      },
+      {
+        left: "-44px",
+        marginBottom: "0px",
+        marginTop: "20px",
+      },
+      {
+        left: "0px",
+        marginBottom: "0px",
+        marginTop: "11px",
+      },
+    ],
+    lessons: [],
+  },
+];
 
 const LessonPath = () => {
   return (
@@ -7,441 +54,29 @@ const LessonPath = () => {
       <div className={classes.wrapper}>
         <div className={classes.pathWrapper}>
           <div className={classes.path}>
-            <section
-              style={{
-                left: "0px",
-                position: "absolute",
-                top: "0px",
-                width: "100%",
-              }}
-            >
-              <header className={classes.pathHeader}>
-                <h1 className={classes.pathH1}>Section 1</h1>
-                <span className={classes.pathSpan}>
-                  Utilise des mots de base !
-                </span>
-              </header>
-              <div className={classes.pathContent}>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "0px",
-                    marginBottom: "0px",
-                    marginTop: "24px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          src="	https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg"
-                          alt=""
-                          className={classes.img}
+            {data.map((section) => {
+              return (
+                <section style={{ ...section.sectionStyle }} key={section.id}>
+                  <header className={classes.pathHeader}>
+                    <h1 className={classes.pathH1}>{section.title}</h1>
+                    <span className={classes.pathSpan}>
+                      {section.description}
+                    </span>
+                  </header>
+                  <div className={classes.pathContent}>
+                    {section.btnStyle.map((style, i) => {
+                      return (
+                        <LessonBtn
+                          style={style}
+                          color={section.colorSection}
+                          key={i}
                         />
-                      </button>
-                    </div>
+                      );
+                    })}
                   </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-44.884px",
-                    marginBottom: "0px",
-                    marginTop: "11.8533px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-70px",
-                    marginBottom: "0px",
-                    marginTop: "20.3826px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-44.884px",
-                    marginBottom: "0px",
-                    marginTop: "20.3826px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "0px",
-                    marginBottom: "0px",
-                    marginTop: "11.8533px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            <section
-              style={{
-                left: "0px",
-                position: "absolute",
-                top: "700.578px",
-                width: "100%",
-              }}
-            >
-              <header className={classes.pathHeader}>
-                <h1 className={classes.pathH1}>Section 1</h1>
-                <span className={classes.pathSpan}>
-                  Utilise des mots de base !
-                </span>
-              </header>
-              <div className={classes.pathContent}>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "0px",
-                    marginBottom: "0px",
-                    marginTop: "24px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-44.884px",
-                    marginBottom: "0px",
-                    marginTop: "11.8533px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-70px",
-                    marginBottom: "0px",
-                    marginTop: "20.3826px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-44.884px",
-                    marginBottom: "0px",
-                    marginTop: "20.3826px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "0px",
-                    marginBottom: "0px",
-                    marginTop: "11.8533px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            <section
-              style={{
-                left: "0px",
-                position: "absolute",
-                top: "1400px",
-                width: "100%",
-              }}
-            >
-              <header className={classes.pathHeader}>
-                <h1 className={classes.pathH1}>Section 1</h1>
-                <span className={classes.pathSpan}>
-                  Utilise des mots de base !
-                </span>
-              </header>
-              <div className={classes.pathContent}>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "0px",
-                    marginBottom: "0px",
-                    marginTop: "24px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-44.884px",
-                    marginBottom: "0px",
-                    marginTop: "11.8533px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-70px",
-                    marginBottom: "0px",
-                    marginTop: "20.3826px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "-44.884px",
-                    marginBottom: "0px",
-                    marginTop: "20.3826px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={classes.pathBtnContainer}
-                  style={{
-                    left: "0px",
-                    marginBottom: "0px",
-                    marginTop: "11.8533px",
-                  }}
-                >
-                  <div className={classes.pathBtnWrapper}>
-                    <div>
-                      <button className={classes.btn}>
-                        <img
-                          class="_1Pfqd"
-                          draggable="false"
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/04c71ff20ffdd493e967aec8fd5a864f.svg"
-                          className={classes.backgroundShine}
-                        />
-                        <img
-                          src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/53727b0c96103443bc616435bb1f2fbc.svg"
-                          alt=""
-                          className={classes.img}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+                </section>
+              );
+            })}
           </div>
         </div>
       </div>
