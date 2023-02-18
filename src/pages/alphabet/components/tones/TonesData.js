@@ -1,4 +1,4 @@
-// DONNEE TON
+//* DONNEE TONNALITE
 function createData(ton, symbole, exemple) {
   return { ton, symbole, exemple };
 }

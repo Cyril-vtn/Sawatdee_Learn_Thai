@@ -1,0 +1,40 @@
+.green {
+  --path-unit-background-color: #58cc02;
+  --path-unit-foreground-color: #fff;
+}
+
+.lightGreen {
+  --path-unit-background-color: #00cd9c;
+  --path-unit-foreground-color: #fff;
+}
+.lightBlue {
+  --path-unit-background-color: #1cb0f6;
+  --path-unit-foreground-color: #fff;
+}
+.red {
+  --path-unit-background-color: #ff4b4b;
+  --path-unit-foreground-color: #fff;
+}
+
+.purple {
+  --path-unit-background-color: #ce82ff;
+  --path-unit-foreground-color: #fff;
+}
+.orange {
+  --path-unit-background-color: #ff9600;
+  --path-unit-foreground-color: #fff;
+}
+.lightPink {
+  --path-unit-background-color: #ff86d0;
+  --path-unit-foreground-color: #fff;
+}
+
+.pink {
+  --path-unit-background-color: #cc348d;
+  --path-unit-foreground-color: #fff;
+}
+
+.brown {
+  --path-unit-background-color: #a56644;
+  --path-unit-foreground-color: #fff;
+}

@@ -1,12 +1,8 @@
 import React from "react";
-import LessonPath from "./components/LessonPath";
+import Path from "./components/Path";
 
 const Learn = () => {
-  return (
-    <div style={{ paddingLeft: "256px" }}>
-      <LessonPath />
-    </div>
-  );
+  return <Path />;
 };
 
 export default Learn;

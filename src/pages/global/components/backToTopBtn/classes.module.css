@@ -1,9 +1,9 @@
 .btn {
   margin-right: 0;
   margin-left: auto;
-  bottom: 20px;
-  right: 20px;
-  position: sticky;
+  bottom: 50px;
+  right: 50px;
+  position: fixed;
   z-index: 1;
   align-items: center;
   justify-content: center;

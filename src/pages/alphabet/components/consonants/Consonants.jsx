@@ -1,6 +1,13 @@
 import React from "react";
+
+//* IMPORT DES STYLES
 import classes from "./Consonants.module.css";
+
+//* IMPORT DES COMPOSANTS
 import Tableaux from "./ConsonantsTable";
+
+//* IMPORT DES DONNEES
+//! A MODIFIER POUR RECUPERER LES DONNEES DEPUIS FIREBASE
 import {
   MiddleConsonants,
   HighConsonants,

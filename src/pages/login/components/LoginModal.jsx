@@ -1,44 +1,41 @@
 import React, { useState } from "react";
+
+//* IMPORT DE REACT ROUTER
 import { Link, useNavigate } from "react-router-dom";
 
-//  firebase import
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-
-//css import
+//* IMPORT DES STYLES
 import classes from "./LoginModal.module.css";
 
-// img import
-import closeBtn from "../../../assets/svg/closeBtn.svg";
-
-// component import
+//* IMPORT DES COMPOSANTS
 import Bouton from "../../../pages/global/components/button/Bouton";
 import Load from "../../global/components/loader/Load";
 
-// import du context
+//* IMPORT DES IMAGES
+import closeBtn from "../../../assets/svg/closeBtn.svg";
+
+//* IMPORT DU CONTEXT
 import { UserAuth } from "../../../context/AuthContext";
 
 const LoginModal = () => {
-  // useNvigate pour géré la navigation du site (voir import si besoin)
+  //* hook pour naviguer entre les pages
   const navigate = useNavigate();
 
-  // gestion des input avec useState avec React
+  //* CREATION DES ETATS
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Récupération des function du context (voir import si besoin)
+  //* RECUPERATION DE LA FONCTION DE CONNEXION DU CONTEXTE
   const { signIn } = UserAuth();
 
-  // submit fonction
+  //* CREATION DE LA FONCTION POUR GERER LA SOUMISSION DU FORMULAIRE
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // trigger l'apparition du loader
     setLoading(true);
 
-    // try catch pour executer la fonction et géré les erreurs
     try {
       await signIn(email, password);
       setLoading(false);
@@ -60,7 +57,7 @@ const LoginModal = () => {
     }
   };
 
-  // rendu du composant
+  //* CREATION DU JSX
   return (
     <div className={classes.registerModal}>
       <div className={classes.registerModalContainer}>

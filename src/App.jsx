@@ -1,3 +1,4 @@
+import React from "react";
 import { createBrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
 import Home from "./pages/main/index";
@@ -8,6 +9,7 @@ import Register from "./pages/register/index";
 import RootLayout from "./pages/Root";
 import { AuthContextProvider } from "./context/AuthContext";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { PathContextProvider } from "./context/DataContext";
 
 const THEME = createTheme({
   typography: {
@@ -22,24 +24,26 @@ const THEME = createTheme({
 function App() {
   return (
     <ThemeProvider theme={THEME}>
-      <AuthContextProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/app"
-            element={
-              <ProtectedRoute>
-                <RootLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="learn" element={<Learn />} />
-            <Route path="alphabet" element={<Alphabet />} />
-          </Route>
-        </Routes>
-      </AuthContextProvider>
+      <PathContextProvider>
+        <AuthContextProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/app"
+              element={
+                <ProtectedRoute>
+                  <RootLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="learn" element={<Learn />} />
+              <Route path="alphabet" element={<Alphabet />} />
+            </Route>
+          </Routes>
+        </AuthContextProvider>
+      </PathContextProvider>
     </ThemeProvider>
   );
 }

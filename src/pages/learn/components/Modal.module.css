@@ -1,0 +1,69 @@
+.container {
+  filter: brightness(1);
+  left: 50%;
+  position: absolute;
+  z-index: 199;
+  transform-origin: center var(--margin);
+  cursor: default;
+  bottom: -1px;
+}
+
+.wrapper {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 295px;
+
+  margin-top: var(--margin);
+  box-sizing: border-box;
+}
+.content {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 16px;
+  text-align: center;
+  background-color: var(--path-unit-background-color);
+  border: 0;
+  color: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  transform: translateZ(0);
+  text-align: left;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  line-height: 26.6px;
+  margin-bottom: 0;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.paragraph {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0 0 18px;
+}
+.btn {
+  display: inline-flex;
+  color: var(--path-unit-background-color);
+  margin-top: 16px;
+  width: 100%;
+  background-color: #fff;
+  border-color: hsla(0, 0%, 100%, 0.8);
+  border-radius: 12px;
+  justify-content: center;
+  border: 0 solid transparent;
+  border-bottom: solid transparent;
+  height: 50px;
+  padding: 16px;
+  transition: filter 0.2s;
+  font: 700 15px/1.2 "DINROUNDPRO", sans-serif;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  text-transform: uppercase;
+}

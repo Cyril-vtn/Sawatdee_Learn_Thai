@@ -1,3 +1,6 @@
+.LessonPath {
+  padding-left: 256px;
+}
 .container {
   font-family: "DINROUNDPRO";
   margin: 0 auto;
@@ -27,7 +30,7 @@
 
 .pathHeader {
   align-items: center;
-  background: #58cc02;
+  background: var(--shine-background-color, var(--path-unit-background-color));
   background-size: 100% 100%;
   border-radius: 13px;
   padding: 22px 16px;
@@ -37,7 +40,7 @@
   display: grid;
   grid-auto-columns: 1fr min-content;
   position: relative;
-  color: #fff;
+  color: var(--path-unit-foreground-color);
 }
 
 .pathH1 {
@@ -58,4 +61,10 @@
   flex-direction: column;
   padding: 0 16px;
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .LessonPath {
+    padding-left: 100px;
+  }
 }

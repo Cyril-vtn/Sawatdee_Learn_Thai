@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+
+//* IMPORT DE REACT ROUTER DOM
 import { Link } from "react-router-dom";
+
+//* IMPORT DES STYLES
 import classes from "./MainContent.module.css";
+
+//* IMPORT DES IMAGES
 import logo from "../../../assets/brand/logo.png";
 import ThaiWorld from "../../../assets/images/thaiWorldLogo.png";
+
+//* IMPORT DES COMPOSANTS
 import Bouton from "../../../pages/global/components/button/Bouton";
 
 const Home = () => {
@@ -34,6 +42,8 @@ const Home = () => {
                 <div className={classes.mainText}>
                   La méthode gratuite, fun et efficace pour apprendre le Thai !
                 </div>
+
+                {/* SI L'UTILISATEUR EST DEJA CONNECTE, RENDRE SEULEMENT UN BOUTON C'EST PARTIE ! */}
                 <div className={classes.mainButtonContainer}>
                   <Bouton
                     text="C'est parti !"
@@ -44,8 +54,6 @@ const Home = () => {
                     text="J'ai déjà un compte"
                     link="/login"
                     classes={classes.boutonLoginMain}
-
-                    //set onclick for isLogging=true ! and open
                   />
                 </div>
               </div>
@@ -58,9 +66,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// backgroundColor: props.backgroundColor,
-// borderBottom: props.borderBottom,
-// borderBottomWidth: props.borderBottomWidth,
-// padding: props.padding,
-// color: props.color,

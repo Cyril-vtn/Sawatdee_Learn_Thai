@@ -1,6 +1,13 @@
 import React from "react";
+
+//* IMPORT DES STYLES
 import classes from "./Vowels.module.css";
+
+//* IMPORT DES COMPOSANTS
 import Tableaux from "./VowelsTable";
+
+//* IMPORT DES DONNEES
+//! A MODIFIER AFIN DE FETCH LES DONNEES DEPUIS FIREBASE
 import {
   ShortVowels,
   LongVowels,
