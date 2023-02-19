@@ -1,0 +1,109 @@
+.mainContainer {
+  display: flex;
+  margin-top: 150px;
+  flex-direction: column;
+  align-items: center;
+
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-family: "DINROUNDPRO";
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 450px;
+  overflow: visible;
+  width: 600px;
+}
+.h1 {
+  font-size: 32px;
+  line-height: 1.25;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  font-weight: 700;
+  color: #3c3c3c;
+}
+.questionContainer {
+  line-height: 39px;
+  margin-top: 24px;
+  padding-left: 10px;
+  display: flex;
+}
+
+.img {
+  width: 180px;
+  align-self: flex-start;
+}
+
+.bubbleContainer {
+  margin-bottom: 12px;
+  margin-top: 24px;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: 8px;
+}
+.bubbleWrapper {
+  padding: 12px 24px;
+  background-color: #fff;
+  border: 2px solid #e5e5e5;
+  border-radius: var(--web-ui_popover-border-radius, 15px);
+  box-sizing: border-box;
+  overflow: hidden;
+  transform: translateZ(0);
+  position: relative;
+  top: 45px;
+}
+.arrowContainer {
+  left: -13px;
+  margin: var(--web-ui_popover-border-radius, 15px) 0;
+  height: 10px;
+  overflow: hidden;
+  width: 20px;
+  box-sizing: border-box;
+  position: absolute;
+}
+.arrow {
+  background-color: #fff;
+  border: 2px solid #e5e5e5;
+  border-radius: 2px;
+  content: "";
+  height: 14px;
+  left: 50%;
+  transform: translateZ(0) rotate(45deg);
+  transform-origin: top left;
+  width: 14.14427px;
+  position: absolute;
+}
+
+.wordsContainer {
+  display: flex;
+  border-top: 2px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
+  width: 100%;
+  gap: 50px;
+}
+.wordBankContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.wordBankWrapper {
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

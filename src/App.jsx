@@ -1,14 +1,27 @@
 import React from "react";
-import { createBrowserRouter, Route, Routes } from "react-router-dom";
-import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
+
+// * IMPORT DE REACT ROUTER DOM
+import { Route, Routes } from "react-router-dom";
+
+// * IMPORT DES PAGES
 import Home from "./pages/main/index";
 import Learn from "./pages/learn/index";
 import Alphabet from "./pages/alphabet/index";
 import Login from "./pages/login/index";
 import Register from "./pages/register/index";
+import Lessons from "./pages/lessons/index";
+
+// * IMPORT DE LA PROTECTED ROUTE
+import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
+
+// * IMPORT DU ROOT LAYOUT
 import RootLayout from "./pages/Root";
-import { AuthContextProvider } from "./context/AuthContext";
+
+// * IMPORT DU THEME
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+// * IMPORT DU CONTEXT
+import { AuthContextProvider } from "./context/AuthContext";
 import { PathContextProvider } from "./context/DataContext";
 
 const THEME = createTheme({
@@ -41,6 +54,14 @@ function App() {
               <Route path="learn" element={<Learn />} />
               <Route path="alphabet" element={<Alphabet />} />
             </Route>
+            <Route
+              path="lessons"
+              element={
+                <ProtectedRoute>
+                  <Lessons />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </AuthContextProvider>
       </PathContextProvider>

@@ -7,7 +7,14 @@ import classes from "./LessonBtn.module.css";
 import Modal from "./Modal";
 
 //* CREATION DU COMPOSANT
-const LessonBtn = ({ id, onClick, style, isActive, setActive }) => {
+const LessonBtn = ({
+  id,
+  onClick,
+  style,
+  isActive,
+  setActive,
+  ModalContent,
+}) => {
   return (
     <div className={classes.pathBtnContainer} style={{ ...style }}>
       <div className={classes.pathBtnWrapper}>
@@ -28,8 +35,8 @@ const LessonBtn = ({ id, onClick, style, isActive, setActive }) => {
         {/* COMPOSANT RENDU SI IL EST ACTIF (EN CLIQUAND SUR LE BOUTON DONT L'ID EST ASSOCIE)  */}
         {isActive && (
           <Modal
-            title={`Modal ${id}`}
-            active={isActive}
+            title={ModalContent?.title}
+            id={id}
             onClose={() => setActive(null)}
           >
             Modal content for {id}

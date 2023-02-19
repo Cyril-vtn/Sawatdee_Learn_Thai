@@ -49,21 +49,58 @@
   margin: 0 0 18px;
 }
 .btn {
+  --__internal__lip-width: 4px;
+  --__internal__border-radius: 16px;
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
   color: var(--path-unit-background-color);
   margin-top: 16px;
   width: 100%;
+  background: none;
   background-color: #fff;
   border-color: hsla(0, 0%, 100%, 0.8);
-  border-radius: 12px;
-  justify-content: center;
+  border-bottom: var(--__internal__lip-width) solid transparent;
+  border-radius: var(--__internal__border-radius);
+  border-radius: 16px;
   border: 0 solid transparent;
-  border-bottom: solid transparent;
   height: 50px;
   padding: 16px;
   transition: filter 0.2s;
-  font: 700 15px/1.2 "DINROUNDPRO", sans-serif;
-  letter-spacing: 0.8px;
-  text-decoration: none;
+  font-family: "DINROUNDPRO", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pointerWrapper {
+  margin: 0 15px;
+  transform: translateX(-50%);
+  top: -8px;
+  height: 10px;
+  overflow: hidden;
+  width: 20px;
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.pointer {
+  background-color: var(--path-unit-background-color);
+  border: 0;
+  color: #fff;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 2px;
+  content: "";
+  height: 14.14427px;
+  left: 50%;
+  transform: translateZ(0) rotate(45deg);
+  transform-origin: top left;
+  width: 14.14427px;
+}
+
+.btn:hover {
+  filter: brightness(1.1);
 }

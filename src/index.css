@@ -1,6 +1,6 @@
 @import url("./font/stylesheet.css");
 root {
-  font-family: "DINRoundPro";
+  font-family: "DINROUNDPRO";
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
@@ -96,7 +96,7 @@ time,
 mark,
 audio,
 video {
-  font-family: "DINRoundPro";
+  font-family: "DINROUNDPRO";
   margin: 0;
   padding: 0;
   border: 0;
@@ -150,7 +150,7 @@ a {
 }
 
 * {
-  font-family: "DINRoundPro";
+  font-family: "DINROUNDPRO";
 }
 
 *,
@@ -162,7 +162,7 @@ input,
 textarea {
   -webkit-tap-highlight-color: transparent;
   box-sizing: inherit;
-  font-family: din-round, sans-serif;
+  font-family: "DINROUNDPRO", sans-serif;
   outline: none;
   -webkit-user-select: none;
   -moz-user-select: none;

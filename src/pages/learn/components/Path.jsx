@@ -49,11 +49,14 @@ const LessonPath = () => {
                     </header>
                     <div className={classes.pathContent}>
                       {section.btnStyle.map((style, i) => {
-                        const btnId = `${section.id}${i}`;
+                        const btnId = `${section.id}L${i + 1}`;
+                        const modalTitle =
+                          section.modalTitle && section.modalTitle[i];
                         return (
                           <React.Fragment key={btnId}>
                             <LessonBtn
                               style={style}
+                              ModalContent={modalTitle}
                               key={btnId}
                               id={btnId}
                               isActive={activeButton === btnId}
