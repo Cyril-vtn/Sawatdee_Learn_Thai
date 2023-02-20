@@ -1,40 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import classes from "./MainContent.module.css";
 import Img from "../../../assets/images/thaiPersonWoman.png";
 import WordBtn from "./WordBtn";
-const MainContent = () => {
-  const [words, setWords] = useState([]);
-  const [wordBank, setWordBank] = useState([]);
 
+import { useLessonsCtx } from "../../../context/LessonsContext";
+const MainContent = () => {
+  const { id, getLesson, lesson, loading } = useLessonsCtx();
+  console.log(lesson);
+  useEffect(() => {
+    getLesson(id);
+  }, [id]);
   return (
     <>
       <Header />
       <div className={classes.mainContainer}>
         <div>
           <div className={classes.content}>
+            {/* {lesson.map((question) => {
+              return ( */}
             <div className={classes.wrapper}>
               <h1 className={classes.h1}>
-                <span>Écris ceci en Thaï</span>
+                <span>qzd</span>
               </h1>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "left",
-
                   width: "100%",
                   marginTop: "20px",
                 }}
               >
                 <div className={classes.questionContainer}>
-                  <div>
-                    <img src={Img} className={classes.img} />
-                  </div>
+                  <img src={Img} className={classes.img} />
+
                   <div className={classes.bubbleContainer}>
                     <div className={classes.bubbleWrapper}>
                       <div>
-                        <span>Me</span>
-                        <span>?....................</span>
+                        <span>qzdqd</span>
                       </div>
                     </div>
                     <div
@@ -49,19 +52,23 @@ const MainContent = () => {
                   </div>
                 </div>
               </div>
-              <div
-                className={classes.wordsContainer}
-                style={{ padding: "30px" }}
-              >
-                <div>{/* AJOUTER LES MOT ICI APRES CLIQUE */}</div>
+              <div className={classes.wordsContainer}>
+                <div>
+                  <WordBtn />
+                </div>
               </div>
               <div className={classes.wordBankContainer}>
                 <div className={classes.wordBankWrapper} data-test="word-bank">
+                  {/* {question.possibility.map((word) => (
+                    <WordBtn key={word} word={word} />
+                  ))} */}
+                  <WordBtn />
                   <WordBtn />
                   <WordBtn />
                 </div>
               </div>
             </div>
+            {/* ); })} */}
           </div>
         </div>
       </div>

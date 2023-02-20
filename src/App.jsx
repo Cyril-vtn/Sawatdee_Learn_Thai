@@ -23,6 +23,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 // * IMPORT DU CONTEXT
 import { AuthContextProvider } from "./context/AuthContext";
 import { PathContextProvider } from "./context/DataContext";
+import { LessonsContextProvider } from "./context/LessonsContext";
 
 const THEME = createTheme({
   typography: {
@@ -37,34 +38,36 @@ const THEME = createTheme({
 function App() {
   return (
     <ThemeProvider theme={THEME}>
-      <PathContextProvider>
-        <AuthContextProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/app"
-              element={
-                <ProtectedRoute>
-                  <RootLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route path="learn" element={<Learn />} />
-              <Route path="alphabet" element={<Alphabet />} />
-            </Route>
-            <Route
-              path="lessons"
-              element={
-                <ProtectedRoute>
-                  <Lessons />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </AuthContextProvider>
-      </PathContextProvider>
+      <LessonsContextProvider>
+        <PathContextProvider>
+          <AuthContextProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/app"
+                element={
+                  <ProtectedRoute>
+                    <RootLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="learn" element={<Learn />} />
+                <Route path="alphabet" element={<Alphabet />} />
+              </Route>
+              <Route
+                path="lessons"
+                element={
+                  <ProtectedRoute>
+                    <Lessons />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </AuthContextProvider>
+        </PathContextProvider>
+      </LessonsContextProvider>
     </ThemeProvider>
   );
 }

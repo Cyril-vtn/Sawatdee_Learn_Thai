@@ -9,14 +9,19 @@ import anime from "animejs/lib/anime.es.js";
 //* IMPORT DE LA LIBRAIRIE REACT ROUTER DOM
 import { useNavigate } from "react-router-dom";
 
+//* IMPORT DU CONTEXTE
+import { useLessonsCtx } from "../../../context/LessonsContext";
+
 //* CREATION DU COMPOSANT MODAL
 const Modal = ({ title, onClose, id }) => {
   const modalRef = useRef(null);
   const navigate = useNavigate();
+  const { setId } = useLessonsCtx();
 
   //* CREATION DE LA FONCTION POUR GERER LE CLICK SUR LE BOUTON ET COMMENCER LA LECON EN RECUPERANT L'ID DU BOUTON
   const handleLesson = (id) => {
     if (id) {
+      setId(id);
       navigate(`/lessons`);
     }
   };

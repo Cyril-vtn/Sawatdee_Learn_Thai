@@ -12,8 +12,8 @@ const Header = () => {
           <div
             className={classes.progress}
             style={{
-              "--web-ui_internal_progress-bar-height": "20px",
-              "--web-ui_internal_progress-bar-value": "0%",
+              "--web-ui_internal_progress-bar-height": "16px",
+              "--web-ui_internal_progress-bar-value": "20%",
             }}
             aria-valuemax="1"
             aria-valuemin="0"
