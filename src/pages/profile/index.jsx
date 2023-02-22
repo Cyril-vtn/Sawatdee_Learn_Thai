@@ -1,8 +1,7 @@
 import React from "react";
-import Voyelles from "./components/Voyelles";
-
+import Profile from "./components/Profile";
 const index = () => {
-  return <Voyelles />;
+  return <Profile />;
 };
 
 export default index;

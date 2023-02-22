@@ -4,10 +4,11 @@ const WordBtn = ({ word, id }) => {
   return (
     <div className={classes.btnContainer}>
       <button
+        key={id}
         // disabled
         className={classes.btn}
       >
-        spanqzdbqlifbqlfbqf
+        {word}
       </button>
     </div>
   );

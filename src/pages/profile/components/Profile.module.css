@@ -1,0 +1,80 @@
+.profile {
+  padding-left: 256px;
+}
+.container {
+  margin: 0 auto;
+  max-width: 1056px;
+  padding-top: 32px;
+  width: 100%;
+}
+
+.header {
+  border-bottom: 2px solid rgb(var(--color-swan));
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0;
+  padding: 0 16px;
+}
+.profileInfoContainer {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+}
+
+.profileInfo {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+.profilePicContainer {
+  flex: 0 0 auto;
+  margin-left: 0;
+  margin-right: 48px;
+}
+
+.profilePic {
+  display: inline-block;
+  line-height: 0;
+  position: relative;
+}
+.profilePic img {
+  border-radius: 50%;
+  height: 180px;
+  width: 180px;
+  object-fit: cover;
+}
+.editBtn {
+  right: 13.8604px;
+  top: 13.8604px;
+  background-color: rgb(var(--color-macaw));
+  border: 2px solid rgb(var(--color-snow));
+  border-radius: 98px;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  transition: filter 0.2s ease-in-out;
+}
+.editBtn:hover {
+  filter: brightness(1.1);
+}
+.label img {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+.label {
+  cursor: pointer;
+}
+
+.label input {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+.profileTitle {
+  font-size: 28px;
+  line-height: 34px;
+  margin: 0 0 16px;
+  word-break: break-word;
+}

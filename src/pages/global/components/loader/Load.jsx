@@ -1,12 +1,14 @@
 import React from "react";
 import classes from "./Load.module.css";
-const Load = () => {
+const Load = ({ style }) => {
   return (
-    <div className={classes.ldsEllipsis}>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className={classes.container}>
+      <div className={classes.ldsEllipsis}>
+        <div style={{ ...style }}></div>
+        <div style={{ ...style }}></div>
+        <div style={{ ...style }}></div>
+        <div style={{ ...style }}></div>
+      </div>
     </div>
   );
 };

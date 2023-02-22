@@ -10,7 +10,7 @@ import alphabetIcon from "../../../assets/images/alphabetIcon.png";
 import Load from "../../global/components/loader/Load";
 
 const Sidebar = () => {
-  const { logout } = UserAuth();
+  const { logout, user } = UserAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -76,7 +76,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/profile:id"
+          to="profile/cyril"
           className={({ isActive }) => {
             return isActive ? classes.active : classes.inactive;
           }}
