@@ -5,13 +5,16 @@ import Img from "../../../assets/images/profileImg.png";
 import { ref, uploadBytes } from "firebase/storage";
 
 //* IMPORT FIREBASE STORAGE
-import { storage, firebaseConfig } from "../../../firebase/config";
+import { storage } from "../../../firebase/config";
+
 const Profile = () => {
-  //* GET USER ID FROM URL
+  // * STATE
+  const [file, setFile] = useState();
+
+  //* RECUPARATION DE L'ID DE L'UTILISATEUR
   const { userid } = useParams();
 
-  // * UPLOAD PROFILE PIC
-  const [file, setFile] = useState();
+  // * MISE A JOUR DE LA PHOTO DE PROFIL
   const HandleChangeProfilePic = async (e) => {
     setFile(e.target.files[0]);
 
