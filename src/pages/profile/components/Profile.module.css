@@ -18,7 +18,7 @@
 .profileInfoContainer {
   display: flex;
   flex: 1 1 auto;
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 
 .profileInfo {
@@ -30,6 +30,7 @@
   flex: 0 0 auto;
   margin-left: 0;
   margin-right: 48px;
+  margin-bottom: 10px;
 }
 
 .profilePic {
@@ -52,9 +53,10 @@
   cursor: pointer;
   padding: 5px;
   position: absolute;
-  transition: filter 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .editBtn:hover {
+  scale: 1.1;
   filter: brightness(1.1);
 }
 .label img {
