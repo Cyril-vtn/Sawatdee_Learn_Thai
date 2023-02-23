@@ -8,8 +8,12 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+//* IMPORT DE LA BASE DE DONNEES
+import { db } from "../firebase/config";
+
 //* IMPORT DE LA CONFIGURATION DE FIREBASE
 import { auth } from "../firebase/config";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 //* CREATION DU CONTEXTE
 const UserContext = createContext();
@@ -20,12 +24,32 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   //* CREATION DES FONCTIONS POUR GERER LA CREATION D'UN COMPTE, LA CONNEXION ET LA DECONNEXION
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const createUser = async (email, password, pseudo) => {
+    await createUserWithEmailAndPassword(auth, email, password).then(
+      (UserCrudential) => {
+        const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+        const user = {
+          email: UserCrudential.user.email,
+          pseudo: UserCrudential.user.uid,
+          uid: UserCrudential.user.uid,
+          pseudo: pseudo,
+          tag: `${pseudo}#${randomNumber}`,
+          level: 1,
+          xp: 0,
+          finished: [],
+          profilePic: "",
+        };
+        //* send user to firestore database
+        const userRef = doc(db, "users", user.uid);
+        setDoc(userRef, user);
+
+        setUser(user);
+      }
+    );
   };
 
   const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
@@ -35,9 +59,19 @@ export const AuthContextProvider = ({ children }) => {
   //* CREATION DE L'EFFECT POUR GERER LA CONNEXION ET LA DECONNEXION
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
+      //* SI L'UTILISATEUR EST DECONNECTE
+      if (!currentUser) {
+        setUser({});
+        return;
+      }
+
+      //* RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
+      const userRef = doc(db, "users", currentUser.uid);
+      const docSnap = getDoc(userRef).then((docSnap) => {
+        setUser(docSnap.data());
+      });
     });
+
     return () => {
       unsubscribe();
     };

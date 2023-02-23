@@ -23,7 +23,7 @@ const RegisterModal = () => {
 
   //* CREATION DES ETATS
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,6 +38,25 @@ const RegisterModal = () => {
     setError("");
 
     //* vérification des champs
+    if (
+      password === "" ||
+      email === "" ||
+      pseudo === "" ||
+      confirmedPassword === ""
+    ) {
+      setError("Veuillez remplir tous les champs");
+      return;
+    }
+    // * LE PSEUDO NE DOIT PAS CONTENIR DE CARACTERE SPECIAUX NI D'ESPACE
+
+    const isValidPseudo = /^[a-zA-Z0-9]+$/.test(pseudo);
+    if (!isValidPseudo) {
+      setError(
+        "Le pseudo ne doit pas contenir d'espace ou de caractères spéciaux"
+      );
+      return;
+    }
+
     if (password !== confirmedPassword) {
       setError("Le mot de passe doit être identique");
       return;
@@ -47,12 +66,18 @@ const RegisterModal = () => {
       return;
     }
 
+    const isValidEmail =
+      /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})$/.test(email);
+    if (!isValidEmail) {
+      setError("L'adresse email n'est pas valide");
+      return;
+    }
     setLoading(true);
 
     try {
-      await createUser(email, password, name);
+      await createUser(email, password, pseudo);
       setLoading(false);
-      navigate("/app//learn");
+      navigate("/app/learn");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         setError("Adresse email déjà utilisé");
@@ -90,11 +115,13 @@ const RegisterModal = () => {
                 <label className={classes.Label}>
                   <div className={classes.inputContent}>
                     <input
-                      required
                       type="text"
                       autoComplete="name"
-                      placeholder="Prénom *"
-                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Pseudo *"
+                      onChange={(e) => {
+                        setError("");
+                        setPseudo(e.target.value);
+                      }}
                     />
                   </div>
                 </label>
@@ -108,8 +135,10 @@ const RegisterModal = () => {
                       type="email"
                       autoComplete="email"
                       placeholder="E-mail *"
-                      required
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setError("");
+                        setEmail(e.target.value);
+                      }}
                     />
                   </div>
                 </label>
@@ -120,12 +149,14 @@ const RegisterModal = () => {
                 <label htmlFor="" className={classes.Label}>
                   <div className={classes.inputContent}>
                     <input
-                      required
                       type="password"
                       autoComplete="current-password"
                       aria-autocomplete="list"
                       placeholder="Mot de passe *"
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setError("");
+                        setPassword(e.target.value);
+                      }}
                     />
                   </div>
                 </label>
@@ -136,12 +167,14 @@ const RegisterModal = () => {
                 <label htmlFor="" className={classes.Label}>
                   <div className={classes.inputContent}>
                     <input
-                      required
                       type="password"
                       autoComplete="current-password"
                       aria-autocomplete="list"
                       placeholder="Confirmer le mot de passe *"
-                      onChange={(e) => setConfirmedPassword(e.target.value)}
+                      onChange={(e) => {
+                        setError("");
+                        setConfirmedPassword(e.target.value);
+                      }}
                     />
                   </div>
                 </label>

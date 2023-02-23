@@ -34,8 +34,19 @@ const LoginModal = () => {
     e.preventDefault();
     setError("");
 
+    //* vérification des champs
     setLoading(true);
-
+    if (password === "" || email === "") {
+      setError("Veuillez remplir tous les champs");
+      setLoading(false);
+      return;
+    }
+    const isValidEmail =
+      /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})$/.test(email);
+    if (!isValidEmail) {
+      setError("L'adresse email n'est pas valide");
+      return;
+    }
     try {
       await signIn(email, password);
       setLoading(false);
@@ -89,8 +100,10 @@ const LoginModal = () => {
                       type="email"
                       autoComplete="email"
                       placeholder="E-mail *"
-                      required
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setError("");
+                      }}
                     />
                   </div>
                 </label>
@@ -101,12 +114,14 @@ const LoginModal = () => {
                 <label htmlFor="" className={classes.Label}>
                   <div className={classes.inputContent}>
                     <input
-                      required
                       type="password"
                       autoComplete="current-password"
                       aria-autocomplete="list"
                       placeholder="Mot de passe *"
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setError("");
+                      }}
                     />
                   </div>
                 </label>

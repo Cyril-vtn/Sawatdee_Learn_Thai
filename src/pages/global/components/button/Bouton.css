@@ -16,7 +16,7 @@
   filter: brightness(108%);
 }
 
-.bouton:focus {
+.bouton:active {
   border: 0 !important;
   border-bottom: 0px !important;
   border-bottom-width: 0px !important;
