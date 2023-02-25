@@ -76,7 +76,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="profile/cyril"
+          to={`profile/${user.tag}`}
           className={({ isActive }) => {
             return isActive ? classes.active : classes.inactive;
           }}

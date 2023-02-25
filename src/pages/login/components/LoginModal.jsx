@@ -33,9 +33,9 @@ const LoginModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    //* vérification des champs
     setLoading(true);
+    //* vérification des champs
+
     if (password === "" || email === "") {
       setError("Veuillez remplir tous les champs");
       setLoading(false);
@@ -47,25 +47,29 @@ const LoginModal = () => {
       setError("L'adresse email n'est pas valide");
       return;
     }
-    try {
-      await signIn(email, password);
-      setLoading(false);
-      navigate("/app/learn");
-    } catch (err) {
-      console.log(err.code);
-      if (err.code === "auth/wrong-password") {
-        setError("Mot de passe incorrect");
+
+    //* AJOUT D'UN DELAY POUR EVITER LES MULTIPLE CREATION D'UTILISATEURS
+    setTimeout(async () => {
+      try {
+        await signIn(email, password);
         setLoading(false);
-        return;
-      }
-      if (err.code === "auth/user-not-found") {
-        setError("Adresse mail introuvable");
+        navigate("/app/learn");
+      } catch (err) {
+        console.log(err.code);
+        if (err.code === "auth/wrong-password") {
+          setError("Mot de passe incorrect");
+          setLoading(false);
+          return;
+        }
+        if (err.code === "auth/user-not-found") {
+          setError("Adresse mail introuvable");
+          setLoading(false);
+          return;
+        }
+        setError("Une erreur est survenue");
         setLoading(false);
-        return;
       }
-      setError("Une erreur est survenue");
-      setLoading(false);
-    }
+    }, 1000);
   };
 
   //* CREATION DU JSX

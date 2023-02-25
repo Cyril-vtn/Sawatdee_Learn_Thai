@@ -1,0 +1,86 @@
+.listItem {
+  border-bottom: 2px solid rgb(var(--color-swan));
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.cardContainer {
+  margin-left: 0;
+  min-width: 77px;
+}
+.progressBarContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 10;
+  justify-content: center;
+  overflow: hidden;
+}
+.progressBarTitle {
+  display: flex;
+  justify-content: space-between;
+}
+.progressBarTitle h3 {
+  font-size: 19px;
+  font-weight: 700;
+  flex: 1 1 auto;
+  line-height: 1.5;
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.progressBarTitle div {
+  color: rgb(var(--color-hare));
+  font-size: 15px;
+  justify-content: flex-end;
+  margin-left: 12px;
+  text-align: right;
+}
+.progressBar {
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+}
+.progressBar_BarContainer {
+  margin-bottom: 15px;
+}
+.progressBar_Bar {
+  --web-ui_progress-bar-color: rgb(var(--color-bee));
+}
+.fullProgressBar {
+  background: var(--web-ui_progress-bar-background, rgb(var(--color-swan)));
+  border-radius: calc(var(--web-ui_internal_progress-bar-height) / 2);
+  position: relative;
+}
+.fullProgressBar_Content {
+  background: currentcolor;
+  border-radius: inherit;
+  -webkit-clip-path: inset(
+    0 calc(100% - var(--web-ui_internal_progress-bar-value)) 0 0 round
+      calc(var(--web-ui_internal_progress-bar-height) / 2)
+  );
+  clip-path: inset(
+    0 calc(100% - var(--web-ui_internal_progress-bar-value)) 0 0 round
+      calc(var(--web-ui_internal_progress-bar-height) / 2)
+  );
+  color: var(--web-ui_progress-bar-color, rgb(var(--color-owl)));
+  height: var(--web-ui_internal_progress-bar-height);
+  min-width: calc(var(--web-ui_internal_progress-bar-height) * 1.5);
+  position: relative;
+  transition-duration: 0.4s;
+  transition-property: background, color, opacity, -webkit-clip-path;
+  transition-property: background, color, opacity, clip-path;
+  transition-property: background, color, opacity, clip-path, -webkit-clip-path;
+  width: 100%;
+}
+.progressBarDescription {
+  color: rgb(var(--color-wolf));
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  width: 100%;
+}

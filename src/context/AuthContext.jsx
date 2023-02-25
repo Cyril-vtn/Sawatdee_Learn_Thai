@@ -68,6 +68,7 @@ export const AuthContextProvider = ({ children }) => {
       //* RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
       const userRef = doc(db, "users", currentUser.uid);
       const docSnap = getDoc(userRef).then((docSnap) => {
+        console.log(docSnap.data());
         setUser(docSnap.data());
       });
     });
@@ -79,7 +80,7 @@ export const AuthContextProvider = ({ children }) => {
 
   //* RENDU DU PROVIDER AVEC EN VALUE LES FONCTIONS ET L'ETAT
   return (
-    <UserContext.Provider value={{ createUser, user, logout, signIn }}>
+    <UserContext.Provider value={{ createUser, setUser, user, logout, signIn }}>
       {children}
     </UserContext.Provider>
   );

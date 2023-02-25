@@ -291,6 +291,69 @@ h2 {
   color: rgb(119, 119, 119);
   line-height: 34px;
   margin: 5px 0;
-  text-decoration: underline;
+
   padding-right: 24px;
+}
+.btnStyle {
+  position: relative;
+  --__internal__border-radius: var(--web-ui_button-border-radius, 12px);
+  --__internal__lip-width: 4px;
+  background: none;
+  border: 0 solid transparent;
+  border-bottom: var(--__internal__lip-width) solid transparent;
+  border-radius: var(--__internal__border-radius);
+  color: var(--web-ui_button-color, rgb(var(--color-snow)));
+  height: var(--web-ui_button-height, 50px);
+  padding: var(--web-ui_button-padding, 0 16px);
+  transition: filter 0.2s;
+}
+
+.btnStyle::before {
+  background-color: var(
+    --web-ui_button-background-color,
+    rgb(var(--color-macaw))
+  );
+  border-radius: var(--__internal__border-radius);
+  bottom: 0;
+  box-shadow: 0 var(--__internal__lip-width) 0
+    var(--web-ui_button-border-color, rgb(var(--color-whale)));
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+.btnStyle:hover {
+  filter: brightness(1.1);
+}
+
+.btnText {
+  display: inline-flex;
+
+  -webkit-font-smoothing: antialiased;
+  align-items: center;
+  font: 700 var(--web-ui_button-font-size, 15px) /
+      var(--web-ui_button-line-height, 1.2) "DINROUNDPRO",
+    sans-serif;
+  justify-content: center;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  text-transform: uppercase;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btnStyle img {
+  margin-right: 10px;
+}
+
+.btnStyle:active::before {
+  box-shadow: none;
+}
+
+.btnStyle:active {
+  transform: translateY(var(--__internal__lip-width)) translateZ(0);
 }
