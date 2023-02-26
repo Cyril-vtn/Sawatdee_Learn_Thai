@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import ListItem from "./ListItem";
 import StatBox from "./StatBox";
 import classes from "./UserStats.module.css";
-export const UserStats = () => {
+export const UserStats = ({ user }) => {
   return (
     <div className={classes.userStatsWrapper}>
       <div className={classes.statsContainer}>
@@ -14,22 +14,22 @@ export const UserStats = () => {
           <div className={classes.statsBoxContainer}>
             <StatBox
               img="https://d35aaqx5ub95lt.cloudfront.net/images/398e4298a3b39ce566050e5c041949ef.svg"
-              text="2"
+              text={user.dayStreak[0]}
               subtitle="Jours d'affilée"
             />
             <StatBox
               img="https://d35aaqx5ub95lt.cloudfront.net/images/profile/01ce3a817dd01842581c3d18debcbc46.svg"
-              text="1557"
+              text={user.xp}
               subtitle="XP gagnés"
             />
             <StatBox
               img="https://d35aaqx5ub95lt.cloudfront.net/images/leagues/8148b17e32d8706a82c02688f559e9ef.svg"
-              text="Argent"
+              text={user.division}
               subtitle="Division actuelle"
             />
             <StatBox
               img="https://d35aaqx5ub95lt.cloudfront.net/images/profile/3f97ae337724f7edb6dfbef23cd3a6e7.svg"
-              text="1"
+              text={user.top3}
               subtitle="Fois dans le top 3"
             />
           </div>
@@ -42,21 +42,24 @@ export const UserStats = () => {
         <div className={classes.succesListContainer}>
           <div className={classes.succesListWrapper}>
             <ul className={classes.succesList}>
-              <ListItem
-                cardBackground={"PEvQz"}
-                level="1"
-                title="Tout feu tout flamme"
-              />
-              <ListItem
-                cardBackground={"PEvQz"}
-                level="1"
-                title="Tout feu tout flamme"
-              />
-              <ListItem
-                cardBackground={"PEvQz"}
-                level="1"
-                title="Tout feu tout flamme"
-              />
+              {/* afficher chaque succes de l'utilisateur */}
+              {user.Succes.sort((a, b) => b.completed - a.completed).map(
+                (succes) => {
+                  return (
+                    <ListItem
+                      key={succes.name}
+                      card={succes.img[0]}
+                      cardGold={succes.img[1]}
+                      title={succes.name}
+                      completed={succes.completed}
+                      description={succes.description}
+                      tier={succes.tier}
+                      tierCounts={succes.tierCounts}
+                      count={succes.count}
+                    />
+                  );
+                }
+              )}
 
               <Link to="#" className={classes.link}>
                 Afficher tout

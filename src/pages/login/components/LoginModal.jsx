@@ -32,44 +32,43 @@ const LoginModal = () => {
   //* CREATION DE LA FONCTION POUR GERER LA SOUMISSION DU FORMULAIRE
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-    //* vérification des champs
 
+    const isValidEmail =
+      /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})$/.test(email);
+
+    //* vérification des champs
     if (password === "" || email === "") {
       setError("Veuillez remplir tous les champs");
       setLoading(false);
       return;
     }
-    const isValidEmail =
-      /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})$/.test(email);
+
     if (!isValidEmail) {
       setError("L'adresse email n'est pas valide");
+      setLoading(false);
       return;
     }
 
     //* AJOUT D'UN DELAY POUR EVITER LES MULTIPLE CREATION D'UTILISATEURS
-    setTimeout(async () => {
-      try {
-        await signIn(email, password);
+    setError("");
+    setLoading(true);
+
+    try {
+      await signIn(email, password);
+      setLoading(false);
+      navigate("/app/learn");
+    } catch (err) {
+      if (err.code === "auth/wrong-password") {
+        setError("Mot de passe incorrect");
         setLoading(false);
-        navigate("/app/learn");
-      } catch (err) {
-        console.log(err.code);
-        if (err.code === "auth/wrong-password") {
-          setError("Mot de passe incorrect");
-          setLoading(false);
-          return;
-        }
-        if (err.code === "auth/user-not-found") {
-          setError("Adresse mail introuvable");
-          setLoading(false);
-          return;
-        }
-        setError("Une erreur est survenue");
-        setLoading(false);
+        return;
       }
-    }, 1000);
+      if (err.code === "auth/user-not-found") {
+        setError("Adresse mail introuvable");
+        setLoading(false);
+        return;
+      }
+    }
   };
 
   //* CREATION DU JSX

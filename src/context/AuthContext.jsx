@@ -8,6 +8,9 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+//* IMPORT CREATION DATA
+import userCreationData from "../utils/userCreationData";
+
 //* IMPORT DE LA BASE DE DONNEES
 import { db } from "../firebase/config";
 
@@ -30,14 +33,10 @@ export const AuthContextProvider = ({ children }) => {
         const randomNumber = Math.floor(Math.random() * 9000) + 1000;
         const user = {
           email: UserCrudential.user.email,
-          pseudo: UserCrudential.user.uid,
           uid: UserCrudential.user.uid,
           pseudo: pseudo,
           tag: `${pseudo}#${randomNumber}`,
-          level: 1,
-          xp: 0,
-          finished: [],
-          profilePic: "",
+          ...userCreationData,
         };
         //* send user to firestore database
         const userRef = doc(db, "users", user.uid);
@@ -49,7 +48,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signIn = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
@@ -68,8 +67,7 @@ export const AuthContextProvider = ({ children }) => {
       //* RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
       const userRef = doc(db, "users", currentUser.uid);
       const docSnap = getDoc(userRef).then((docSnap) => {
-        console.log(docSnap.data());
-        setUser(docSnap.data());
+        return setUser(docSnap.data());
       });
     });
 

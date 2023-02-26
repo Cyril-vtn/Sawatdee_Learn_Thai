@@ -18,9 +18,6 @@ import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
 // * IMPORT DU ROOT LAYOUT
 import RootLayout from "./pages/Root";
 
-// * IMPORT DU THEME
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 // * IMPORT DU CONTEXT
 import { AuthContextProvider } from "./context/AuthContext";
 import { PathContextProvider } from "./context/DataContext";
@@ -44,15 +41,8 @@ function App() {
             <Route path="learn" element={<Learn />} />
             <Route path="alphabet" element={<Alphabet />} />
             <Route path="profile/:userid" element={<Profile />} />
+            <Route path="lessons/:lessonid" element={<Lessons />} />
           </Route>
-          <Route
-            path="lessons/:lessonid"
-            element={
-              <ProtectedRoute>
-                <Lessons />
-              </ProtectedRoute>
-            }
-          />
         </Routes>
       </AuthContextProvider>
     </PathContextProvider>

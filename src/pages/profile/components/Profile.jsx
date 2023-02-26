@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import Load from "../../global/components/loader/Load";
+
+//* IMPORT IMG
+import profilePic from "../../../assets/images/profileImg.png";
+
 //* IMPORT CSS
 import classes from "./Profile.module.css";
 
@@ -9,7 +14,6 @@ import { db, storage } from "../../../firebase/config";
 
 //* IMPORT IMG
 import flagRounded from "../../../assets/svg/flagRounded.svg";
-import Img from "../../../assets/images/profileImg.png";
 
 //* IMPORT FIREBASE STORAGE
 import {
@@ -32,116 +36,166 @@ const Profile = () => {
 
   const [userFromUrl, setUserFromUrl] = useState();
   const [photo, setPhoto] = useState("");
-
-  const { userid } = useParams();
+  const [empty, setEmpty] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // * RECUPERATION DE L'ID DE L'URL
   const userIdFromUrl = window.location.href.split("/")[5];
 
-  //* RECUPERATION DE L'UTILISATEUR SUR FIREBASE GRACE A SON ID DANS L'URL
   useEffect(() => {
+    setIsLoading(true);
+    // Crée une requête Firestore pour récupérer l'utilisateur avec l'ID de l'URL.
     const q = query(collection(db, "users"), where("tag", "==", userIdFromUrl));
+    // Exécute la requête et récupère le snapshot.
     const querySnapshot = getDocs(q).then((querySnapshot) => {
+      // Si le snapshot est vide, cela signifie qu'il n'y a pas d'utilisateur avec cet ID, alors définit "empty" à true et quitte la fonction.
+      if (querySnapshot.empty === true) {
+        setEmpty(true);
+        return;
+      }
+      // Si le snapshot n'est pas vide, itère sur chaque document (dans ce cas, il n'y a qu'un document car "tag" est unique) dans le snapshot.
       querySnapshot.forEach((doc) => {
-        if (user?.profilePic) {
-          getDownloadURL(ref(storage, user.profilePic)).then((url) => {
-            setPhoto(url);
-            setUserFromUrl(doc.data());
-          });
+        // Récupère les données de l'utilisateur actuel dans la boucle forEach.
+        const userFromSnapshot = doc.data();
+        console.log(userFromSnapshot);
+        // Si l'utilisateur actuel a une photo de profil, récupère l'URL de téléchargement de l'image et met à jour l'état de "photo" avec cette URL.
+        setIsLoading(false);
+        if (userFromSnapshot?.profilePic) {
+          getDownloadURL(ref(storage, userFromSnapshot.profilePic)).then(
+            (url) => {
+              setPhoto(url);
+
+              // Met à jour l'état de "userFromUrl" avec les données de l'utilisateur actuel dans la boucle forEach.
+            }
+          );
         }
+        setUserFromUrl(userFromSnapshot);
       });
     });
-  }, [user]);
+  }, []); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
 
   // * MISE A JOUR DE LA PHOTO DE PROFIL
   const HandleChangeProfilePic = async (e) => {
     // RECUPERATION DE LA PHOTO
     const type = e.target.files[0].type.split("/")[1];
-    console.log(type);
+    // Stockage de la nouvelle photo sur Firebase Storage
     const storageRef = ref(storage, `/users/${user.uid}/avatar.${type}`);
     await uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
-      //* MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
+      //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
       setUser({ ...user, profilePic: snapshot.ref.fullPath });
-      console.log(snapshot.ref.fullPath);
-      //* MISE A JOUR DE LA PHOTO DE PROFIL DANS LA BASE DE DONNEES FIRESTORE
-      const userRef = doc(db, "users", user.uid);
-      setDoc(userRef, { ...user, profilePic: snapshot.ref.fullPath });
-      // RECHARGER LA PAGE ACTUEL
+
+      // MISE A JOUR DU SUCCES PHOTOGÉNIQUE
+      const photogenicSuccess = user.Succes.find(
+        (success) => success.name === "Photogénique"
+      );
+      if (photogenicSuccess && photogenicSuccess.count === 0) {
+        // Si le compteur est à 0, mettez à jour le succès Photogénique avec le compteur à 1
+        const updatedSuccess = {
+          ...photogenicSuccess,
+          count: 1,
+          completed: true,
+        };
+        const updatedSuccesses = [
+          ...user.Succes.filter((success) => success.name !== "Photogénique"),
+          updatedSuccess,
+        ];
+        console.log(updatedSuccesses);
+        // Mettez à jour l'utilisateur dans Firestore avec le succès mis à jour
+        const userRef = doc(db, "users", user.uid);
+        setDoc(userRef, {
+          ...user,
+          profilePic: snapshot.ref.fullPath,
+          Succes: updatedSuccesses,
+        });
+      } // recharger la page
       window.location.reload();
     });
   };
 
-  // * SI L'UTILISATEUR N'EST PAS ENCORE CHARGER
-  if (!userFromUrl) return <div>loading</div>;
-
   return (
     <div className={classes.profile}>
-      <div className={classes.container}>
-        <div className={classes.header}>
-          <div className={classes.profileInfoContainer}>
-            <div className={classes.profileInfo}>
-              <h1 data-test="profile-username" className={classes.profileTitle}>
-                <span>{userFromUrl.pseudo}</span>
-                <div>{userFromUrl.tag}</div>
-              </h1>
-              <div className={classes.userInfoWrapper}>
-                <div className={classes.userInfo}>
-                  <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ee1babf2becff2aa8ef6634fd9d76cc6.svg" />
-                  <div>Membre depuis Décembre 2022</div>
-                </div>
-                <div className={classes.userInfo}>
-                  <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ca7b8ce89fb2e61323e8c7dcb24c1094.svg" />
-                  <div>1 abonnement / 1 abonné</div>
-                </div>
-              </div>
-              <div className={classes.country}>
-                <svg
-                  viewBox="0 2310 82 66"
-                  style={{ height: "30px", width: "40px" }}
+      {isLoading ? (
+        <Load style={{ backgroundColor: "rgb(var(--color-macaw)" }} />
+      ) : empty ? (
+        <div>Utilisateur introuvable</div>
+      ) : (
+        <div className={classes.container}>
+          <div className={classes.header}>
+            {/* CONTENU DE L'EN-TÊTE DU PROFIL */}
+            <div className={classes.profileInfoContainer}>
+              <div className={classes.profileInfo}>
+                <h1
+                  data-test="profile-username"
+                  className={classes.profileTitle}
                 >
-                  <image href={flagRounded} alt="" />
-                </svg>
-              </div>
-            </div>
-
-            {/* IMAGE DE PROFILE */}
-            <div className={classes.profilePicContainer}>
-              <div className={classes.profilePic}>
-                <img src={photo} alt="" draggable="false" />
-                {user.tag === userIdFromUrl && (
-                  <div className={classes.editBtn}>
-                    <label className={classes.label}>
-                      <input
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        name="image"
-                        onChange={HandleChangeProfilePic}
-                      />
-                      <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg" />
-                    </label>
+                  <span>{userFromUrl.pseudo}</span>
+                  <div>{userFromUrl.tag}</div>
+                </h1>
+                <div className={classes.userInfoWrapper}>
+                  {/* CONTENU DE L'EN-TÊTE DU PROFIL */}
+                  <div className={classes.userInfo}>
+                    <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ee1babf2becff2aa8ef6634fd9d76cc6.svg" />
+                    <div>Membre depuis Décembre 2022</div>
                   </div>
-                )}
+                  <div className={classes.userInfo}>
+                    <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ca7b8ce89fb2e61323e8c7dcb24c1094.svg" />
+                    <div>1 abonnement / 1 abonné</div>
+                  </div>
+                </div>
+                <div className={classes.country}>
+                  <svg
+                    viewBox="0 2310 82 66"
+                    style={{ height: "30px", width: "40px" }}
+                  >
+                    <image href={flagRounded} alt="" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* IMAGE DE PROFILE */}
+              <div className={classes.profilePicContainer}>
+                <div className={classes.profilePic}>
+                  {photo ? (
+                    // Affiche la nouvelle photo de profil si elle existe, sinon affiche une image vide.
+                    <img src={photo} alt="" draggable="false" />
+                  ) : (
+                    <img src={profilePic} alt="" draggable="false" />
+                  )}
+                  {user.tag === userIdFromUrl && (
+                    <div className={classes.editBtn}>
+                      <label className={classes.label}>
+                        <input
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image"
+                          onChange={HandleChangeProfilePic}
+                        />
+                        <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg" />
+                      </label>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
+            {user.tag === userIdFromUrl && (
+              <div className={classes.btnWrapper}>
+                <div className={classes.btn}>
+                  <Link to="#" className="btnStyle btnText" draggable="false">
+                    <img
+                      src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg"
+                      alt=""
+                    />
+                    <div>Modifier mon profil</div>
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
-          {user.tag === userIdFromUrl && (
-            <div className={classes.btnWrapper}>
-              <div className={classes.btn}>
-                <Link to="#" className="btnStyle btnText" draggable="false">
-                  <img
-                    src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg"
-                    alt=""
-                  />
-                  <div>Modifier mon profil</div>
-                </Link>
-              </div>
-            </div>
-          )}
+          <div className={classes.userStatsContainer}>
+            <UserStats user={userFromUrl} />
+          </div>
         </div>
-        <div className={classes.userStatsContainer}>
-          <UserStats />
-        </div>
-      </div>
+      )}
     </div>
   );
 };
