@@ -1,8 +1,8 @@
 import React from "react";
-import Profile from "./components/Profile";
+import Settings from "./components/Settings";
 
 const index = () => {
-  return <Profile />;
+  return <Settings />;
 };
 
 export default index;

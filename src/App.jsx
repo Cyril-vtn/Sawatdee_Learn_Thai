@@ -11,6 +11,7 @@ import Login from "./pages/login/index";
 import Register from "./pages/register/index";
 import Lessons from "./pages/lessons/index";
 import Profile from "./pages/profile/index";
+import Settings from "./pages/account/index";
 
 // * IMPORT DE LA PROTECTED ROUTE
 import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
@@ -42,6 +43,7 @@ function App() {
             <Route path="alphabet" element={<Alphabet />} />
             <Route path="profile/:userid" element={<Profile />} />
             <Route path="lessons/:lessonid" element={<Lessons />} />
+            <Route path="settings/account" element={<Settings />} />
           </Route>
         </Routes>
       </AuthContextProvider>

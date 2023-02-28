@@ -16,7 +16,7 @@ import { db } from "../firebase/config";
 
 //* IMPORT DE LA CONFIGURATION DE FIREBASE
 import { auth } from "../firebase/config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 //* CREATION DU CONTEXTE
 const UserContext = createContext();
@@ -47,6 +47,14 @@ export const AuthContextProvider = ({ children }) => {
     );
   };
 
+  const updateProfilePhoto = async (photoUrl) => {
+    // Mettre à jour l'URL de la photo de profil dans la base de données Firestore
+    const userRef = doc(db, "users", user.uid);
+    return await updateDoc(userRef, { photoUrl });
+
+    // Mettre à jour l'objet utilisateur dans l'état local
+    setUser((prevUser) => ({ ...prevUser, photoUrl }));
+  };
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -78,7 +86,9 @@ export const AuthContextProvider = ({ children }) => {
 
   //* RENDU DU PROVIDER AVEC EN VALUE LES FONCTIONS ET L'ETAT
   return (
-    <UserContext.Provider value={{ createUser, setUser, user, logout, signIn }}>
+    <UserContext.Provider
+      value={{ createUser, setUser, user, logout, signIn, updateProfilePhoto }}
+    >
       {children}
     </UserContext.Provider>
   );

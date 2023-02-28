@@ -3,8 +3,9 @@ const userCreationData = {
   xp: 0,
   finished: [],
   profilePic: "",
-  friends: [],
-  dayStreak: [1, new Date().toDateString()],
+  friends: [{}],
+  createdAt: new Date().toDateString(),
+  dayStreak: [0, new Date().toDateString()],
   division: "Beginner",
   top3: 0,
   Succes: [

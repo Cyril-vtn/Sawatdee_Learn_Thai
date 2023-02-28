@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Navigate, NavLink, redirect, useNavigate } from "react-router-dom";
 import classes from "./Sidebar.module.css";
 import logo from "../../../assets/svg/logoGreen.svg";
 import logoSmall from "../../../assets/svg/logoSmall.svg";
@@ -11,9 +11,9 @@ import Load from "../../global/components/loader/Load";
 
 const Sidebar = () => {
   const { logout, user } = UserAuth();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleLogout = async () => {

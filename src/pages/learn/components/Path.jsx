@@ -27,7 +27,7 @@ const LessonPath = () => {
 
   //* CREATION DU JSX
   return (
-    <div className={classes.LessonPath}>
+    <div>
       <div className={classes.container}>
         <div className={classes.wrapper}>
           {loading ? <Load /> : null}

@@ -1,0 +1,116 @@
+.settings {
+  margin: 0 auto;
+  max-width: 750px;
+  padding-top: 32px;
+  width: 100%;
+}
+.container {
+  padding: 24px 24px;
+}
+.compteSection {
+  padding: 0;
+}
+.title {
+  display: flex;
+  align-items: flex-start;
+}
+.title h1 {
+  font-weight: 700;
+  font-size: 27px;
+  margin-bottom: 22px;
+}
+.table {
+  background: initial;
+  margin: 0;
+  position: static;
+  width: 100%;
+}
+.inputTitle {
+  display: inline-table;
+  width: 180px;
+  font-size: 15px;
+  padding: var(--left-cell-padding-top) 24px 0 0;
+  vertical-align: top;
+  position: relative;
+  line-height: 22px;
+  color: rgb(var(--color-eel));
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+  vertical-align: middle;
+  word-break: break-word;
+}
+.labelContainer {
+  padding-bottom: 20px;
+  color: rgb(var(--color-gray-text));
+}
+
+.labelWrapper {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.fileTxt {
+  margin-top: 6px;
+}
+.label {
+  display: inline-flex;
+  cursor: pointer;
+
+  --web-ui_button-color: rgb(var(--color-snow));
+  --web-ui_button-background-color: rgb(var(--color-macaw));
+}
+
+.inputFile {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  box-shadow: none;
+}
+.fileName {
+  flex: 1 1 auto;
+  font-size: 14px;
+  margin-top: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.inputTd {
+  padding-bottom: 20px px;
+  color: rgb(var(--color-gray-text));
+  --left-cell-padding-top: 24px;
+  position: relative;
+}
+.input {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 16px;
+  display: block;
+  padding: 5px 10px;
+  line-height: 24px;
+  background: rgb(var(--color-polar));
+  border: 2px solid rgb(var(--color-swan));
+  color: rgb(var(--color-eel));
+  min-height: 30px;
+  text-align: left;
+  box-shadow: none;
+}
+.deleteAccount {
+  cursor: pointer;
+  color: rgb(var(--color-cardinal));
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  transition: filter 0.3s ease-in-out;
+}
+.deleteAccount:hover {
+  filter: brightness(1.4);
+}
+
+.error {
+  color: rgb(var(--color-cardinal));
+  font-weight: 700;
+  margin-top: 6px;
+}

@@ -1,5 +1,5 @@
 .profile {
-  padding-left: 256px;
+  display: grid;
 }
 .container {
   margin: 0 auto;
@@ -150,12 +150,18 @@
   .header {
     flex-direction: column;
   }
+  .profileInfoContainer {
+    align-self: center;
+  }
+
   .btnWrapper {
-    margin: 20px 0;
+    margin: 20px auto;
   }
 }
-@media screen and (max-width: 768px) {
-  .profile {
-    padding-left: 100px;
-  }
+
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

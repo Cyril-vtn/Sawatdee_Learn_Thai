@@ -11,6 +11,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --left-cell-padding-top: 24px;
   --viewport-height: 100dvh;
   --web-ui_button-border-radius: 16px;
   --color-snow: 255, 255, 255;
@@ -255,6 +256,12 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+td,
+th {
+  line-height: 22px;
+  padding: 12px 16px;
+  text-align: left;
+}
 a {
   text-decoration: none;
 }
@@ -295,6 +302,9 @@ h2 {
   padding-right: 24px;
 }
 .btnStyle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   --__internal__border-radius: var(--web-ui_button-border-radius, 12px);
   --__internal__lip-width: 4px;
@@ -306,6 +316,12 @@ h2 {
   height: var(--web-ui_button-height, 50px);
   padding: var(--web-ui_button-padding, 0 16px);
   transition: filter 0.2s;
+  font: 700 var(--web-ui_button-font-size, 15px) /
+      var(--web-ui_button-line-height, 1.2) "DINROUNDPRO",
+    sans-serif;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .btnStyle::before {
@@ -356,4 +372,14 @@ h2 {
 
 .btnStyle:active {
   transform: translateY(var(--__internal__lip-width)) translateZ(0);
+}
+
+.root {
+  padding-left: 256px;
+}
+
+@media screen and (max-width: 768px) {
+  .root {
+    padding-left: 102px;
+  }
 }

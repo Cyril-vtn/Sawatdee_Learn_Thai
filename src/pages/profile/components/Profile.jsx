@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Load from "../../global/components/loader/Load";
 
@@ -31,9 +31,10 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { UserStats } from "./UserStats";
 
 const Profile = () => {
+  const params = useParams();
+
   //* RECUPERATION DE L'UTILISATEUR
   const { user, setUser } = UserAuth();
-
   const [userFromUrl, setUserFromUrl] = useState();
   const [photo, setPhoto] = useState("");
   const [empty, setEmpty] = useState(false);
@@ -43,7 +44,10 @@ const Profile = () => {
   const userIdFromUrl = window.location.href.split("/")[5];
 
   useEffect(() => {
+    // set de params ici pour reload la page en cas de changement de params
+    const tag = params;
     setIsLoading(true);
+
     // Crée une requête Firestore pour récupérer l'utilisateur avec l'ID de l'URL.
     const q = query(collection(db, "users"), where("tag", "==", userIdFromUrl));
     // Exécute la requête et récupère le snapshot.
@@ -72,7 +76,7 @@ const Profile = () => {
         setUserFromUrl(userFromSnapshot);
       });
     });
-  }, []); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
+  }, [userIdFromUrl]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
 
   // * MISE A JOUR DE LA PHOTO DE PROFIL
   const HandleChangeProfilePic = async (e) => {
@@ -112,10 +116,22 @@ const Profile = () => {
     });
   };
 
+  // * MISE A JOUR DE LA DATE DE CREATION DU COMPTE
+  function formatDate(date) {
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const monthCapitalized = month.charAt(0).toUpperCase() + month.slice(1);
+
+    return `${monthCapitalized} ${year}`;
+  }
+
   return (
     <div className={classes.profile}>
       {isLoading ? (
-        <Load style={{ backgroundColor: "rgb(var(--color-macaw)" }} />
+        <Load
+          centerClass={classes.center}
+          style={{ backgroundColor: "rgb(var(--color-macaw)" }}
+        />
       ) : empty ? (
         <div>Utilisateur introuvable</div>
       ) : (
@@ -135,7 +151,11 @@ const Profile = () => {
                   {/* CONTENU DE L'EN-TÊTE DU PROFIL */}
                   <div className={classes.userInfo}>
                     <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ee1babf2becff2aa8ef6634fd9d76cc6.svg" />
-                    <div>Membre depuis Décembre 2022</div>
+
+                    <div>
+                      Membre depuis{" "}
+                      {formatDate(new Date(userFromUrl?.createdAt))}
+                    </div>
                   </div>
                   <div className={classes.userInfo}>
                     <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ca7b8ce89fb2e61323e8c7dcb24c1094.svg" />
@@ -180,7 +200,11 @@ const Profile = () => {
             {user.tag === userIdFromUrl && (
               <div className={classes.btnWrapper}>
                 <div className={classes.btn}>
-                  <Link to="#" className="btnStyle btnText" draggable="false">
+                  <Link
+                    to="../settings/account"
+                    className="btnStyle btnText"
+                    draggable="false"
+                  >
                     <img
                       src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg"
                       alt=""

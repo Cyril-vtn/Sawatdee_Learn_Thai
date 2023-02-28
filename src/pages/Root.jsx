@@ -5,7 +5,9 @@ function RootLayout() {
   return (
     <>
       <Sidebar />
-      <Outlet />
+      <div className="root">
+        <Outlet />
+      </div>
     </>
   );
 }
