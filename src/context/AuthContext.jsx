@@ -19,7 +19,12 @@ import { db, storage } from "../firebase/config";
 //* IMPORT DE LA CONFIGURATION DE FIREBASE
 import { auth } from "../firebase/config";
 import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { deleteObject, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 //* CREATION DU CONTEXTE
@@ -31,7 +36,9 @@ export const AuthContextProvider = ({ children }) => {
   //* CREATION DE L'ETAT POUR GERER L'UTILISATEUR
   const [user, setUser] = useState({});
   const [photo, setPhoto] = useState("");
-  const [isLoagedIn, setIsloagedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") || false
+  );
   // !UPDATE DE L'UTILISATEUR A MODIFIE
   const updateUserInfo = async (user, data) => {
     try {
@@ -70,7 +77,7 @@ export const AuthContextProvider = ({ children }) => {
         //* send user to firestore database
         const userRef = doc(db, "users", user.uid);
         setDoc(userRef, user);
-        setIsloagedIn(true);
+        setIsLoggedIn(true);
         setUser(user);
       }
     );
@@ -106,28 +113,36 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signIn = (email, password) => {
-    setIsloagedIn(true);
-
+    setIsLoggedIn(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
-    setIsloagedIn(false);
+    setIsLoggedIn(false);
+    setPhoto("");
     return signOut(auth);
   };
 
   //* CREATION DE L'EFFECT POUR GERER LA CONNEXION ET LA DECONNEXION
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      localStorage.setItem("isLoggedIn", isLoggedIn);
+      setIsLoggedIn(true);
       //* SI L'UTILISATEUR EST DECONNECTE
       if (!currentUser) {
         setUser({});
         return;
       }
-      setIsloagedIn(true);
+
       //* RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
       const userRef = doc(db, "users", currentUser.uid);
       const docSnap = getDoc(userRef).then((docSnap) => {
+        const user = docSnap.data();
+        if (user.profilePic) {
+          getDownloadURL(ref(storage, user.profilePic)).then((url) => {
+            setPhoto(url);
+          });
+        }
         return setUser(docSnap.data());
       });
     });
@@ -135,7 +150,7 @@ export const AuthContextProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [photo, user.profilePic]);
 
   //* RENDU DU PROVIDER AVEC EN VALUE LES FONCTIONS ET L'ETAT
   return (
@@ -151,7 +166,8 @@ export const AuthContextProvider = ({ children }) => {
         deleteUserPerma,
         photo,
         setPhoto,
-        setIsloagedIn,
+        setIsLoggedIn,
+        isLoggedIn,
       }}
     >
       {children}

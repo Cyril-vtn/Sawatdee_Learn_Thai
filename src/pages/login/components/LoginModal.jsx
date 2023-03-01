@@ -27,7 +27,7 @@ const LoginModal = () => {
   const [loading, setLoading] = useState(false);
 
   //* RECUPERATION DE LA FONCTION DE CONNEXION DU CONTEXTE
-  const { signIn } = UserAuth();
+  const { signIn, setIsLoggedIn } = UserAuth();
 
   //* CREATION DE LA FONCTION POUR GERER LA SOUMISSION DU FORMULAIRE
   const handleSubmit = async (e) => {
@@ -54,6 +54,7 @@ const LoginModal = () => {
     setLoading(true);
 
     try {
+      setIsLoggedIn(true);
       await signIn(email, password);
       setLoading(false);
       navigate("/app/learn");

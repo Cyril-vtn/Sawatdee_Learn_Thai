@@ -10,15 +10,16 @@ import alphabetIcon from "../../../assets/images/alphabetIcon.png";
 import Load from "../../global/components/loader/Load";
 
 const Sidebar = () => {
-  const { logout, user } = UserAuth();
+  const { logout, user, setIsLoggedIn } = UserAuth();
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleLogout = async () => {
-    if (confirm("souhaitez-vous vraiment être déconnecté ?") == true) {
+    if (confirm("souhaitez-vous vraiment être déconnecté ?")) {
       setLoading(true);
+      setIsLoggedIn(false);
       try {
         await delay(1000);
         await logout();

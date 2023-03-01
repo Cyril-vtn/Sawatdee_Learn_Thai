@@ -12,7 +12,7 @@ import {
   MiddleConsonants,
   HighConsonants,
   LowConsonants,
-} from "./consonantsData";
+} from "../../../../utils/consonantsData";
 
 const Consonants = () => {
   return (

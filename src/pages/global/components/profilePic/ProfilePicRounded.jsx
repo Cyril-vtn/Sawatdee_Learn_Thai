@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+//* IMPORT DES STYLES
 import classes from "./ProfilePicRounded.module.css";
-import { storage } from "../../../../firebase/config";
+
+//* IMPORT DES IMAGES
 import ProfileImg from "../../../../assets/images/profileImg.png";
+
+//* IMPORT DU CONTEXTE
 import { UserAuth } from "../../../../context/AuthContext";
-import { getDownloadURL, ref } from "firebase/storage";
+
 const ProfilePicRounded = () => {
-  const { user, photo } = UserAuth();
+  // RECUPERATION DE LA PHOTO DE PROFIL DU CONTEXTE
+  const { photo } = UserAuth();
 
   return (
     <span className={classes.profileImgContainer}>

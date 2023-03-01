@@ -8,7 +8,7 @@ import Tableaux from "./TonesTable";
 
 //* IMPORT DES DONNEES
 //! A MODIFIER POUR RECUPERER LES DONNEES DEPUIS FIREBASE
-import { Tones as Tonalités } from "./TonesData";
+import { Tones as Tonalités } from "../../../../utils/TonesData";
 
 const Tones = () => {
   return (

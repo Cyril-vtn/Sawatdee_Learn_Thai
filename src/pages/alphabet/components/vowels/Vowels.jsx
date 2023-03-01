@@ -7,13 +7,14 @@ import classes from "./Vowels.module.css";
 import Tableaux from "./VowelsTable";
 
 //* IMPORT DES DONNEES
+
 //! A MODIFIER AFIN DE FETCH LES DONNEES DEPUIS FIREBASE
 import {
   ShortVowels,
   LongVowels,
   ShortDiphthongs,
   LongDiphthongs,
-} from "./vowelsData";
+} from "../../../../utils/vowelsData";
 
 const Vowels = () => {
   return (

@@ -62,13 +62,7 @@ const Profile = () => {
         const userFromSnapshot = doc.data();
         // Si l'utilisateur actuel a une photo de profil, récupère l'URL de téléchargement de l'image et met à jour l'état de "photo" avec cette URL.
         setIsLoading(false);
-        if (userFromSnapshot?.profilePic) {
-          getDownloadURL(ref(storage, userFromSnapshot.profilePic)).then(
-            (url) => {
-              setPhoto(url);
-            }
-          );
-        }
+
         setUserFromUrl(userFromSnapshot);
       });
     });
@@ -83,7 +77,10 @@ const Profile = () => {
     await uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
       //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
       setUser({ ...user, profilePic: snapshot.ref.fullPath });
-
+      // TELECHARGEMENT DE LA PHOTO DE PROFIL DANS LE STATE PHOTO
+      getDownloadURL(snapshot.ref).then((url) => {
+        setPhoto(url);
+      });
       // MISE A JOUR DU SUCCES PHOTOGÉNIQUE
       const photogenicSuccess = user.Succes.find(
         (success) => success.name === "Photogénique"
@@ -153,7 +150,7 @@ const Profile = () => {
                   </div>
                   <div className={classes.userInfo}>
                     <img src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/ca7b8ce89fb2e61323e8c7dcb24c1094.svg" />
-                    <div>1 abonnement / 1 abonné</div>
+                    <div>{userFromUrl?.friends.length} abonnement</div>
                   </div>
                 </div>
                 <div className={classes.country}>
