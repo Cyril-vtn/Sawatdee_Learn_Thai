@@ -61,7 +61,6 @@ const Profile = () => {
       querySnapshot.forEach((doc) => {
         // Récupère les données de l'utilisateur actuel dans la boucle forEach.
         const userFromSnapshot = doc.data();
-        console.log(userFromSnapshot);
         // Si l'utilisateur actuel a une photo de profil, récupère l'URL de téléchargement de l'image et met à jour l'état de "photo" avec cette URL.
         setIsLoading(false);
         if (userFromSnapshot?.profilePic) {
@@ -76,7 +75,7 @@ const Profile = () => {
         setUserFromUrl(userFromSnapshot);
       });
     });
-  }, [userIdFromUrl]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
+  }, [userIdFromUrl, user]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
 
   // * MISE A JOUR DE LA PHOTO DE PROFIL
   const HandleChangeProfilePic = async (e) => {
@@ -103,7 +102,6 @@ const Profile = () => {
           ...user.Succes.filter((success) => success.name !== "Photogénique"),
           updatedSuccess,
         ];
-        console.log(updatedSuccesses);
         // Mettez à jour l'utilisateur dans Firestore avec le succès mis à jour
         const userRef = doc(db, "users", user.uid);
         setDoc(userRef, {
@@ -111,8 +109,7 @@ const Profile = () => {
           profilePic: snapshot.ref.fullPath,
           Succes: updatedSuccesses,
         });
-      } // recharger la page
-      window.location.reload();
+      }
     });
   };
 

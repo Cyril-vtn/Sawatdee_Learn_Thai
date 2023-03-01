@@ -6,27 +6,55 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateEmail,
+  deleteUser,
 } from "firebase/auth";
 
 //* IMPORT CREATION DATA
 import userCreationData from "../utils/userCreationData";
 
 //* IMPORT DE LA BASE DE DONNEES
-import { db } from "../firebase/config";
+import { db, storage } from "../firebase/config";
 
 //* IMPORT DE LA CONFIGURATION DE FIREBASE
 import { auth } from "../firebase/config";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 //* CREATION DU CONTEXTE
 const UserContext = createContext();
 
 //* CREATION DU PROVIDER
 export const AuthContextProvider = ({ children }) => {
+  const navigate = useNavigate();
   //* CREATION DE L'ETAT POUR GERER L'UTILISATEUR
   const [user, setUser] = useState({});
 
-  //* CREATION DES FONCTIONS POUR GERER LA CREATION D'UN COMPTE, LA CONNEXION ET LA DECONNEXION
+  // !UPDATE DE L'UTILISATEUR A MODIFIE
+  const updateUserInfo = async (user, data) => {
+    try {
+      if (data?.email !== user.email) {
+        await updateEmail(user, email);
+      }
+      if (data?.pseudo !== user.pseudo) {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, { pseudo: data.pseudo });
+      }
+      if (data.password !== data.newPassword) {
+        await updatePassword(user, data.newPassword).then(() => {
+          console.log("Password updated!");
+        });
+      }
+      if (data.photo !== user.profilPic) {
+        await changeProfilePic(user, data.photo);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //* CREE UN UTILISATEUR DANS FIREBASE ET DANS LA BASE DE DONNEES
   const createUser = async (email, password, pseudo) => {
     await createUserWithEmailAndPassword(auth, email, password).then(
       (UserCrudential) => {
@@ -47,6 +75,26 @@ export const AuthContextProvider = ({ children }) => {
     );
   };
 
+  //* SUPPRIMER LE COMPTE UTILISATEUR DE FIREBASE ET DE LA BASE DE DONNEES
+  const deleteUserPerma = async (user) => {
+    const currentUser = auth.currentUser;
+    const userRef = doc(db, "users", user.uid);
+    // supprimer l'utilisateur de la base de données Firestore
+    await deleteDoc(userRef);
+    // supprimer l'utilisateur de Firebase Authentication
+    await deleteUser(currentUser);
+    // si l'utilisateur à une photo de profil
+    if (user.profilePic) {
+      const storageRef = ref(storage, `/users/${user.uid}/avatar.jpeg`);
+      // supprimer la photo de profil de Firebase Storage
+      await deleteObject(storageRef);
+      alert("compte supprimé");
+      navigate("/");
+    }
+    navigate("/");
+  };
+
+  //* CHANGER LA PHOTO DE PROFIL
   const updateProfilePhoto = async (photoUrl) => {
     // Mettre à jour l'URL de la photo de profil dans la base de données Firestore
     const userRef = doc(db, "users", user.uid);
@@ -55,6 +103,7 @@ export const AuthContextProvider = ({ children }) => {
     // Mettre à jour l'objet utilisateur dans l'état local
     setUser((prevUser) => ({ ...prevUser, photoUrl }));
   };
+
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -87,7 +136,16 @@ export const AuthContextProvider = ({ children }) => {
   //* RENDU DU PROVIDER AVEC EN VALUE LES FONCTIONS ET L'ETAT
   return (
     <UserContext.Provider
-      value={{ createUser, setUser, user, logout, signIn, updateProfilePhoto }}
+      value={{
+        createUser,
+        setUser,
+        user,
+        logout,
+        signIn,
+        updateProfilePhoto,
+        updateUserInfo,
+        deleteUserPerma,
+      }}
     >
       {children}
     </UserContext.Provider>

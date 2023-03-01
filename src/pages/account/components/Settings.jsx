@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // import du context pour récupérer les données de l'utilisateur
 import { UserAuth } from "../../../context/AuthContext";
@@ -7,39 +7,63 @@ import { UserAuth } from "../../../context/AuthContext";
 import classes from "./settings.module.css";
 
 const Settings = () => {
-  const [tag, setTag] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  // * RECUPERATION DE L'UTILISATEUR
+  const { user, deleteUserPerma } = UserAuth();
   const [photo, setPhoto] = useState();
   const [error, setError] = useState();
 
-  // * RECUPERATION DE L'UTILISATEUR
-  const { user, updateProfilePhoto } = UserAuth();
+  const [input, setInput] = useState({
+    photo: "",
+    pseudo: "",
+    email: "",
+    password: "",
+    newPassword: "",
+  });
 
-  const handlePhotoChange = (event) => {
-    setError(null);
-    const fileSize = event.target.files[0].size; // taille en bytes
-    console.log(fileSize);
-    const maxSize = 1 * 1024 * 1024; // 1MB en bytes
-    if (fileSize > maxSize) {
-      setError("La taille de l'image ne doit pas dépasser 1MB");
+  // utiliser useEffect pour récupérer les données de l'utilisateur et les mettre dans le state input
+  useEffect(() => {
+    if (user) {
+      setInput({
+        photo: user.profilePic ? user.profilePic : "",
+        pseudo: user.pseudo ? user.pseudo : "",
+        email: user.email ? user.email : "",
+      });
+    }
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    // si c'est un changement de photo
+    console.log(e.target.name);
+    if (e.target.name === "photo") {
+      setError(null);
+      const fileSize = e.target.files[0].size; // taille en bytes
+      const maxSize = 1 * 1024 * 1024; // 1MB en bytes
+
+      if (fileSize > maxSize) {
+        setError("La taille de l'image ne doit pas dépasser 1MB");
+        return;
+      }
+      setPhoto(e.target.files[0]);
+      setInput({
+        ...input,
+        [e.target.name]: e.target.files[0],
+      });
       return;
     }
-    setPhoto(event.target.files[0]);
+
+    // autres inputs
+    setInput({
+      ...input,
+
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // ! Fonction pour mettre à jour la photo de profil a utiliser sur un obuton global en dessous
-  const handleUpdateProfilePhoto = () => {
-    const newPhotoUrl = photo;
-    console.log(newPhotoUrl);
-    try {
-      updateProfilePhoto(newPhotoUrl);
-    } catch (error) {
-      console.log(error);
+  const handleDeleteAccount = async () => {
+    if (window.confirm("Voulez-vous vraiment supprimer votre compte ?")) {
+      await deleteUserPerma(user);
     }
   };
-
   return (
     <div className={classes.settings}>
       <div className={classes.container}>
@@ -56,10 +80,10 @@ const Settings = () => {
                     <div className={classes.labelWrapper}>
                       <label className={`btnStyle ${classes.label}`}>
                         <input
-                          onChange={handlePhotoChange}
+                          onChange={handleInputChange}
                           accept="image/*"
                           className={classes.inputFile}
-                          name="picture"
+                          name="photo"
                           type="file"
                         />
                         Choisir un fichier
@@ -82,9 +106,11 @@ const Settings = () => {
                   <td className={classes.inputTd}>
                     <input
                       id="pseudo"
-                      name="name"
+                      name="pseudo"
                       className={classes.input}
                       type="text"
+                      value={input.pseudo}
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
@@ -99,6 +125,8 @@ const Settings = () => {
                       name="email"
                       className={classes.input}
                       type="text"
+                      value={input.email}
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
@@ -112,19 +140,21 @@ const Settings = () => {
                       name="password"
                       className={classes.input}
                       type="password"
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
                 <tr>
                   <td className={classes.inputTitle}>
-                    <label htmlFor="NewPassword">Nouveau mot de passe</label>
+                    <label htmlFor="newPassword">Nouveau mot de passe</label>
                   </td>
                   <td className={classes.inputTd}>
                     <input
-                      id="NewPassword"
+                      id="newPassword"
                       name="password"
                       className={classes.input}
                       type="password"
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
@@ -134,7 +164,8 @@ const Settings = () => {
                   <td>
                     <a
                       className={classes.deleteAccount}
-                      href="https://drive-thru.duolingo.com/"
+                      href="#"
+                      onClick={handleDeleteAccount}
                       tabIndex="0"
                     >
                       Supprimer mon compte
