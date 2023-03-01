@@ -14,7 +14,7 @@ import Profile from "./pages/profile/index";
 import Settings from "./pages/account/index";
 
 // * IMPORT DE LA PROTECTED ROUTE
-import ProtectedRoute from "./setup/protectedRoutes/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // * IMPORT DU ROOT LAYOUT
 import RootLayout from "./pages/Root";

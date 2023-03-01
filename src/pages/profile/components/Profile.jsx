@@ -34,9 +34,8 @@ const Profile = () => {
   const params = useParams();
 
   //* RECUPERATION DE L'UTILISATEUR
-  const { user, setUser } = UserAuth();
+  const { user, setUser, photo, setPhoto } = UserAuth();
   const [userFromUrl, setUserFromUrl] = useState();
-  const [photo, setPhoto] = useState("");
   const [empty, setEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -67,8 +66,6 @@ const Profile = () => {
           getDownloadURL(ref(storage, userFromSnapshot.profilePic)).then(
             (url) => {
               setPhoto(url);
-
-              // Met à jour l'état de "userFromUrl" avec les données de l'utilisateur actuel dans la boucle forEach.
             }
           );
         }

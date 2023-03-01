@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }) => {
   const navigate = useNavigate();
   //* CREATION DE L'ETAT POUR GERER L'UTILISATEUR
   const [user, setUser] = useState({});
-
+  const [photo, setPhoto] = useState("");
   // !UPDATE DE L'UTILISATEUR A MODIFIE
   const updateUserInfo = async (user, data) => {
     try {
@@ -145,6 +145,8 @@ export const AuthContextProvider = ({ children }) => {
         updateProfilePhoto,
         updateUserInfo,
         deleteUserPerma,
+        photo,
+        setPhoto,
       }}
     >
       {children}
