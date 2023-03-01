@@ -5,14 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 //* IMPORT DES STYLES
 import classes from "./RegisterModal.module.css";
-import "../../../pages/global/components/button/Bouton.css";
+import "../../../components/button/Bouton.css";
 
 //* IMPORT DES IMAGES
 import closeBtn from "../../../assets/svg/closeBtn.svg";
 
 //* IMPORT DES COMPOSANTS
-import Bouton from "../../../pages/global/components/button/Bouton";
-import Load from "../../global/components/loader/Load";
+import Bouton from "../../../components/button/Bouton";
+import Load from "../../../components/loader/Load";
 
 //* IMPORT DU CONTEXT
 import { UserAuth } from "../../../context/AuthContext";

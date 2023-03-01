@@ -4,7 +4,7 @@ import React from "react";
 import classes from "./Alphabet.module.css";
 
 //* IMPORT DES COMPOSANTS
-import BackToTopBtn from "../../global/components/backToTopBtn/index";
+import BackToTopBtn from "../../../components/backToTopBtn/index";
 import Header from "./header/Header";
 import Consonnes from "./consonants/Consonants";
 import Tons from "./tones/Tones";

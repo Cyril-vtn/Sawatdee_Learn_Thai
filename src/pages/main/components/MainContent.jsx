@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 //* IMPORT DE REACT ROUTER DOM
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ import logo from "../../../assets/brand/logo.png";
 import ThaiWorld from "../../../assets/images/thaiWorldLogo.png";
 
 //* IMPORT DES COMPOSANTS
-import Bouton from "../../../pages/global/components/button/Bouton";
+import Bouton from "../../../components/button/Bouton";
 
 const Home = () => {
   return (

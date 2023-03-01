@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import classes from "./MainContent.module.css";
-import Load from "../../global/components/loader/Load";
+import Load from "../../../components/loader/Load";
 import Img from "../../../assets/images/thaiPersonWoman.png";
 import WordBtn from "./WordBtn";
 // //* IMPORT DE LA CONFIGURATION DE FIREBASE

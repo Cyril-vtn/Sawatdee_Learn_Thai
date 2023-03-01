@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import Load from "../../global/components/loader/Load";
-
-//* IMPORT IMG
-import profilePic from "../../../assets/images/profileImg.png";
+//* IMPORT COMPONENTS
+import Load from "../../../components/loader/Load";
+import ProfilePicRounded from "../../../components/profilePic/ProfilePicRounded";
 
 //* IMPORT CSS
 import classes from "./Profile.module.css";
@@ -14,6 +13,7 @@ import { db, storage } from "../../../firebase/config";
 
 //* IMPORT IMG
 import flagRounded from "../../../assets/svg/flagRounded.svg";
+import profilePic from "../../../assets/images/profileImg.png";
 
 //* IMPORT FIREBASE STORAGE
 import {
@@ -166,12 +166,7 @@ const Profile = () => {
               {/* IMAGE DE PROFILE */}
               <div className={classes.profilePicContainer}>
                 <div className={classes.profilePic}>
-                  {photo ? (
-                    // Affiche la nouvelle photo de profil si elle existe, sinon affiche une image vide.
-                    <img src={photo} alt="" draggable="false" />
-                  ) : (
-                    <img src={profilePic} alt="" draggable="false" />
-                  )}
+                  <ProfilePicRounded />
                   {user.tag === userIdFromUrl && (
                     <div className={classes.editBtn}>
                       <label className={classes.label}>

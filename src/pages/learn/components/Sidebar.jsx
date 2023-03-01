@@ -1,21 +1,35 @@
 import React, { useState } from "react";
-import { Navigate, NavLink, redirect, useNavigate } from "react-router-dom";
+
+//* IMPORT REACT ROUTER
+import { NavLink, useNavigate } from "react-router-dom";
+
+//* IMPORT DES STYLES
 import classes from "./Sidebar.module.css";
+
+//* IMPORT DES IMAGES
 import logo from "../../../assets/svg/logoGreen.svg";
 import logoSmall from "../../../assets/svg/logoSmall.svg";
 import disconnectIcon from "../../../assets/images/disconnectIcon.png";
-import ProfilePicRounded from "../../global/components/profilePic/ProfilePicRounded";
-import { UserAuth } from "../../../context/AuthContext";
+import ProfilePicRounded from "../../../components/profilePic/ProfilePicRounded";
 import alphabetIcon from "../../../assets/images/alphabetIcon.png";
-import Load from "../../global/components/loader/Load";
+
+//* IMPORT DU CONTEXTE
+import { UserAuth } from "../../../context/AuthContext";
+
+//* IMPORT DES COMPOSANTS
+import Load from "../../../components/loader/Load";
 
 const Sidebar = () => {
+  // RECUPERATION DES FONCTION/STATE DU CONTEXTE
   const { logout, user, setIsLoggedIn } = UserAuth();
 
+  // CREATION DES STATE
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  // FONCTION POUR GERER LA DECONNEXION
   const handleLogout = async () => {
     if (confirm("souhaitez-vous vraiment être déconnecté ?")) {
       setLoading(true);

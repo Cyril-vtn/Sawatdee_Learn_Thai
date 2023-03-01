@@ -7,8 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import classes from "./LoginModal.module.css";
 
 //* IMPORT DES COMPOSANTS
-import Bouton from "../../../pages/global/components/button/Bouton";
-import Load from "../../global/components/loader/Load";
+import Bouton from "../../../components/button/Bouton";
+import Load from "../../../components/loader/Load";
 
 //* IMPORT DES IMAGES
 import closeBtn from "../../../assets/svg/closeBtn.svg";

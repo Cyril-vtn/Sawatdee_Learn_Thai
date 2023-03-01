@@ -6,8 +6,8 @@ import "./PathColor.css";
 
 //* IMPORT DES COMPOSANTS
 import LessonBtn from "./LessonBtn";
-import BackToTopBtn from "../../global/components/backToTopBtn/index";
-import Load from "../../global/components/loader/Load";
+import BackToTopBtn from "../../../components/backToTopBtn/index";
+import Load from "../../../components/loader/Load";
 
 //* IMPORT DU CONTEXTE
 import { PathAuth } from "../../../context/DataContext";
