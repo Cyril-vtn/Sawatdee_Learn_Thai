@@ -31,6 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   //* CREATION DE L'ETAT POUR GERER L'UTILISATEUR
   const [user, setUser] = useState({});
   const [photo, setPhoto] = useState("");
+  const [isLoagedIn, setIsloagedIn] = useState(false);
   // !UPDATE DE L'UTILISATEUR A MODIFIE
   const updateUserInfo = async (user, data) => {
     try {
@@ -69,7 +70,7 @@ export const AuthContextProvider = ({ children }) => {
         //* send user to firestore database
         const userRef = doc(db, "users", user.uid);
         setDoc(userRef, user);
-
+        setIsloagedIn(true);
         setUser(user);
       }
     );
@@ -105,10 +106,13 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signIn = (email, password) => {
+    setIsloagedIn(true);
+
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
+    setIsloagedIn(false);
     return signOut(auth);
   };
 
@@ -120,7 +124,7 @@ export const AuthContextProvider = ({ children }) => {
         setUser({});
         return;
       }
-
+      setIsloagedIn(true);
       //* RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
       const userRef = doc(db, "users", currentUser.uid);
       const docSnap = getDoc(userRef).then((docSnap) => {
@@ -147,6 +151,7 @@ export const AuthContextProvider = ({ children }) => {
         deleteUserPerma,
         photo,
         setPhoto,
+        setIsloagedIn,
       }}
     >
       {children}
