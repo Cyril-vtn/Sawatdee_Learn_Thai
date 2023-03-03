@@ -96,6 +96,16 @@
   text-align: left;
   box-shadow: none;
 }
+
+.confirmBtn {
+  display: inline-flex;
+  cursor: pointer;
+
+  --web-ui_button-color: rgb(var(--color-snow));
+  --web-ui_button-background-color: rgb(var(--color-owl));
+  --web-ui_button-border-color: rgb(var(--color-tree-frog));
+}
+
 .deleteAccount {
   cursor: pointer;
   color: rgb(var(--color-cardinal));
@@ -113,4 +123,10 @@
   color: rgb(var(--color-cardinal));
   font-weight: 700;
   margin-top: 6px;
+}
+.accountBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }

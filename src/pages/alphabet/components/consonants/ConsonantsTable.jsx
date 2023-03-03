@@ -33,9 +33,9 @@ const TableauxAlphabet = (props) => {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {props.rows.map((row) => (
-            <TableRow key={row.lettres}>
+        {props.rows.map((row, index) => (
+          <TableBody key={index}>
+            <TableRow>
               <TableCell component="th" scope="row" align="center">
                 {row.lettres}
               </TableCell>
@@ -43,8 +43,8 @@ const TableauxAlphabet = (props) => {
               <TableCell align="center">{row.sonFinal}</TableCell>
               <TableCell align="center">{row.nom}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
+          </TableBody>
+        ))}
       </Table>
     </TableContainer>
   );

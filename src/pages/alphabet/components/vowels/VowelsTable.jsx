@@ -31,8 +31,8 @@ const TableauxAlphabet = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.rows.map((row) => (
-            <TableRow key={row.vowels}>
+          {props.rows.map((row, index) => (
+            <TableRow key={index}>
               <TableCell component="th" scope="row" align="center">
                 {row.vowels}
               </TableCell>

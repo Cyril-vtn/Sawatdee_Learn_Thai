@@ -33,12 +33,12 @@ const Sidebar = () => {
   const handleLogout = async () => {
     if (confirm("souhaitez-vous vraiment être déconnecté ?")) {
       setLoading(true);
-      setIsLoggedIn(false);
+
       try {
         await delay(1000);
         await logout();
+        setIsLoggedIn(false);
         setLoading(false);
-        navigate("/login");
       } catch (err) {
         setLoading(false);
         console.log(err);

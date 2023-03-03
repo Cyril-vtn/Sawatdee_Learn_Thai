@@ -9,7 +9,6 @@ import classes from "./settings.module.css";
 const Settings = () => {
   // * RECUPERATION DE L'UTILISATEUR
   const { user, deleteUserPerma } = UserAuth();
-  const [photo, setPhoto] = useState();
   const [error, setError] = useState();
 
   const [input, setInput] = useState({
@@ -20,8 +19,10 @@ const Settings = () => {
     newPassword: "",
   });
 
-  // utiliser useEffect pour récupérer les données de l'utilisateur et les mettre dans le state input
+  const [isDisabled, setIsDisabled] = useState(true); // nouvel état pour le bouton
+
   useEffect(() => {
+    // utiliser useEffect pour récupérer les données de l'utilisateur et les mettre dans le state input
     if (user) {
       setInput({
         photo: user.profilePic ? user.profilePic : "",
@@ -33,30 +34,60 @@ const Settings = () => {
 
   const handleInputChange = (e) => {
     // si c'est un changement de photo
-    console.log(e.target.name);
     if (e.target.name === "photo") {
       setError(null);
       const fileSize = e.target.files[0].size; // taille en bytes
       const maxSize = 1 * 1024 * 1024; // 1MB en bytes
 
+      // si la taille de l'image est supérieure à 1MB
       if (fileSize > maxSize) {
         setError("La taille de l'image ne doit pas dépasser 1MB");
         return;
       }
-      setPhoto(e.target.files[0]);
+
+      setIsDisabled(false);
+      // si la taille de l'image est inférieure à 1MB set la nouvelle photo dans le state input
       setInput({
         ...input,
-        [e.target.name]: e.target.files[0],
+        photo: e.target.files[0],
       });
       return;
     }
-
+    setIsDisabled(false);
     // autres inputs
     setInput({
       ...input,
 
       [e.target.name]: e.target.value,
     });
+  };
+
+  // fonction pour mettre à jour les données de l'utilisateur si changement
+  const handleFetchNewData = async (e) => {
+    e.preventDefault();
+    // si l'utilisateur a changé son pseudo
+    if (input.pseudo !== user.pseudo) {
+      // mettre à jour le pseudo dans la base de données
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, { pseudo: input.pseudo });
+    }
+    // si l'utilisateur a changé son email
+    if (input.email !== user.email) {
+      // mettre à jour l'email dans la base de données et authentification
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, { email: input.email });
+      await updateEmail(user, input.email);
+    }
+    // si l'utilisateur a changé son mot de passe
+    if (input.password !== input.newPassword) {
+      // mettre à jour le mot de passe dans la base de données
+      await updatePassword(user, input.newPassword);
+    }
+    // si l'utilisateur a changé sa photo de profil
+    if (input.photo !== user.profilePic) {
+      // mettre à jour la photo de profil dans la base de données
+      await changeProfilePic(user, input.photo);
+    }
   };
 
   const handleDeleteAccount = async () => {
@@ -89,7 +120,9 @@ const Settings = () => {
                         Choisir un fichier
                       </label>
                       <div className={classes.fileName}>
-                        {!photo ? "aucun fichier sélectionné" : photo.name}
+                        {!input.photo.name
+                          ? "aucun fichier sélectionné"
+                          : input.photo.name}
                       </div>
                     </div>
                     <div
@@ -151,25 +184,11 @@ const Settings = () => {
                   <td className={classes.inputTd}>
                     <input
                       id="newPassword"
-                      name="password"
+                      name="newPassword"
                       className={classes.input}
                       type="password"
                       onChange={handleInputChange}
                     />
-                  </td>
-                </tr>
-
-                <tr>
-                  <td></td>
-                  <td>
-                    <a
-                      className={classes.deleteAccount}
-                      href="#"
-                      onClick={handleDeleteAccount}
-                      tabIndex="0"
-                    >
-                      Supprimer mon compte
-                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -177,6 +196,30 @@ const Settings = () => {
           </div>
           <div className="_3ky4c V9dBP">
             <hr className="_2tnT1" />
+          </div>
+          <div className={classes.accountBtn}>
+            <button
+              className={`btnStyle ${classes.confirmBtn}`}
+              disabled={isDisabled}
+            >
+              <input
+                onChange={handleInputChange}
+                accept="image/*"
+                className={classes.inputFile}
+                name="photo"
+                type="file"
+              />
+              Confirmer les changements
+            </button>
+
+            <a
+              className={classes.deleteAccount}
+              href="#"
+              onClick={handleDeleteAccount}
+              tabIndex="0"
+            >
+              Supprimer mon compte
+            </a>
           </div>
         </div>
       </div>

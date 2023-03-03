@@ -343,6 +343,9 @@ h2 {
 .btnStyle:hover {
   filter: brightness(1.1);
 }
+.btnStyle:hover[disabled] {
+  filter: none;
+}
 
 .btnText {
   display: inline-flex;
@@ -372,6 +375,18 @@ h2 {
 
 .btnStyle:active {
   transform: translateY(var(--__internal__lip-width)) translateZ(0);
+}
+
+.btnStyle:disabled {
+  transform: translateY(var(--__internal__lip-width)) translateZ(0);
+  cursor: default;
+}
+.btnStyle:disabled::before {
+  background-color: var(
+    --web-ui_button-background-color-disabled,
+    rgb(var(--color-swan))
+  );
+  box-shadow: none;
 }
 
 .root {

@@ -61,9 +61,9 @@ const Profile = () => {
         // Récupère les données de l'utilisateur actuel dans la boucle forEach.
         const userFromSnapshot = doc.data();
         // Si l'utilisateur actuel a une photo de profil, récupère l'URL de téléchargement de l'image et met à jour l'état de "photo" avec cette URL.
-        setIsLoading(false);
 
         setUserFromUrl(userFromSnapshot);
+        setIsLoading(false);
       });
     });
   }, [userIdFromUrl, user]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
@@ -75,7 +75,7 @@ const Profile = () => {
     // Stockage de la nouvelle photo sur Firebase Storage
     const storageRef = ref(storage, `/users/${user.uid}/avatar.${type}`);
     await uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
-      //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
+      console.log(snapshot.ref); //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
       setUser({ ...user, profilePic: snapshot.ref.fullPath });
       // TELECHARGEMENT DE LA PHOTO DE PROFIL DANS LE STATE PHOTO
       getDownloadURL(snapshot.ref).then((url) => {

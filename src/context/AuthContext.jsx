@@ -39,6 +39,7 @@ export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") || false
   );
+
   // !UPDATE DE L'UTILISATEUR A MODIFIE
   const updateUserInfo = async (user, data) => {
     try {
@@ -50,9 +51,7 @@ export const AuthContextProvider = ({ children }) => {
         await updateDoc(userRef, { pseudo: data.pseudo });
       }
       if (data.password !== data.newPassword) {
-        await updatePassword(user, data.newPassword).then(() => {
-          console.log("Password updated!");
-        });
+        await updatePassword(user, data.newPassword);
       }
       if (data.photo !== user.profilPic) {
         await changeProfilePic(user, data.photo);
@@ -64,23 +63,25 @@ export const AuthContextProvider = ({ children }) => {
 
   //* CREE UN UTILISATEUR DANS FIREBASE ET DANS LA BASE DE DONNEES
   const createUser = async (email, password, pseudo) => {
-    await createUserWithEmailAndPassword(auth, email, password).then(
-      (UserCrudential) => {
-        const randomNumber = Math.floor(Math.random() * 9000) + 1000;
-        const user = {
-          email: UserCrudential.user.email,
-          uid: UserCrudential.user.uid,
-          pseudo: pseudo,
-          tag: `${pseudo}#${randomNumber}`,
-          ...userCreationData,
-        };
-        //* send user to firestore database
-        const userRef = doc(db, "users", user.uid);
-        setDoc(userRef, user);
-        setIsLoggedIn(true);
-        setUser(user);
-      }
+    const UserCrudential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
     );
+
+    const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+    const user = {
+      email: UserCrudential.user.email,
+      uid: UserCrudential.user.uid,
+      pseudo: pseudo,
+      tag: `${pseudo}#${randomNumber}`,
+      ...userCreationData,
+    };
+    //* send user to firestore database
+    const userRef = doc(db, "users", user.uid);
+    setDoc(userRef, user);
+    setIsLoggedIn(true);
+    setUser(user);
   };
 
   //* SUPPRIMER LE COMPTE UTILISATEUR DE FIREBASE ET DE LA BASE DE DONNEES
@@ -100,16 +101,6 @@ export const AuthContextProvider = ({ children }) => {
       navigate("/");
     }
     navigate("/");
-  };
-
-  //* CHANGER LA PHOTO DE PROFIL
-  const updateProfilePhoto = async (photoUrl) => {
-    // Mettre à jour l'URL de la photo de profil dans la base de données Firestore
-    const userRef = doc(db, "users", user.uid);
-    return await updateDoc(userRef, { photoUrl });
-
-    // Mettre à jour l'objet utilisateur dans l'état local
-    setUser((prevUser) => ({ ...prevUser, photoUrl }));
   };
 
   const signIn = (email, password) => {
@@ -161,7 +152,6 @@ export const AuthContextProvider = ({ children }) => {
         user,
         logout,
         signIn,
-        updateProfilePhoto,
         updateUserInfo,
         deleteUserPerma,
         photo,
