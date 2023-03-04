@@ -42,9 +42,17 @@ function App() {
             <Route path="learn" element={<Learn />} />
             <Route path="alphabet" element={<Alphabet />} />
             <Route path="profile/:userid" element={<Profile />} />
-            <Route path="lessons/:lessonid" element={<Lessons />} />
+
             <Route path="settings/account" element={<Settings />} />
           </Route>
+          <Route
+            path="lessons/:lessonid"
+            element={
+              <ProtectedRoute>
+                <Lessons />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthContextProvider>
     </PathContextProvider>

@@ -118,9 +118,9 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       localStorage.setItem("isLoggedIn", isLoggedIn);
-      setIsLoggedIn(true);
       //* SI L'UTILISATEUR EST DECONNECTE
       if (!currentUser) {
+        setIsLoggedIn(false);
         setUser({});
         return;
       }

@@ -1,5 +1,6 @@
 .profile {
   display: grid;
+  transition: opacity 0.4s ease-in-out;
 }
 .container {
   margin: 0 auto;

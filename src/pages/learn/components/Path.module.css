@@ -4,6 +4,7 @@
   max-width: 1056px;
   padding-top: 32px;
   width: 100%;
+  transition: opacity 0.4s ease-in-out;
 }
 .wrapper {
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 //* IMPORT COMPONENTS
@@ -34,23 +34,25 @@ const Profile = () => {
   const params = useParams();
 
   //* RECUPERATION DE L'UTILISATEUR
-  const { user, setUser, photo, setPhoto } = UserAuth();
+  const { user, setUser } = UserAuth();
+  const { photo, setPhoto } = UserAuth();
   const [userFromUrl, setUserFromUrl] = useState();
+  const [userPhotoFromUrl, setUserPhotoFromUrl] = useState();
   const [empty, setEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // * RECUPERATION DE L'ID DE L'URL
   const userIdFromUrl = window.location.href.split("/")[5];
+  const tag = params;
 
   useEffect(() => {
     // set de params ici pour reload la page en cas de changement de params
-    const tag = params;
     setIsLoading(true);
 
     // Crée une requête Firestore pour récupérer l'utilisateur avec l'ID de l'URL.
     const q = query(collection(db, "users"), where("tag", "==", userIdFromUrl));
     // Exécute la requête et récupère le snapshot.
-    const querySnapshot = getDocs(q).then((querySnapshot) => {
+    getDocs(q).then((querySnapshot) => {
       // Si le snapshot est vide, cela signifie qu'il n'y a pas d'utilisateur avec cet ID, alors définit "empty" à true et quitte la fonction.
       if (querySnapshot.empty === true) {
         setEmpty(true);
@@ -60,13 +62,19 @@ const Profile = () => {
       querySnapshot.forEach((doc) => {
         // Récupère les données de l'utilisateur actuel dans la boucle forEach.
         const userFromSnapshot = doc.data();
-        // Si l'utilisateur actuel a une photo de profil, récupère l'URL de téléchargement de l'image et met à jour l'état de "photo" avec cette URL.
+        if (userFromSnapshot.profilePic) {
+          getDownloadURL(ref(storage, userFromSnapshot.profilePic)).then(
+            (url) => {
+              setUserPhotoFromUrl(url);
+              setIsLoading(false);
+            }
+          );
+        }
 
         setUserFromUrl(userFromSnapshot);
-        setIsLoading(false);
       });
     });
-  }, [userIdFromUrl, user]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
+  }, [userIdFromUrl]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
 
   // * MISE A JOUR DE LA PHOTO DE PROFIL
   const HandleChangeProfilePic = async (e) => {
@@ -75,11 +83,12 @@ const Profile = () => {
     // Stockage de la nouvelle photo sur Firebase Storage
     const storageRef = ref(storage, `/users/${user.uid}/avatar.${type}`);
     await uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
-      console.log(snapshot.ref); //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
+      //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
       setUser({ ...user, profilePic: snapshot.ref.fullPath });
       // TELECHARGEMENT DE LA PHOTO DE PROFIL DANS LE STATE PHOTO
       getDownloadURL(snapshot.ref).then((url) => {
         setPhoto(url);
+        setUserPhotoFromUrl(url);
       });
       // MISE A JOUR DU SUCCES PHOTOGÉNIQUE
       const photogenicSuccess = user.Succes.find(
@@ -123,8 +132,6 @@ const Profile = () => {
           centerClass={classes.center}
           style={{ backgroundColor: "rgb(var(--color-macaw)" }}
         />
-      ) : empty ? (
-        <div>Utilisateur introuvable</div>
       ) : (
         <div className={classes.container}>
           <div className={classes.header}>
@@ -158,7 +165,7 @@ const Profile = () => {
                     viewBox="0 2310 82 66"
                     style={{ height: "30px", width: "40px" }}
                   >
-                    <image href={flagRounded} alt="" />
+                    <image href={flagRounded} alt="Drapeau Thaïlande" />
                   </svg>
                 </div>
               </div>
@@ -166,7 +173,7 @@ const Profile = () => {
               {/* IMAGE DE PROFILE */}
               <div className={classes.profilePicContainer}>
                 <div className={classes.profilePic}>
-                  <ProfilePicRounded />
+                  <ProfilePicRounded Img={userPhotoFromUrl} />
                   {user.tag === userIdFromUrl && (
                     <div className={classes.editBtn}>
                       <label className={classes.label}>

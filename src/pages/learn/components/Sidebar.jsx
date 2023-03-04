@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 //* IMPORT REACT ROUTER
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //* IMPORT DES STYLES
 import classes from "./Sidebar.module.css";
@@ -21,11 +21,10 @@ import Load from "../../../components/loader/Load";
 
 const Sidebar = () => {
   // RECUPERATION DES FONCTION/STATE DU CONTEXTE
-  const { logout, user, setIsLoggedIn } = UserAuth();
+  const { logout, user, setIsLoggedIn, photo } = UserAuth();
 
   // CREATION DES STATE
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -98,16 +97,12 @@ const Sidebar = () => {
         >
           <span className={classes.linkContent}>
             <div className={classes.linkImg}>
-              <ProfilePicRounded />
+              <ProfilePicRounded Img={photo} />
             </div>
             <span className={classes.linkText}>MON PROFIL</span>
           </span>
         </NavLink>
-        <NavLink
-          to="#"
-          className={classes.disconnectBtn}
-          onClick={handleLogout}
-        >
+        <button className={classes.disconnectBtn} onClick={handleLogout}>
           <span>
             <img
               src={disconnectIcon}
@@ -118,7 +113,7 @@ const Sidebar = () => {
               {loading ? <Load /> : "DECONNEXION"}
             </span>
           </span>
-        </NavLink>
+        </button>
       </div>
     </div>
   );

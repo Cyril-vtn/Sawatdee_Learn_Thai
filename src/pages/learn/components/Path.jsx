@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 //* IMPORT DES STYLES
 import classes from "./Path.module.css";
@@ -30,7 +30,7 @@ const LessonPath = () => {
     <div>
       <div className={classes.container}>
         <div className={classes.wrapper}>
-          {loading ? <Load /> : null}
+          {loading && <Load />}
           <div className={classes.pathWrapper}>
             <div className={classes.path}>
               {/* MAP SUR LE STATE PATH RECUPERE DU CONTEXTE  */}
