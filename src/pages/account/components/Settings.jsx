@@ -8,8 +8,14 @@ import classes from "./settings.module.css";
 
 const Settings = () => {
   // * RECUPERATION DE L'UTILISATEUR
-  const { user, deleteUserPerma } = UserAuth();
-  const [error, setError] = useState();
+  const {
+    user,
+    deleteUserPerma,
+    changeProfilePic,
+    error,
+    setError,
+    updateUser,
+  } = UserAuth();
 
   const [input, setInput] = useState({
     photo: "",
@@ -19,9 +25,13 @@ const Settings = () => {
     newPassword: "",
   });
 
+  //  nouvel état pour le bouton submit
   const [isDisabled, setIsDisabled] = useState(true); // nouvel état pour le bouton
-
   useEffect(() => {
+    setInput({
+      photo: "aucun fichier sélectionné",
+    });
+    setError("");
     // utiliser useEffect pour récupérer les données de l'utilisateur et les mettre dans le state input
     if (user) {
       setInput({
@@ -32,10 +42,20 @@ const Settings = () => {
     }
   }, [user]);
 
+  //* -------------------------- FONCTION POUR GERER LES CHANGEMENTS DANS LES INPUTS -------------------------- */
   const handleInputChange = (e) => {
+    //si l'utilisateur ferme la fenêtre de modification de photo
+    if (e.target.name === "photo" && e.target.files.length === 0) {
+      return;
+    }
+    // reset du state photo et de
+    setInput({
+      ...input,
+      photo: "aucun fichier sélectionné",
+    });
+    setError("");
     // si c'est un changement de photo
     if (e.target.name === "photo") {
-      setError(null);
       const fileSize = e.target.files[0].size; // taille en bytes
       const maxSize = 1 * 1024 * 1024; // 1MB en bytes
 
@@ -47,6 +67,7 @@ const Settings = () => {
 
       setIsDisabled(false);
       // si la taille de l'image est inférieure à 1MB set la nouvelle photo dans le state input
+
       setInput({
         ...input,
         photo: e.target.files[0],
@@ -62,39 +83,21 @@ const Settings = () => {
     });
   };
 
-  // fonction pour mettre à jour les données de l'utilisateur si changement
+  //* -------------------------- FONCTION POUR GERER LA SOUMISSION DU FORMULAIRE -------------------------- */
   const handleFetchNewData = async (e) => {
     e.preventDefault();
     // si l'utilisateur a changé son pseudo
-    if (input.pseudo !== user.pseudo) {
-      // mettre à jour le pseudo dans la base de données
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, { pseudo: input.pseudo });
-    }
-    // si l'utilisateur a changé son email
-    if (input.email !== user.email) {
-      // mettre à jour l'email dans la base de données et authentification
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, { email: input.email });
-      await updateEmail(user, input.email);
-    }
-    // si l'utilisateur a changé son mot de passe
-    if (input.password !== input.newPassword) {
-      // mettre à jour le mot de passe dans la base de données
-      await updatePassword(user, input.newPassword);
-    }
-    // si l'utilisateur a changé sa photo de profil
-    if (input.photo !== user.profilePic) {
-      // mettre à jour la photo de profil dans la base de données
-      await changeProfilePic(user, input.photo);
-    }
+
+    await updateUser(input);
   };
 
+  //* -------------------------- FONCTION POUR SUPPRIMER LE COMPTE -------------------------- */
   const handleDeleteAccount = async () => {
     if (window.confirm("Voulez-vous vraiment supprimer votre compte ?")) {
       await deleteUserPerma(user);
     }
   };
+
   return (
     <div className={classes.settings}>
       <div className={classes.container}>
@@ -126,7 +129,12 @@ const Settings = () => {
                       </div>
                     </div>
                     <div
-                      className={`${!error ? classes.fileTxt : classes.error}`}
+                      className={`${
+                        error !==
+                        "La taille de l'image ne doit pas dépasser 1MB"
+                          ? classes.fileTxt
+                          : classes.error
+                      }`}
                     >
                       taille maximale = 1 MB
                     </div>
@@ -197,18 +205,19 @@ const Settings = () => {
           <div className="_3ky4c V9dBP">
             <hr className="_2tnT1" />
           </div>
+          {error ? (
+            <div className={classes.errorContainer}>
+              <div className={classes.error}>{error}</div>
+            </div>
+          ) : null}
+
           <div className={classes.accountBtn}>
             <button
               className={`btnStyle ${classes.confirmBtn}`}
               disabled={isDisabled}
+              onClick={handleFetchNewData}
+              type="submit"
             >
-              <input
-                onChange={handleInputChange}
-                accept="image/*"
-                className={classes.inputFile}
-                name="photo"
-                type="file"
-              />
               Confirmer les changements
             </button>
 

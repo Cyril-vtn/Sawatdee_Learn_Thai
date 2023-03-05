@@ -114,6 +114,7 @@
   letter-spacing: 0.8px;
   text-transform: uppercase;
   transition: filter 0.3s ease-in-out;
+  align-self: center;
 }
 .deleteAccount:hover {
   filter: brightness(1.4);
@@ -124,9 +125,16 @@
   font-weight: 700;
   margin-top: 6px;
 }
+.errorContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+}
 .accountBtn {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   gap: 20px;
 }

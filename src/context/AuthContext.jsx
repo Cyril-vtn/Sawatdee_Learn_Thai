@@ -8,6 +8,7 @@ import {
   onAuthStateChanged,
   updateEmail,
   deleteUser,
+  updatePassword,
 } from "firebase/auth";
 
 //* IMPORT CREATION DATA
@@ -36,39 +37,127 @@ export const AuthContextProvider = ({ children }) => {
   //* CREATION DE L'ETAT POUR GERER L'UTILISATEUR
   const [user, setUser] = useState({});
   const [photo, setPhoto] = useState("");
+  const [error, setError] = useState("");
+  const [userProfilePhoto, setUserProfilePhoto] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") || false
   );
 
-  // !UPDATE DE L'UTILISATEUR A MODIFIE
-  const updateUserInfo = async (user, data) => {
-    try {
-      if (data?.email !== user.email) {
-        await updateEmail(user, email);
-      }
-      if (data?.pseudo !== user.pseudo) {
-        const userRef = doc(db, "users", user.uid);
-        await updateDoc(userRef, { pseudo: data.pseudo });
-      }
-      if (data.password !== data.newPassword) {
-        await updatePassword(user, data.newPassword);
-      }
-      if (data.photo !== user.profilPic) {
-        await changeProfilePic(user, data.photo);
-      }
-    } catch (err) {
-      console.log(err);
+  //*-------------------------- MODIFIER LA PHOTO DE PROFIL DE L'UTILISATEUR -------------------------- */
+  const changeProfilePic = async (photo) => {
+    // RECUPERATION DE LA PHOTO
+    const type = photo.type.split("/")[1];
+    // Stockage de la nouvelle photo sur Firebase Storage
+    const storageRef = ref(storage, `/users/${user.uid}/avatar.${type}`);
+    // SUPPRESSION DE L'ANCIENNE PHOTO DE PROFIL
+    if (user.profilePic) {
+      const oldProfilePicRef = ref(storage, user.profilePic);
+      await deleteObject(oldProfilePicRef);
+    }
+
+    const snapshot = await uploadBytes(storageRef, photo);
+    //MISE A JOUR DE LA PHOTO DE PROFIL DANS LE STATE USER
+    setUser({ ...user, profilePic: snapshot.ref.fullPath });
+
+    // TELECHARGEMENT DE LA PHOTO DE PROFIL DANS LE STATE PHOTO
+    getDownloadURL(snapshot.ref).then((url) => {
+      setPhoto(url);
+      setUserProfilePhoto(url);
+    });
+
+    // MISE A JOUR DU SUCCES PHOTOGÉNIQUE
+    const photogenicSuccess = user.Succes.find(
+      (success) => success.name === "Photogénique"
+    );
+    if (photogenicSuccess && photogenicSuccess.count === 0) {
+      // Si le compteur est à 0, mettez à jour le succès Photogénique avec le compteur à 1
+      const updatedSuccess = {
+        ...photogenicSuccess,
+        count: 1,
+        completed: true,
+      };
+      const updatedSuccesses = [
+        ...user.Succes.filter((success) => success.name !== "Photogénique"),
+        updatedSuccess,
+      ];
+      // Mettez à jour l'utilisateur dans Firestore avec le succès mis à jour
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        profilePic: snapshot.ref.fullPath,
+        Succes: updatedSuccesses,
+      });
+    } else {
+      // Mettez à jour l'utilisateur dans Firestore avec le champ profilePic mis à jour
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, { profilePic: snapshot.ref.fullPath });
     }
   };
 
-  //* CREE UN UTILISATEUR DANS FIREBASE ET DANS LA BASE DE DONNEES
+  //* -------------------------- MODIFIER DE (PSEUDO,EMAIL,MDP,PHOTO DE PROFIL) DE L'UTILISATEUR -------------------------- */
+
+  const updateUser = async (data) => {
+    // si le mot de passe est vide
+    if (data.password === "" || data.password === undefined) {
+      setError("veuillez indiquer votre mot de passe");
+      console.log("veuillez remplir le champ mot de passe");
+      return;
+    }
+    // si les mots de passe sont identiques
+    if (data.password === data.newPassword) {
+      setError("veuillez entrer un nouveau mot de passe");
+      console.log("veuillez entrer un nouveau mot de passe");
+      return;
+    }
+    //  si le nouveau mot de passe est plus petit que 6 caractères
+    if (data.newPassword !== undefined && data.newPassword.length < 6) {
+      setError("le mot de passe doit contenir au moins 6 caractères");
+      console.log("le mot de passe doit contenir au moins 6 caractères");
+      return;
+    }
+    console.log(data);
+    // reconnectez l'utilsateur avant de modifier ses données (sécurité de firebase)
+    await signInWithEmailAndPassword(auth, user.email, data.password);
+    const userRef = doc(db, "users", user.uid);
+
+    // si l'email est différent de l'email actuel
+    if (data.email && data.email !== user.email) {
+      // mettez à jour l'email dans Firestore
+      await updateDoc(userRef, { email: data.email });
+      await updateEmail(auth.currentUser, data.email);
+    }
+    if (data.newPassword !== undefined && data.newPassword !== data.password) {
+      await updatePassword(auth.currentUser, data.newPassword);
+    }
+
+    // si le pseudo est différent du pseudo actuel
+    if (data.pseudo && data.pseudo !== user.pseudo) {
+      // recupéré le nombre random dans le tag de l'utilisateur actuel
+      const previousTag = user.tag.split("#")[1];
+      const newPseudoWithTag = `${data.pseudo}#${previousTag}`;
+
+      // mettre à jour le pseudo et le tag dans le state
+      setUser({ ...user, pseudo: data.pseudo, tag: newPseudoWithTag });
+
+      // mettez à jour le pseudo dans Firestore
+      await updateDoc(userRef, { pseudo: data.pseudo, tag: newPseudoWithTag });
+    }
+    if (data.photo !== user.profilePic) {
+      await changeProfilePic(data.photo);
+    }
+
+    alert("modification effectuée avec succès !");
+    // redirigier l'utilisateur vers la page profile
+
+    navigate(`app/profile/${data.pseudo}#${user.tag.split("#")[1]}`);
+  };
+
+  //* -------------------------- CREE UN UTILISATEUR DANS FIREBASE ET DANS LA BASE DE DONNEES -------------------------- */
   const createUser = async (email, password, pseudo) => {
     const UserCrudential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-
     const randomNumber = Math.floor(Math.random() * 9000) + 1000;
     const user = {
       email: UserCrudential.user.email,
@@ -84,7 +173,7 @@ export const AuthContextProvider = ({ children }) => {
     setUser(user);
   };
 
-  //* SUPPRIMER LE COMPTE UTILISATEUR DE FIREBASE ET DE LA BASE DE DONNEES
+  //* -------------------------- SUPPRIMER LE COMPTE UTILISATEUR DE FIREBASE ET DE LA BASE DE DONNEES -------------------------- */
   const deleteUserPerma = async (user) => {
     const currentUser = auth.currentUser;
     const userRef = doc(db, "users", user.uid);
@@ -93,8 +182,8 @@ export const AuthContextProvider = ({ children }) => {
     // supprimer l'utilisateur de Firebase Authentication
     await deleteUser(currentUser);
     // si l'utilisateur à une photo de profil
-    if (user.profilePic) {
-      const storageRef = ref(storage, `/users/${user.uid}/avatar.jpeg`);
+    if (user?.profilePic) {
+      const storageRef = ref(storage, user.profilePic);
       // supprimer la photo de profil de Firebase Storage
       await deleteObject(storageRef);
       alert("compte supprimé");
@@ -114,7 +203,7 @@ export const AuthContextProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  //* CREATION DE L'EFFECT POUR GERER LA CONNEXION ET LA DECONNEXION
+  //* -------------------------- CREATION DE L'EFFECT POUR GERER LA CONNEXION ET LA DECONNEXION -------------------------- */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       localStorage.setItem("isLoggedIn", isLoggedIn);
@@ -125,11 +214,11 @@ export const AuthContextProvider = ({ children }) => {
         return;
       }
 
-      //* RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
+      // RECUPERAION DE L'UTILISATEUR DANS LA BASE DE DONNEES FIRESTORE ET SET DANS L'ETAT USER
       const userRef = doc(db, "users", currentUser.uid);
       const docSnap = getDoc(userRef).then((docSnap) => {
         const user = docSnap.data();
-        if (user.profilePic) {
+        if (user?.profilePic) {
           getDownloadURL(ref(storage, user.profilePic)).then((url) => {
             setPhoto(url);
           });
@@ -141,7 +230,7 @@ export const AuthContextProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, [photo, user.profilePic]);
+  }, [photo, user?.profilePic]);
 
   //* RENDU DU PROVIDER AVEC EN VALUE LES FONCTIONS ET L'ETAT
   return (
@@ -152,12 +241,17 @@ export const AuthContextProvider = ({ children }) => {
         user,
         logout,
         signIn,
-        updateUserInfo,
         deleteUserPerma,
         photo,
         setPhoto,
         setIsLoggedIn,
         isLoggedIn,
+        changeProfilePic,
+        userProfilePhoto,
+        setUserProfilePhoto,
+        error,
+        setError,
+        updateUser,
       }}
     >
       {children}
