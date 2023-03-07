@@ -32,10 +32,8 @@ const Profile = () => {
 
   // RECUPERATION DE L'ID DE L'URL
   const userIdFromUrl = window.location.href.split("/")[5];
-
   useEffect(() => {
     setIsLoading(true);
-
     // Crée une requête Firestore pour récupérer l'utilisateur avec l'ID de l'URL.
     const q = query(collection(db, "users"), where("tag", "==", userIdFromUrl));
     // Exécute la requête et récupère le snapshot.
@@ -55,12 +53,11 @@ const Profile = () => {
             }
           );
         }
-
         setUserFromUrl(userFromSnapshot);
       });
       setIsLoading(false);
     });
-  }, [userIdFromUrl]); // La dépendance vide signifie que l'effet ne sera déclenché qu'une fois, lorsque le composant est monté.```
+  }, [userIdFromUrl]); // si le user.succes change, alors on recharge le useEffect
 
   //* -------------------------- MISE A JOUR DE LA PHOTO DE PROFIL -------------------------- *//
   const HandleChangeProfilePic = async (e) => {
@@ -168,7 +165,7 @@ const Profile = () => {
             )}
           </div>
           <div className={classes.userStatsContainer}>
-            <UserStats user={userFromUrl} />
+            <UserStats user={user?.tag === userFromUrl ? user : userFromUrl} />
           </div>
         </div>
       )}

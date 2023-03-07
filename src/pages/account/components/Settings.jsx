@@ -93,8 +93,15 @@ const Settings = () => {
 
   //* -------------------------- FONCTION POUR SUPPRIMER LE COMPTE -------------------------- */
   const handleDeleteAccount = async () => {
+    // si le champ password est vide
+    if (input.password == "" || input.password == null || !input.password) {
+      setError(
+        "Veuillez renseigner votre mot de passe pour supprimer votre compte"
+      );
+      return;
+    }
     if (window.confirm("Voulez-vous vraiment supprimer votre compte ?")) {
-      await deleteUserPerma(user);
+      await deleteUserPerma(user, user.password);
     }
   };
 

@@ -99,24 +99,30 @@ export const AuthContextProvider = ({ children }) => {
     // si le mot de passe est vide
     if (data.password === "" || data.password === undefined) {
       setError("veuillez indiquer votre mot de passe");
-      console.log("veuillez remplir le champ mot de passe");
       return;
     }
     // si les mots de passe sont identiques
     if (data.password === data.newPassword) {
       setError("veuillez entrer un nouveau mot de passe");
-      console.log("veuillez entrer un nouveau mot de passe");
       return;
     }
     //  si le nouveau mot de passe est plus petit que 6 caractères
     if (data.newPassword !== undefined && data.newPassword.length < 6) {
       setError("le mot de passe doit contenir au moins 6 caractères");
-      console.log("le mot de passe doit contenir au moins 6 caractères");
       return;
     }
-    console.log(data);
     // reconnectez l'utilsateur avant de modifier ses données (sécurité de firebase)
-    await signInWithEmailAndPassword(auth, user.email, data.password);
+    try {
+      const userCrudential = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        data.password
+      );
+    } catch (error) {
+      setError("mot de passe incorrect");
+      return;
+    }
+
     const userRef = doc(db, "users", user.uid);
 
     // si l'email est différent de l'email actuel
@@ -174,22 +180,33 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   //* -------------------------- SUPPRIMER LE COMPTE UTILISATEUR DE FIREBASE ET DE LA BASE DE DONNEES -------------------------- */
-  const deleteUserPerma = async (user) => {
+  const deleteUserPerma = async (user, password) => {
     const currentUser = auth.currentUser;
-    const userRef = doc(db, "users", user.uid);
-    // supprimer l'utilisateur de la base de données Firestore
-    await deleteDoc(userRef);
-    // supprimer l'utilisateur de Firebase Authentication
-    await deleteUser(currentUser);
+    // ! reauthentifier l'utilisateur avant de supprimer son compte (sécurité de firebase)
+    try {
+      const userCrudential = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        password
+      );
+    } catch (error) {
+      setError("mot de passe incorrect");
+      return;
+    }
     // si l'utilisateur à une photo de profil
     if (user?.profilePic) {
       const storageRef = ref(storage, user.profilePic);
       // supprimer la photo de profil de Firebase Storage
       await deleteObject(storageRef);
-      alert("compte supprimé");
-      navigate("/");
     }
-    navigate("/");
+    const userRef = doc(db, "users", user.uid);
+    // supprimer l'utilisateur de la base de données Firestore
+    await deleteDoc(userRef);
+    // supprimer l'utilisateur de Firebase Authentication
+    await deleteUser(currentUser);
+    setPhoto("");
+    alert("compte supprimé");
+    navigate("/register");
   };
 
   const signIn = (email, password) => {

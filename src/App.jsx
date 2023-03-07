@@ -22,40 +22,43 @@ import RootLayout from "./pages/Root";
 // * IMPORT DU CONTEXT
 import { AuthContextProvider } from "./context/AuthContext";
 import { PathContextProvider } from "./context/DataContext";
+import { LessonContextProvider } from "./context/LessonContext";
 
 function App() {
   return (
-    <PathContextProvider>
-      <AuthContextProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/app"
-            element={
-              <ProtectedRoute>
-                <RootLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="learn" element={<Learn />} />
-            <Route path="alphabet" element={<Alphabet />} />
-            <Route path="profile/:userid" element={<Profile />} />
+    <LessonContextProvider>
+      <PathContextProvider>
+        <AuthContextProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/app"
+              element={
+                <ProtectedRoute>
+                  <RootLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="learn" element={<Learn />} />
+              <Route path="alphabet" element={<Alphabet />} />
+              <Route path="profile/:userid" element={<Profile />} />
 
-            <Route path="settings/account" element={<Settings />} />
-          </Route>
-          <Route
-            path="lessons/:lessonid"
-            element={
-              <ProtectedRoute>
-                <Lessons />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </AuthContextProvider>
-    </PathContextProvider>
+              <Route path="settings/account" element={<Settings />} />
+            </Route>
+            <Route
+              path="lessons/:lessonid"
+              element={
+                <ProtectedRoute>
+                  <Lessons />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </AuthContextProvider>
+      </PathContextProvider>
+    </LessonContextProvider>
   );
 }
 

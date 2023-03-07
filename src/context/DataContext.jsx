@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 //* IMPORT DES FONCTIONS DE FIREBASE
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 
 //* IMPORT DE LA CONFIGURATION DE FIREBASE
 import { db } from "../firebase/config";
@@ -13,6 +13,9 @@ const DataContext = createContext();
 export const PathContextProvider = ({ children }) => {
   const [path, setPath] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lessonId, setLessonId] = useState();
+
+  const s1l1Document = doc(db, `lessons/${lessonId}`);
 
   //* CREATION DE L'EFFECT POUR RECUPERER LES DONNEES DE LA COLLECTION PATH
   useEffect(() => {
@@ -23,9 +26,8 @@ export const PathContextProvider = ({ children }) => {
     return unsub;
   }, [loading]);
 
-  //* RENDU DU PROVIDER AVEC EN VALUE LES FONCTIONS ET L'ETAT
   return (
-    <DataContext.Provider value={{ path, loading }}>
+    <DataContext.Provider value={{ path, loading, lessonId, setLessonId }}>
       {children}
     </DataContext.Provider>
   );

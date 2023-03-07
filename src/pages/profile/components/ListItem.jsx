@@ -33,7 +33,6 @@ const ListItem = ({
       // S'il n'y a pas de nombre dans la description, on retourne la description telle quelle
       return description;
     }
-    const oldN = match[0];
     const newSring = description.replace(nombreRegex, tierCounts[tier]);
     return newSring;
   }

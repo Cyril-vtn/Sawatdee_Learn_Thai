@@ -4,40 +4,53 @@ import classes from "./MainContent.module.css";
 import Load from "../../../components/loader/Load";
 import Img from "../../../assets/images/thaiPersonWoman.png";
 import WordBtn from "./WordBtn";
-// //* IMPORT DE LA CONFIGURATION DE FIREBASE
-import { db } from "../../../firebase/config";
+import { LessonCtx } from "../../../context/LessonContext";
 
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
 
 const MainContent = () => {
-  const [data, setData] = useState(null);
-
-  const [loading, setLoading] = useState(true);
+  // récupéré le contexte
+  const { loading, data, fetchData, index, shownIndexes } = LessonCtx();
+  // state pour les réponses sélectionnées
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   // récupéré les parametre de l'url
   const { lessonid } = useParams();
 
   useEffect(() => {
-    setLoading(true);
-
-    const s1l1Document = doc(db, `lessons/${lessonid}`);
-    getDoc(s1l1Document).then((doc) => {
-      if (doc.exists()) {
-        setData(doc.data().Q1[0]);
-        console.log("Document data:", doc.data().Q1[0]);
-        // setId("");
-        setLoading(false);
-      } else {
-        console.log("Le document n'existe pas!");
-        setLoading(false);
-      }
-    });
+    // on récupère les données de la leçon
+    fetchData(lessonid);
   }, []);
 
-  if (loading) return <Load style={{ backgroundColor: "#58cc02" }} />;
+  // on récupère la question avec l'index généré aléatoirement
+  const questionKey = `Q${index}`;
+  const question = data[questionKey];
+
+  // fonction pour gérer le click sur les mots
+  const handleAnswerClick = (answer) => {
+    if (selectedAnswers.includes(answer)) {
+      // Si la réponse est déjà sélectionnée, on la retire du tableau
+      setSelectedAnswers(selectedAnswers.filter((a) => a !== answer));
+    } else {
+      // Si la réponse n'est pas sélectionnée, on vérifie qu'il n'y a pas déjà 1 réponses sélectionnées
+      if (selectedAnswers.length == 1) return;
+      // Sinon, on l'ajoute au tableau
+      setSelectedAnswers([...selectedAnswers, answer]);
+    }
+  };
+
+  const isAnswerSelected = (answer) => {
+    // Retourne true si la réponse est déjà sélectionnée, false sinon
+    return selectedAnswers.includes(answer);
+  };
+  if (loading)
+    return (
+      <Load
+        style={{ backgroundColor: "#58cc02" }}
+        centerClass={classes.center}
+      />
+    );
   else {
-    console.log(data);
     return (
       <>
         <Header />
@@ -46,7 +59,7 @@ const MainContent = () => {
             <div className={classes.content}>
               <div className={classes.wrapper}>
                 <h1 className={classes.h1}>
-                  <span>qzd</span>
+                  <span>{`Question ${shownIndexes.length} !`}</span>
                 </h1>
                 <div
                   style={{
@@ -63,7 +76,7 @@ const MainContent = () => {
                       <div className={classes.bubbleWrapper}>
                         <div>
                           <span className={classes.question}>
-                            {data.question}
+                            {question.question}
                           </span>
                         </div>
                       </div>
@@ -81,7 +94,13 @@ const MainContent = () => {
                 </div>
                 <div className={classes.wordsContainer}>
                   <div>
-                    <WordBtn />
+                    {selectedAnswers.map((answer, i) => (
+                      <WordBtn
+                        key={i}
+                        word={answer}
+                        onClick={() => handleAnswerClick(answer)}
+                      />
+                    ))}
                   </div>
                 </div>
                 <div className={classes.wordBankContainer}>
@@ -89,8 +108,13 @@ const MainContent = () => {
                     className={classes.wordBankWrapper}
                     data-test="word-bank"
                   >
-                    {data.possibility.map((word, i) => (
-                      <WordBtn key={i} word={word} />
+                    {question.possibilities.map((answer, i) => (
+                      <WordBtn
+                        key={i}
+                        word={answer}
+                        disabled={isAnswerSelected(answer)}
+                        onClick={() => handleAnswerClick(answer)}
+                      />
                     ))}
                   </div>
                 </div>
