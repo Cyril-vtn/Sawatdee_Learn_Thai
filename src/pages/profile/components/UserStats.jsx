@@ -60,8 +60,7 @@ export const UserStats = ({ user }) => {
                   );
                 }
               )}
-
-              <Link to="#" className={classes.link}>
+              <Link to="#" className={`${classes.link} ${classes.disabled}`}>
                 Afficher tout
                 <span></span>
               </Link>

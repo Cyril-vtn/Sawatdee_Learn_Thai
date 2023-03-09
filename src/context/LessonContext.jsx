@@ -5,12 +5,14 @@ import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 
 //* IMPORT DE LA CONFIGURATION DE FIREBASE
 import { db } from "../firebase/config";
+import { useNavigate } from "react-router-dom";
 
 //* CREATION DU CONTEXTE
 const LessonContext = createContext();
 
 //* CREATION DU PROVIDER
 export const LessonContextProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [shownIndexes, setShownIndexes] = useState([]);
   const [index, setIndex] = useState([]);
@@ -21,20 +23,24 @@ export const LessonContextProvider = ({ children }) => {
   // fonction qui permet de récupérer les données de la leçon
   const fetchData = async (lessonId) => {
     setLoading(true);
-    setTimeout(async () => {
-      const lessonDoc = doc(db, `lessons/${lessonId}`);
-      await getDoc(lessonDoc).then((doc) => {
-        if (doc.exists()) {
-          setData(doc.data());
-          getRandomIndex();
+    // setTimeout(async () => {
+    const lessonDoc = doc(db, `lessons/${lessonId}`);
+    await getDoc(lessonDoc).then((doc) => {
+      if (doc.exists()) {
+        setData(doc.data());
+        getRandomIndex();
 
-          setLoading(false);
-        } else {
-          console.log("Le document n'existe pas!");
-          setLoading(false);
-        }
-      });
-    }, 2000);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        // si ce n'est pas une lecon existante on redirige vers la page d'accueil
+        navigate("/app/learn");
+
+        console.log("Le document n'existe pas!");
+        setLoading(false);
+      }
+    });
+    // }, 2000);
   };
 
   const getRandomIndex = () => {

@@ -43,8 +43,11 @@
   justify-content: space-between;
   padding: 16px;
 }
+.disabled {
+  color: rgb(var(--color-swan));
+  cursor: not-allowed;
+}
 .link span {
-  cursor: pointer;
   margin-left: 6px;
   margin-top: 2px;
   background-position: -678px -70px;

@@ -1,7 +1,6 @@
 .btnContainer {
   --token-extra-height: 0px;
   height: calc(60px + var(--token-extra-height));
-  /* margin: 20px 0; */
   margin-left: 4px;
   margin-right: 4px;
   display: inline-flex;
@@ -45,7 +44,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-
+  transition: opacity 0.3s ease-in-out;
   white-space: nowrap;
 }
 
@@ -62,10 +61,11 @@
   top: -2px;
   z-index: -1;
 }
-.btn:active {
+/* faire fonctionner la classes .btn:active uniquement quand la classe disabled n'est pas active */
+.btn:active:not(.disabled) {
   top: 2px;
 }
-.btn:active::before {
+.btn:active::before:not(.disabled) {
   box-shadow: none;
 }
 
@@ -75,4 +75,8 @@
   color: var(--web-ui_button-color-disabled, #e5e5e5);
   cursor: default;
   box-shadow: none;
+}
+.disabled {
+  opacity: 0.4;
+  cursor: default;
 }

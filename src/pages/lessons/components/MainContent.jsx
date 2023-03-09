@@ -7,6 +7,7 @@ import WordBtn from "./WordBtn";
 import { LessonCtx } from "../../../context/LessonContext";
 
 import { useParams } from "react-router-dom";
+import Footer from "./Footer";
 
 const MainContent = () => {
   // récupéré le contexte
@@ -114,6 +115,7 @@ const MainContent = () => {
                         word={answer}
                         disabled={isAnswerSelected(answer)}
                         onClick={() => handleAnswerClick(answer)}
+                        selectedAnswers={selectedAnswers}
                       />
                     ))}
                   </div>
@@ -122,6 +124,7 @@ const MainContent = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </>
     );
   }
