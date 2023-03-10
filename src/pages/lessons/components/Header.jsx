@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // * IMPORT DES STYLES
 import classes from "./Header.module.css";
 
-const Header = () => {
+const Header = ({ index }) => {
   const navigate = useNavigate();
+  const [progress, setProgress] = React.useState(0);
   const returnToPath = () => {
     // créé une alert pour confirmer la sortie de la partie en cours
     if (
@@ -17,6 +18,11 @@ const Header = () => {
       navigate("/app/learn");
     }
   };
+  // calculer la progression de la leçon en cours en fonction de l'index
+  useEffect(() => {
+    setProgress((index / 5) * 100 + "%");
+  });
+
   return (
     <div className={classes.grid}>
       <div className={classes.wrapper}>
@@ -30,7 +36,7 @@ const Header = () => {
             className={classes.progress}
             style={{
               "--web-ui_internal_progress-bar-height": "16px",
-              "--web-ui_internal_progress-bar-value": "20%",
+              "--web-ui_internal_progress-bar-value": progress,
             }}
             aria-valuemax="1"
             aria-valuemin="0"

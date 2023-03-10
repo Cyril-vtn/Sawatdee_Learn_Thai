@@ -96,6 +96,14 @@ export const AuthContextProvider = ({ children }) => {
   //* -------------------------- MODIFIER DE (PSEUDO,EMAIL,MDP,PHOTO DE PROFIL) DE L'UTILISATEUR -------------------------- */
 
   const updateUser = async (data) => {
+    const isValidPseudo = /^[a-zA-Z0-9]+$/.test(data.pseudo);
+    if (!isValidPseudo) {
+      setError(
+        "Le pseudo ne doit pas contenir d'espace ou de caractères spéciaux"
+      );
+      return;
+    }
+
     // si le mot de passe est vide
     if (data.password === "" || data.password === undefined) {
       setError("veuillez indiquer votre mot de passe");

@@ -1,3 +1,10 @@
+.flex {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
 .mainContainer {
   display: flex;
   margin-top: 100px;
@@ -120,9 +127,8 @@
 }
 .center {
   display: flex;
-  height: 100vh;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  height: 100vh;
   scale: 1.8;
 }

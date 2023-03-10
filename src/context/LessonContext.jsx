@@ -18,29 +18,28 @@ export const LessonContextProvider = ({ children }) => {
   const [index, setIndex] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lessonId, setLessonId] = useState();
-  const [question, setQuestion] = useState();
+  const [lessonError, setLessonError] = useState(0);
 
   // fonction qui permet de récupérer les données de la leçon
   const fetchData = async (lessonId) => {
     setLoading(true);
-    // setTimeout(async () => {
-    const lessonDoc = doc(db, `lessons/${lessonId}`);
-    await getDoc(lessonDoc).then((doc) => {
-      if (doc.exists()) {
-        setData(doc.data());
-        getRandomIndex();
+    setTimeout(async () => {
+      const lessonDoc = doc(db, `lessons/${lessonId}`);
+      await getDoc(lessonDoc).then((doc) => {
+        if (doc.exists()) {
+          setData(doc.data());
+          getRandomIndex();
 
-        setLoading(false);
-      } else {
-        setLoading(false);
-        // si ce n'est pas une lecon existante on redirige vers la page d'accueil
-        navigate("/app/learn");
+          setLoading(false);
+        } else {
+          setLoading(false);
+          // si ce n'est pas une lecon existante on redirige vers la page d'accueil
+          navigate("/app/learn");
 
-        console.log("Le document n'existe pas!");
-        setLoading(false);
-      }
-    });
-    // }, 2000);
+          setLoading(false);
+        }
+      });
+    }, 2000);
   };
 
   const getRandomIndex = () => {
@@ -64,7 +63,8 @@ export const LessonContextProvider = ({ children }) => {
         getRandomIndex,
         index,
         shownIndexes,
-        question,
+        setLessonError,
+        lessonError,
       }}
     >
       {children}
