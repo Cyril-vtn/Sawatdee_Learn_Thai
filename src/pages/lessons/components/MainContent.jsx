@@ -37,7 +37,6 @@ const MainContent = () => {
   // on récupère la question avec l'index généré aléatoirement
   const questionKey = `Q${index}`;
   const question = data[questionKey];
-
   // fonction pour gérer le click sur les mots
   const handleAnswerClick = (answer) => {
     if (selectedAnswers.includes(answer)) {
@@ -169,7 +168,7 @@ const MainContent = () => {
             helper={data?.helper}
             onClick={handleNextClick}
             index={shownIndexes.length}
-            exemple={data?.exemple}
+            exemple={question?.exemple}
             error={lessonError}
           />
           <Footer

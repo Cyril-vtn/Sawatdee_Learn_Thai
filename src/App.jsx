@@ -12,6 +12,7 @@ import Register from "./pages/register/index";
 import Lessons from "./pages/lessons/index";
 import Profile from "./pages/profile/index";
 import Settings from "./pages/account/index";
+import Error from "./pages/error/index";
 
 // * IMPORT DE LA PROTECTED ROUTE
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -30,6 +31,7 @@ function App() {
       <PathContextProvider>
         <AuthContextProvider>
           <Routes>
+            <Route path="*" element={<Error />} />
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

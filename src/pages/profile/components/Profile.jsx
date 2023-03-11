@@ -13,6 +13,7 @@ import { db, storage } from "../../../firebase/config";
 
 //* IMPORT IMG
 import flagRounded from "../../../assets/svg/flagRounded.svg";
+import Img from "../../../assets/svg/noProfileFound.svg";
 
 //* IMPORT FIREBASE STORAGE
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -29,6 +30,7 @@ const Profile = () => {
     UserAuth();
   const [userFromUrl, setUserFromUrl] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   // RECUPERATION DE L'ID DE L'URL
   const userIdFromUrl = window.location.href.split("/")[5];
@@ -40,6 +42,8 @@ const Profile = () => {
     getDocs(q).then((querySnapshot) => {
       // Si le snapshot est vide, cela signifie qu'il n'y a pas d'utilisateur avec cet ID, alors définit "empty" à true et quitte la fonction.
       if (querySnapshot.empty === true) {
+        setIsLoading(false);
+        setIsEmpty(true);
         return;
       }
       // Si le snapshot n'est pas vide, itère sur chaque document (dans ce cas, il n'y a qu'un document car "tag" est unique) dans le snapshot.
@@ -86,6 +90,12 @@ const Profile = () => {
           centerClass={classes.center}
           style={{ backgroundColor: "rgb(var(--color-macaw)" }}
         />
+      ) : isEmpty ? (
+        //! SI L'UTILISATEUR N'EXISTE PAS ALORS ON AFFICHE UN MESSAGE D'ERREUR
+        <div className={classes.noProfileContainer}>
+          <img src={Img} alt="error" />
+          <h2>Ce profil n'existe pas...</h2>
+        </div>
       ) : (
         <div className={classes.container}>
           <div className={classes.header}>

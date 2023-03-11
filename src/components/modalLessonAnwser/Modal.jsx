@@ -34,14 +34,10 @@ const Modal = ({
           ou <strong>("ค่ะ" kâ pour les femmes)</strong> à la fin des phrase en
           signe de politesse !
         </p>
-        {exemple ? <p className={classes.text}>{exemple}</p> : null}
+        {exemple ? (
+          <p className={classes.text}>{`Exemple: ${exemple}`}</p>
+        ) : null}
 
-        {/* (
-          <p>
-            Vous avez fait {error}
-            {error > 1 ? "erreurs" : "erreur"}
-          </p>
-        )} */}
         {index === 5 ? (
           <p
             style={{
