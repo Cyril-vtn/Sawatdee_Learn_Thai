@@ -11,11 +11,13 @@ import Load from "../../../components/loader/Load";
 
 //* IMPORT DU CONTEXTE
 import { PathAuth } from "../../../context/DataContext";
+import { UserAuth } from "../../../context/AuthContext";
 
 //* CREATION DU COMPOSANT
 const LessonPath = () => {
   //* RECUPERATION DES DONNEES DU CONTEXTE
   const { path, loading } = PathAuth();
+  const { user } = UserAuth();
 
   //* CREATION DE L'ETAT POUR GERER L'ACTIVE BUTTON
   const [activeButton, setActiveButton] = useState(null);
@@ -62,6 +64,8 @@ const LessonPath = () => {
                               isActive={activeButton === btnId}
                               onClick={() => handleButtonClick(btnId)}
                               setActive={setActiveButton}
+                              // ajouter en true ou false, en fpnction de si la lecon à déjà été completer ou non par rapport à l'id de la leçon et de l'utilisateur connecté
+                              finishedLesson={user.finished.includes(btnId)}
                             />
                           </React.Fragment>
                         );

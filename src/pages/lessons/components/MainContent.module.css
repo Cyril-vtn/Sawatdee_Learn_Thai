@@ -36,7 +36,6 @@
 .h1 {
   font-size: 28px;
   text-transform: uppercase;
-  text-decoration: underline;
   line-height: 1.25;
   margin: 0;
   text-align: left;
@@ -131,4 +130,12 @@
   align-items: center;
   height: 100vh;
   scale: 1.8;
+}
+
+/* si la fenetre fait moins de 768px */
+
+@media screen and (max-width: 768px) {
+  .mainContainer {
+    margin-top: 40px;
+  }
 }

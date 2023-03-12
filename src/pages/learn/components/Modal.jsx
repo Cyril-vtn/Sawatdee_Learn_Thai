@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 // import { useLessonsCtx } from "../../../context/LessonsContext";
 
 //* CREATION DU COMPOSANT MODAL
-const Modal = ({ title, onClose, id }) => {
+const Modal = ({ title, onClose, id, finishedLesson }) => {
   const modalRef = useRef(null);
   const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ const Modal = ({ title, onClose, id }) => {
   //* CREATION DU JSX
   return (
     <div
-      className={classes.container}
+      className={`${classes.container} ${finishedLesson && classes.finished}`}
       style={{ "--margin": "12px" }}
       ref={modalRef}
     >
@@ -80,6 +80,11 @@ const Modal = ({ title, onClose, id }) => {
                 {title ? title : "Titre de la leçon"}
               </h1>
             </div>
+            {finishedLesson && (
+              <p className={classes.finishedTxt}>
+                Vous avez déjà fini cette leçon
+              </p>
+            )}
             <button
               type="button"
               onClick={() => handleLesson(id)}

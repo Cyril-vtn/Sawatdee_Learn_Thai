@@ -1,9 +1,9 @@
 .modal {
   position: absolute;
   display: flex;
-  height: 180px;
+  height: 230px;
   width: 100%;
-  bottom: -300px;
+  bottom: -350px;
   z-index: 999;
   background-color: var(--color-squid);
   transition: all 0.3s ease-out;

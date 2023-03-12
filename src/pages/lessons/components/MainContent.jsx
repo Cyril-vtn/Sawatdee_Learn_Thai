@@ -10,6 +10,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import Footer from "./Footer";
 import Modal from "../../../components/modalLessonAnwser/Modal";
 
+// Import des sons
+import CorrectAnswerSound from "../../../assets/sounds/correct_answer_sound.mp3";
+import BadAnswerSound from "../../../assets/sounds/bad_answer_sound.mp3";
 const MainContent = () => {
   // récupéré le contexte
   const {
@@ -21,6 +24,7 @@ const MainContent = () => {
     getRandomIndex,
     setLessonError,
     lessonError,
+    updateUserAfterLesson,
   } = LessonCtx();
   // state pour les réponses sélectionnées
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -34,10 +38,11 @@ const MainContent = () => {
     fetchData(lessonid);
   }, []);
 
-  // on récupère la question avec l'index généré aléatoirement
+  //* on récupère la question avec l'index généré aléatoirement
   const questionKey = `Q${index}`;
   const question = data[questionKey];
-  // fonction pour gérer le click sur les mots
+
+  //* fonction pour gérer le click sur les mots
   const handleAnswerClick = (answer) => {
     if (selectedAnswers.includes(answer)) {
       // Si la réponse est déjà sélectionnée, on la retire du tableau
@@ -50,17 +55,24 @@ const MainContent = () => {
     }
   };
 
-  // fonction pour gérer la validation
+  //* fonction pour gérer la validation
   const handleValidation = () => {
-    // on vérifie que les réponses sélectionnées sont les bonnes et les comparer à la liste des réponses
-    const isCorrect = selectedAnswers[0] === question.answer;
-    // si la réponse est fausse on incrémente lessonError
+    const correctAnswerSound = new Audio(CorrectAnswerSound); //bonne réponse
+    const badAnswerSound = new Audio(BadAnswerSound); //mauvaise réponse
+    const isCorrect = selectedAnswers[0] === question.answer; // true ou false
+
+    if (isCorrect) {
+      // si la réponse est correcte
+      correctAnswerSound.volume = 0.5;
+      correctAnswerSound.play();
+    }
     if (!isCorrect) {
+      // si la réponse est incorrecte
+      badAnswerSound.volume = 0.3;
+      badAnswerSound.play();
       setLessonError(lessonError + 1);
     }
-    // on affiche le modal
     setShowModal(true);
-    // on met à jour le state correct en fonction de la réponse
     setCorrect(isCorrect);
   };
 
@@ -170,6 +182,8 @@ const MainContent = () => {
             index={shownIndexes.length}
             exemple={question?.exemple}
             error={lessonError}
+            finishedLesson={updateUserAfterLesson}
+            id={lessonid}
           />
           <Footer
             onClick={handleValidation}

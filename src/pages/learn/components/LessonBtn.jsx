@@ -14,6 +14,7 @@ const LessonBtn = ({
   isActive,
   setActive,
   ModalContent,
+  finishedLesson,
 }) => {
   return (
     <div className={classes.pathBtnContainer} style={{ ...style }}>
@@ -23,7 +24,9 @@ const LessonBtn = ({
             onClick={() => {
               onClick(id);
             }}
-            className={`${classes.btn} ${classes._3rLLs}`}
+            className={`${classes.btn} ${classes._3rLLs} ${
+              finishedLesson && classes.finished
+            }`}
           >
             <img
               src="https://d35aaqx5ub95lt.cloudfront.net/images/path/icons/ef9c771afdb674f0ff82fae25c6a7b0a.svg"
@@ -37,6 +40,7 @@ const LessonBtn = ({
           <Modal
             title={ModalContent?.title}
             id={id}
+            finishedLesson={finishedLesson}
             onClose={() => setActive(null)}
           >
             Modal content for {id}

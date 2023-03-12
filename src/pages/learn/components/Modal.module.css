@@ -104,3 +104,12 @@
 .btn:hover {
   filter: brightness(1.1);
 }
+
+.finished {
+  --path-unit-background-color: rgb(255, 200, 0);
+}
+
+.finishedTxt {
+  font-size: 13px;
+  text-decoration: underline;
+}

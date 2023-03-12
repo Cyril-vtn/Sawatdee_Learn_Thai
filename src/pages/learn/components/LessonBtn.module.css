@@ -60,3 +60,7 @@
 ._3rLLs {
   --path-level-color: var(--path-unit-background-color);
 }
+
+.finished {
+  --path-level-color: rgb(255, 200, 0);
+}

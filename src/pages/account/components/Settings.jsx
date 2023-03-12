@@ -223,7 +223,7 @@ const Settings = () => {
               className={`btnStyle ${classes.confirmBtn}`}
               disabled={isDisabled}
               onClick={handleFetchNewData}
-              type="submit"
+              type="Submit"
             >
               Confirmer les changements
             </button>
