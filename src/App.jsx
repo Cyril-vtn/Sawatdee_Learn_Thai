@@ -31,7 +31,7 @@ function App() {
       <PathContextProvider>
         <AuthContextProvider>
           <Routes>
-            <Route path="*" element={<Error />} />
+            <Route path="/*" element={<Error />} />
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

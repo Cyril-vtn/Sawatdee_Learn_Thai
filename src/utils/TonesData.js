@@ -4,9 +4,9 @@ function createData(ton, symbole, exemple) {
 }
 
 export const Tones = [
-  createData("ton moyen", "Pas de symbole", "kaa"),
-  createData("ton bas", "`", "kaa`"),
-  createData("ton descendant", "ˆ", "kaaˆ"),
-  createData("ton élevé", "´", "kaa´"),
-  createData("ton montant", "ˇ", "kaaˇ"),
+  createData("Moyen", "Pas de symbole", "kaa"),
+  createData("Bas", "`", "kaa`"),
+  createData("Descendant", "ˆ", "kaaˆ"),
+  createData("Élevé", "´", "kaa´"),
+  createData("Montant", "ˇ", "kaaˇ"),
 ];

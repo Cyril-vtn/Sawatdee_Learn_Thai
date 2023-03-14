@@ -65,7 +65,7 @@ const LessonPath = () => {
                               onClick={() => handleButtonClick(btnId)}
                               setActive={setActiveButton}
                               // ajouter en true ou false, en fpnction de si la lecon à déjà été completer ou non par rapport à l'id de la leçon et de l'utilisateur connecté
-                              finishedLesson={user.finished.includes(btnId)}
+                              finishedLesson={user.finished?.includes(btnId)}
                             />
                           </React.Fragment>
                         );

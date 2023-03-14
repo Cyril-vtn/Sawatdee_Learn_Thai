@@ -20,18 +20,18 @@ const userCreationData = {
         xp: 50,
       },
     },
-    {
-      name: "Ami pour la vie",
-      img: ["_2zNmn", "_2SNGW"],
-      description: "Ajoute 3 amis",
-      completed: false,
-      count: 0,
-      tier: 0,
-      tierCounts: [3, 10, 20, 50, 100],
-      reward: {
-        xp: 50,
-      },
-    },
+    // {
+    //   name: "Ami pour la vie",
+    //   img: ["_2zNmn", "_2SNGW"],
+    //   description: "Ajoute 3 amis",
+    //   completed: false,
+    //   count: 0,
+    //   tier: 0,
+    //   tierCounts: [3, 10, 20, 50, 100],
+    //   reward: {
+    //     xp: 50,
+    //   },
+    // },
     {
       name: "Photogénique",
       img: ["_3Nhfm", "_1X1Kv"],

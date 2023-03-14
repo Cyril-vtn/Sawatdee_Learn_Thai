@@ -21,7 +21,8 @@ import Load from "../../../components/loader/Load";
 
 const Sidebar = () => {
   // RECUPERATION DES FONCTION/STATE DU CONTEXTE
-  const { logout, user, setIsLoggedIn, photo } = UserAuth();
+  const { logout, user, setIsLoggedIn, photo, setPhoto, setUserProfilePhoto } =
+    UserAuth();
 
   // CREATION DES STATE
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,8 @@ const Sidebar = () => {
       try {
         await delay(1000);
         await logout();
+        setPhoto(null);
+        setUserProfilePhoto(null);
         setIsLoggedIn(false);
         setLoading(false);
       } catch (err) {
