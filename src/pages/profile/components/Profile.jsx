@@ -38,6 +38,7 @@ const Profile = () => {
     setIsLoading(true);
     // Crée une requête Firestore pour récupérer l'utilisateur avec l'ID de l'URL.
     const q = query(collection(db, "users"), where("tag", "==", userIdFromUrl));
+    setIsEmpty(false);
     // Exécute la requête et récupère le snapshot.
     getDocs(q).then((querySnapshot) => {
       // Si le snapshot est vide, cela signifie qu'il n'y a pas d'utilisateur avec cet ID, alors définit "empty" à true et quitte la fonction.
