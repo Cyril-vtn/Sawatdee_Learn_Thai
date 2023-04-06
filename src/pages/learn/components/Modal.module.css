@@ -75,6 +75,16 @@
   white-space: nowrap;
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  filter: none;
+}
+
 .pointerWrapper {
   margin: 0 15px;
   transform: translateX(-50%);

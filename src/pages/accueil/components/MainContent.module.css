@@ -67,28 +67,11 @@
   width: 30%;
 }
 
-/* différent bouton présent sur la page */
-.boutonRegistermain {
-  background-color: var(--web-ui_bouton-background-color);
+.btnLogin {
   padding: 0 16px;
-  width: 320px;
-  height: 44px;
-  border-bottom: solid var(--web-ui_bouton-border-bottom);
-  border-bottom-width: 4px;
-  color: #fff;
-}
-
-.boutonLoginMain {
-  background-color: #235390;
-  padding: 0 16px;
-  width: 320px;
-  height: 44px;
-  border-top: 2px solid #133055;
-  border-left: 2px solid #133055;
-  border-right: 2px solid #133055;
-  border-bottom: solid #133055;
-  border-bottom-width: 4px;
-  color: #fff;
+  --web-ui_button-color: rgb(var(--color-snow));
+  --web-ui_button-background-color: rgb(var(--color-owl));
+  --web-ui_button-border-color: rgb(var(--color-tree-frog));
 }
 
 @media screen and (max-width: 1024px) {

@@ -1,7 +1,7 @@
 import React from "react";
 
 //* IMPORT DE REACT ROUTER DOM
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 //* IMPORT DES STYLES
 import classes from "./MainContent.module.css";
@@ -9,9 +9,6 @@ import classes from "./MainContent.module.css";
 //* IMPORT DES IMAGES
 import logo from "../../../assets/brand/logo.png";
 import ThaiWorld from "../../../assets/images/thaiWorldLogo.png";
-
-//* IMPORT DES COMPOSANTS
-import Bouton from "../../../components/button/Bouton";
 
 const Home = () => {
   return (
@@ -45,16 +42,20 @@ const Home = () => {
 
                 {/* SI L'UTILISATEUR EST DEJA CONNECTE, RENDRE SEULEMENT UN BOUTON C'EST PARTIE ! */}
                 <div className={classes.mainButtonContainer}>
-                  <Bouton
-                    text="C'est parti !"
-                    link="/register"
-                    classes={classes.boutonRegistermain}
-                  />
-                  <Bouton
-                    text="J'ai déjà un compte"
-                    link="/login"
-                    classes={classes.boutonLoginMain}
-                  />
+                  <NavLink
+                    to="/register"
+                    className={`btnStyle ${classes.btnLogin}`}
+                    style={{ width: "100%" }}
+                  >
+                    C'est parti !
+                  </NavLink>
+                  <NavLink
+                    to="/login"
+                    className="btnStyle"
+                    style={{ width: "100%" }}
+                  >
+                    J'ai déjà un compte
+                  </NavLink>
                 </div>
               </div>
             </div>

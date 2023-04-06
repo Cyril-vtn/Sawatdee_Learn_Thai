@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 
 //* IMPORT DES REACT ROUTER
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 //* IMPORT DES STYLES
 import classes from "./RegisterModal.module.css";
-import "../../../components/button/Bouton.css";
 
 //* IMPORT DES IMAGES
 import closeBtn from "../../../assets/svg/closeBtn.svg";
 
 //* IMPORT DES COMPOSANTS
-import Bouton from "../../../components/button/Bouton";
 import Load from "../../../components/loader/Load";
 
 //* IMPORT DU CONTEXT
@@ -30,7 +28,7 @@ const RegisterModal = () => {
   const [error, setError] = useState("");
 
   //* RECUPERATION DE LA FONCTION DE CONNEXION DU CONTEXTE
-  const { createUser, user } = UserAuth();
+  const { createUser } = UserAuth();
 
   //* CREATION DE LA FONCTION POUR GERER LA SOUMISSION DU FORMULAIRE
   const handleSubmit = async (e) => {
@@ -99,7 +97,13 @@ const RegisterModal = () => {
         </Link>
 
         {/* composant Btn pour aller à la page de login */}
-        <Bouton link="/login" text="Connexion" classes={classes.loginBtn} />
+        <NavLink
+          to="/login"
+          className={` btnStyle ${classes.loginBtn}`}
+          style={{ position: "absolute", top: "30px", right: "30px" }}
+        >
+          Connexion
+        </NavLink>
 
         {/* FORMULAIRE */}
         <form onSubmit={handleSubmit}>
@@ -185,7 +189,7 @@ const RegisterModal = () => {
                 type="submit"
                 // Passage en mode disable pour eviter les multiple creation d'utilisateurs
                 disabled={loading ? true : false}
-                className={`${classes.nextStepBtn} bouton`}
+                className={`${classes.nextStepBtn} btnStyle`}
               >
                 {/* Géré l'apparition du composant Load si le state Loading est true */}
                 {!loading ? "C'est parti !" : <Load />}

@@ -77,7 +77,7 @@ const Modal = ({ title, onClose, id, finishedLesson }) => {
           <div>
             <div className={classes.titleContainer}>
               <h1 className={classes.title}>
-                {title ? title : "Titre de la leçon"}
+                {title ? title : "Leçon non disponible pour le moment !"}
               </h1>
             </div>
             {finishedLesson && (
@@ -89,8 +89,10 @@ const Modal = ({ title, onClose, id, finishedLesson }) => {
               type="button"
               onClick={() => handleLesson(id)}
               className={classes.btn}
+              // si pas de titre alors le bouton est disabled
+              disabled={!title}
             >
-              Commencer +10 XP
+              Commencer +50 XP
             </button>
           </div>
         </div>
@@ -98,7 +100,7 @@ const Modal = ({ title, onClose, id, finishedLesson }) => {
           className={classes.pointerWrapper}
           style={{ left: "calc(0% + 147.5px - 15px)" }}
         >
-          {/* PETIT FLECHE EN BORD DE MODAL */}
+          {/* PETIT FLECHE EN BORD DE MODAL POUR REVENIR EN HAUT DE LA PAGE */}
           <div className={classes.pointer}></div>
         </div>
       </div>

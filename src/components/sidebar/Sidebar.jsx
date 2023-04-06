@@ -7,17 +7,17 @@ import { NavLink } from "react-router-dom";
 import classes from "./Sidebar.module.css";
 
 //* IMPORT DES IMAGES
-import logo from "../../../assets/svg/logoGreen.svg";
-import logoSmall from "../../../assets/svg/logoSmall.svg";
-import disconnectIcon from "../../../assets/images/disconnectIcon.png";
-import ProfilePicRounded from "../../../components/profilePic/ProfilePicRounded";
-import alphabetIcon from "../../../assets/images/alphabetIcon.png";
+import logo from "../../assets/svg/logoGreen.svg";
+import logoSmall from "../../assets/svg/logoSmall.svg";
+import disconnectIcon from "../../assets/images/disconnectIcon.png";
+import ProfilePicRounded from "../profilePic/ProfilePicRounded";
+import alphabetIcon from "../../assets/images/alphabetIcon.png";
 
 //* IMPORT DU CONTEXTE
-import { UserAuth } from "../../../context/AuthContext";
+import { UserAuth } from "../../context/AuthContext";
 
 //* IMPORT DES COMPOSANTS
-import Load from "../../../components/loader/Load";
+import Load from "../loader/Load";
 
 const Sidebar = () => {
   // RECUPERATION DES FONCTION/STATE DU CONTEXTE
@@ -27,15 +27,12 @@ const Sidebar = () => {
   // CREATION DES STATE
   const [loading, setLoading] = useState(false);
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
   // FONCTION POUR GERER LA DECONNEXION
   const handleLogout = async () => {
     if (confirm("souhaitez-vous vraiment être déconnecté ?")) {
       setLoading(true);
 
       try {
-        await delay(1000);
         await logout();
         setPhoto(null);
         setUserProfilePhoto(null);
@@ -43,7 +40,6 @@ const Sidebar = () => {
         setLoading(false);
       } catch (err) {
         setLoading(false);
-        console.log(err);
       }
     } else {
       return;
@@ -88,7 +84,7 @@ const Sidebar = () => {
             <div className={classes.linkImg}>
               <img src={alphabetIcon} />
             </div>
-            <span className={classes.linkText}>CONSONNES</span>
+            <span className={classes.linkText}>ALPHABET</span>
           </span>
         </NavLink>
 

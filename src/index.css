@@ -322,6 +322,7 @@ h2 {
   letter-spacing: 0.8px;
   text-decoration: none;
   text-transform: uppercase;
+  z-index: 1;
 }
 
 .btnStyle::before {

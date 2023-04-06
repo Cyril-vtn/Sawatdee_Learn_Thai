@@ -4,7 +4,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 // * IMPORT DES PAGES
-import Home from "./pages/main/index";
+import Home from "./pages/accueil/index";
 import Learn from "./pages/learn/index";
 import Alphabet from "./pages/alphabet/index";
 import Login from "./pages/login/index";

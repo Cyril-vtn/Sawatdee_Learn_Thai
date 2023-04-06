@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
 //* IMPORT DE REACT ROUTER
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 //* IMPORT DES STYLES
 import classes from "./LoginModal.module.css";
 
 //* IMPORT DES COMPOSANTS
-import Bouton from "../../../components/button/Bouton";
 import Load from "../../../components/loader/Load";
 
 //* IMPORT DES IMAGES
@@ -49,7 +48,6 @@ const LoginModal = () => {
       return;
     }
 
-    //* AJOUT D'UN DELAY POUR EVITER LES MULTIPLE CREATION D'UTILISATEURS
     setError("");
     setLoading(true);
 
@@ -82,11 +80,13 @@ const LoginModal = () => {
         </Link>
 
         {/* composant Btn pour aller à la page register */}
-        <Bouton
-          link="/register"
-          text="s'incrire !"
-          classes={classes.loginBtn}
-        />
+        <NavLink
+          to="/register"
+          className={`${classes.loginBtn} btnStyle`}
+          style={{ position: "absolute", top: "30px", right: "30px" }}
+        >
+          s'incrire !
+        </NavLink>
 
         {/* FORMULAIRE */}
         <form onSubmit={handleSubmit}>
@@ -136,7 +136,7 @@ const LoginModal = () => {
                 type="submit"
                 // Passage en mode disable pour eviter les multiple creation d'utilisateurs
                 disabled={loading ? true : false}
-                className={`${classes.nextStepBtn} bouton`}
+                className={`${classes.nextStepBtn} btnStyle`}
               >
                 {/* Géré l'apparition du composant Load si le state Loading est true */}
                 {!loading ? "C'est parti !" : <Load />}
