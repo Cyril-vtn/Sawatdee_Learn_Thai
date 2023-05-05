@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 // * IMPORT DES STYLES
 import classes from "./Header.module.css";
 
-const Header = ({ index }) => {
+const Header = ({ index, reset }) => {
   const navigate = useNavigate();
-  const [progress, setProgress] = React.useState(0);
+  const [progress, setProgress] = useState(0);
   const returnToPath = () => {
     // créé une alert pour confirmer la sortie de la partie en cours
     if (
@@ -14,7 +14,8 @@ const Header = ({ index }) => {
         "Voulez-vous vraiment quitter la leçon ? Votre progression ne sera pas sauvegardée."
       )
     ) {
-      // si l'utilisateur confirme, on le redirige vers la page d'accueil
+      // si l'utilisateur confirme, on le redirige vers la page d'accueil et reset la leçon avec la fonction du context passée en props
+      reset();
       navigate("/app/learn");
     }
   };

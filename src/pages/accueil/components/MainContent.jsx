@@ -40,7 +40,6 @@ const Home = () => {
                   La méthode gratuite, fun et efficace pour apprendre le Thai !
                 </div>
 
-                {/* SI L'UTILISATEUR EST DEJA CONNECTE, RENDRE SEULEMENT UN BOUTON C'EST PARTIE ! */}
                 <div className={classes.mainButtonContainer}>
                   <NavLink
                     to="/register"

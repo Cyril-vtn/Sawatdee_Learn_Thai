@@ -15,7 +15,7 @@ const ProfilePicRounded = ({ style, Img }) => {
   return (
     <div className={classes.imgContainer}>
       {Img ? (
-        // Affiche la nouvelle photo de profil si elle existe, sinon affiche une autre image.
+        // Affiche la photo de profil si elle existe, sinon affiche une autre image.
         <img src={Img} alt="" draggable="false" style={{ ...style }} />
       ) : (
         <img src={ProfileImg} alt="" draggable="false" style={{ ...style }} />

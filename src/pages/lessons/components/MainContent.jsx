@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
+import { useNavigate, useParams } from "react-router-dom";
+
+// * IMPORT DES STYLES
 import classes from "./MainContent.module.css";
+
+// * IMPORT DES COMPOSANTS
+import Header from "./Header";
 import Load from "../../../components/loader/Load";
 import Img from "../../../assets/images/thaiPersonWoman.png";
 import WordBtn from "./WordBtn";
-import { LessonCtx } from "../../../context/LessonContext";
-
-import { useNavigate, useParams } from "react-router-dom";
 import Footer from "./Footer";
 import Modal from "../../../components/modalLessonAnwser/Modal";
 
-// Import des sons
+// * IMPORT DU CONTEXT
+import { LessonCtx } from "../../../context/LessonContext";
+
+//* Import des sons
 import CorrectAnswerSound from "../../../assets/sounds/correct_answer_sound.mp3";
 import BadAnswerSound from "../../../assets/sounds/bad_answer_sound.mp3";
 const MainContent = () => {
@@ -25,6 +30,7 @@ const MainContent = () => {
     setLessonError,
     lessonError,
     updateUserAfterLesson,
+    resetLesson,
   } = LessonCtx();
   // state pour les réponses sélectionnées
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -104,7 +110,7 @@ const MainContent = () => {
         />
       ) : (
         <>
-          <Header index={shownIndexes.length} />
+          <Header index={shownIndexes.length} reset={resetLesson} />
           <div className={classes.mainContainer}>
             <div>
               <div className={classes.content}>

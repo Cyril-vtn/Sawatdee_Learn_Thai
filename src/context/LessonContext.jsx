@@ -44,6 +44,15 @@ export const LessonContextProvider = ({ children }) => {
     }, 2000);
   };
 
+  // fonction qui permet de reset la leçon quand l'utilisateur quitte la leçon
+  const resetLesson = () => {
+    setData([]);
+    setShownIndexes([]);
+    setIndex([]);
+    setLoading(true);
+    setLessonError(0);
+  };
+
   const updateUserAfterLesson = async (user, lessonId) => {
     const userRef = doc(db, "users", user.uid);
     let dayStreak = [...user.dayStreak];
@@ -199,6 +208,7 @@ export const LessonContextProvider = ({ children }) => {
         setLessonError,
         lessonError,
         updateUserAfterLesson,
+        resetLesson,
       }}
     >
       {children}
