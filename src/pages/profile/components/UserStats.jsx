@@ -4,6 +4,7 @@ import ListItem from "./ListItem";
 import StatBox from "./StatBox";
 import classes from "./UserStats.module.css";
 export const UserStats = ({ user }) => {
+  console.log(user);
   return (
     <div className={classes.userStatsWrapper}>
       <div className={classes.statsContainer}>

@@ -62,7 +62,7 @@ const Profile = () => {
       });
       setIsLoading(false);
     });
-  }, [userIdFromUrl]); // si le user.succes change, alors on recharge le useEffect
+  }, [userIdFromUrl]);
 
   //* -------------------------- MISE A JOUR DE LA PHOTO DE PROFIL -------------------------- *//
   const HandleChangeProfilePic = async (e) => {
@@ -75,7 +75,7 @@ const Profile = () => {
     await changeProfilePic(photo);
   };
 
-  //* -------------------------- MISE A JOUR DE LA DATE DE CREATION DU COMPTE -------------------------- *//
+  //* -------------------------- MISE A JOUR DU FORMAT DE LA DATE DE CREATION DU COMPTE -------------------------- *//
   function formatDate(date) {
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();

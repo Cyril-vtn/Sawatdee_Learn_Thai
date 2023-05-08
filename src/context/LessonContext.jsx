@@ -20,28 +20,25 @@ export const LessonContextProvider = ({ children }) => {
   const [lessonId, setLessonId] = useState();
   const [lessonError, setLessonError] = useState(0);
 
-  //* RECUPERATION DU CONTEXTE DE L'UTILISATEUR
-
   // fonction qui permet de récupérer les données de la leçon
   const fetchData = async (lessonId) => {
     setLoading(true);
-    setTimeout(async () => {
-      const lessonDoc = doc(db, `lessons/${lessonId}`);
-      await getDoc(lessonDoc).then((doc) => {
-        if (doc.exists()) {
-          setData(doc.data());
-          getRandomIndex();
 
-          setLoading(false);
-        } else {
-          setLoading(false);
-          // si ce n'est pas une lecon existante on redirige vers la page d'accueil
-          navigate("/app/learn");
+    const lessonDoc = doc(db, `lessons/${lessonId}`);
+    await getDoc(lessonDoc).then((doc) => {
+      if (doc.exists()) {
+        setData(doc.data());
+        getRandomIndex();
 
-          setLoading(false);
-        }
-      });
-    }, 2000);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        // si ce n'est pas une lecon existante on redirige vers la page d'accueil
+        navigate("/app/learn");
+
+        setLoading(false);
+      }
+    });
   };
 
   // fonction qui permet de reset la leçon quand l'utilisateur quitte la leçon
@@ -161,11 +158,11 @@ export const LessonContextProvider = ({ children }) => {
       const newStreak = [0, now.toDateString()];
       dayStreak = [newStreak[0], newStreak[1]];
     } else if (diffHours >= 24) {
-      const newStreak = [dayStreak[0] + 1, now.toDateString()];
+      const newStreak = [dayStreak[0]++, now.toDateString()];
       dayStreak = [newStreak[0], newStreak[1]];
     }
 
-    // Mettez à jour Firebase avec l'id de la leçon complétée et verifié si l'utilisateur n'a pas déjà complété la leçon sinon je rien ajouté
+    // Mettez à jour Firebase avec l'id de la leçon complétée et verifié si l'utilisateur n'a pas déjà complété la leçon sinon ne rien ajouté
     if (!user.finished.includes(lessonId)) {
       await updateDoc(userRef, {
         finished: [...user.finished, lessonId],
@@ -173,14 +170,13 @@ export const LessonContextProvider = ({ children }) => {
     }
 
     // Mettez à jour Firebase avec les nouvelles données de l'utilisateur (xp, succès)
-    // ! tier des niveaux à définir
+    // tier des niveaux à définir
     await updateDoc(userRef, {
       Succes: userSuccess,
       xp: user.xp + xp,
       dayStreak: dayStreak,
     });
 
-    // redirect to /app/learn
     navigate("/app/learn");
   };
 

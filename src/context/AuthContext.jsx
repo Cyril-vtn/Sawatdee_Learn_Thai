@@ -180,7 +180,8 @@ export const AuthContextProvider = ({ children }) => {
       tag: `${pseudo}#${randomNumber}`,
       ...userCreationData,
     };
-    //* send user to firestore database
+
+    //* CREATION DE L'UTILISATEUR DANS LA BASE DE DONNEES
     const userRef = doc(db, "users", user.uid);
     setDoc(userRef, user);
     setIsLoggedIn(true);

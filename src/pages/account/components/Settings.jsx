@@ -25,7 +25,6 @@ const Settings = () => {
     newPassword: "",
   });
 
-  //  nouvel état pour le bouton submit
   const [isDisabled, setIsDisabled] = useState(true); // nouvel état pour le bouton
   useEffect(() => {
     setInput({
@@ -48,7 +47,7 @@ const Settings = () => {
     if (e.target.name === "photo" && e.target.files.length === 0) {
       return;
     }
-    // reset du state photo et de
+    // reset du state photo
     setInput({
       ...input,
       photo: "aucun fichier sélectionné",

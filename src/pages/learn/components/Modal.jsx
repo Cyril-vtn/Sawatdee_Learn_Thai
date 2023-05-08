@@ -24,7 +24,7 @@ const Modal = ({ title, onClose, id, finishedLesson }) => {
     }
   };
 
-  //* CREATION DE FADING IN ET FADING OUT
+  //* CREATION DE FADING IN
   const fadeIn = () => {
     anime({
       targets: modalRef.current,
